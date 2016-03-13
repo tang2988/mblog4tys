@@ -36,5 +36,31 @@
 		</span>
 		<span class="pull-right">Powered By <a href="http://mtons.com/?copyright" target="_blank">Mtons</a></span>
 	</div>
+	
+	
+	
+	
+	
+<!--  cnzz -->	
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1257953432'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1257953432%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
 
+<!--  tencent-->
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=54978398" charset="UTF-8"></script>
+				
+					
+<!--  baidu-->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?28655287bb90e9fd3d7b6cc8cb1a308b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<!--  51la-->
+<script language="javascript" type="text/javascript" src="http://js.users.51.la/18797664.js"></script>
+<noscript><a href="http://www.51.la/?18797664" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/18797664.asp" style="border:none" /></a></noscript>
 </footer>
