@@ -30,8 +30,14 @@ public class CardTransactionRecordPO {
     private String sysSource;//刷卡平台
     private Date dealTime;//
     private Long userId;//
+    private String realterminalId;
     @Column(name = "point", columnDefinition = "int default 0")
     private Long point;//返现
+    
+    @Column(name = "point1", columnDefinition = "int default 0")
+    private Long point1;//个人返现
+    @Column(name = "point2", columnDefinition = "int default 0")
+    private Long point2;//全体返现
     
 	public long getId() {
 		return id;
@@ -140,6 +146,24 @@ public class CardTransactionRecordPO {
 	}
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+	public String getRealterminalId() {
+		return realterminalId;
+	}
+	public void setRealterminalId(String realterminalId) {
+		this.realterminalId = realterminalId;
+	}
+	public Long getPoint1() {
+		return point1;
+	}
+	public void setPoint1(Long point1) {
+		this.point1 = point1;
+	}
+	public Long getPoint2() {
+		return point2;
+	}
+	public void setPoint2(Long point2) {
+		this.point2 = point2;
 	}
     
     

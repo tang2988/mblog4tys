@@ -12,6 +12,8 @@ public interface CardTransactionRecordService {
 
 	void save(CardTransactionRecord ctr);
 
+    public void update(CardTransactionRecord ctr) ;
+    
 	void delete(long id);
 
 	CardTransactionRecord findById(long id);
@@ -21,7 +23,7 @@ public interface CardTransactionRecordService {
 	public List<CardTransactionRecord> getDataFromSysSource (String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode ) ;
 
 	public void syncDataFromSysSourceByMobile(String sysSource, String yearmonthdatestart, String yearmonthdateend,
-			String moblieNo,String terminalcode);
+			String moblieNo,String terminalcode,Long userId);
 
 	public void syncDataFromSysSource(String sysSource, String yearmonthdatestart, String yearmonthdateend);
 

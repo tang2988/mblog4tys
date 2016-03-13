@@ -23,6 +23,7 @@ import mblog.core.data.CardTransactionRecord;
  *
  */
 public abstract class CardTransactionRecordUtils {
+//	public static String initStartDateStr = "20160302";//
 	public static String initStartDateStr = "20151029";
 
 	public static CardTransactionRecordUtils getInstance(String sysSource) {
@@ -52,9 +53,18 @@ public abstract class CardTransactionRecordUtils {
 	    ctr.setDealTime(dealtime);
 	}
 	
-	static void parseDealTimeFace(List<CardTransactionRecord> lst){
-		for(CardTransactionRecord ctr: lst){
-			parseDealTime(ctr);
-		}
+	/**
+	 * 整理数据
+	 * @param ctr
+	 * @param userId
+	 * @param realterminalId
+	 */
+	public static void postDate(CardTransactionRecord ctr,Long userId,String realterminalId){
+		parseDealTime(ctr);
+		ctr.setUserId(userId);
+		ctr.setRealterminalId(realterminalId);
+		ctr.setPoint(0L);
+		ctr.setPoint1(0L);
+		ctr.setPoint2(0L);
 	}
 }

@@ -87,26 +87,7 @@ public class PointDaoImpl extends BaseRepositoryImpl<PointPO> implements PointDa
 	
 	@Override
 	public PointPO findOneByCondition( List<QueryRules> qrLst)   {
-		Criteria q = createCriteria();
-		for(QueryRules qr: qrLst){
-			if("eq".equals(qr.getOp())){
-				q.add(Restrictions.eq(qr.getName(),qr.getVal()));
-			}else if("like".equals(qr.getOp())){
-				q.add(Restrictions.like(qr.getName(),qr.getVal()));
-			}else if("lt".equals(qr.getOp())){
-				q.add(Restrictions.lt(qr.getName(),qr.getVal()));
-			}else if("gt".equals(qr.getOp())){
-				q.add(Restrictions.gt(qr.getName(),qr.getVal()));
-			}else if("le".equals(qr.getOp())){
-				q.add(Restrictions.le(qr.getName(),qr.getVal()));
-			}else if("ge".equals(qr.getOp())){
-				q.add(Restrictions.ge(qr.getName(),qr.getVal()));
-				
-			}else{
-				throw new RuntimeException("查询记录异常："+qr);
-			}
-		}
-//		q.addOrder(Order.desc("id"));
-		return (PointPO) q.list().get(0);
+		List<PointPO> lst = findByCondition(qrLst);
+		return (PointPO)( lst.size()>0?lst.get(0):null);
 	}
 }

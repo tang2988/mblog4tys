@@ -85,7 +85,7 @@ public class GoodsController extends BaseController {
 
 	@RequestMapping("/save")
 	// @ResponseBody
-	public String save(long id,String name,Long price,Integer storeNum, Integer status,Boolean isVip,String startTime,String endTime,Long reserve1,
+	public String save(long id,String name,Long price,Integer storeNum, Integer status,Integer isVip,String startTime,String endTime,Long reserve1,Long reserve2,
 			String content ,ModelMap model, HttpServletRequest request) {
 		try {
 			
@@ -109,6 +109,7 @@ public class GoodsController extends BaseController {
 			goods.setStartTime(DateUtils.parseDate(startTime+" 00:00:00", new String[]{"yyyy-MM-dd HH:mm:ss"}));
 			goods.setEndTime(DateUtils.parseDate(endTime+" 23:59:59", new String[]{"yyyy-MM-dd HH:mm:ss"}));
 			goods.setReserve1(reserve1);
+			goods.setReserve2(reserve2);
 			goods.setDescHtm(content);
 			
 			goods.setOpId(opId);

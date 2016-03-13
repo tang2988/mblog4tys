@@ -29,6 +29,7 @@ import mblog.core.data.Goods;
 import mblog.core.data.GoodsOther;
 import mblog.core.data.MyPOS;
 import mblog.core.data.Point;
+import mblog.core.data.PointRule;
 import mblog.core.data.User;
 import mblog.core.persist.service.CardTransactionRecordService;
 import mblog.core.persist.service.CommentService;
@@ -40,6 +41,7 @@ import mblog.core.persist.service.GoodsService;
 import mblog.core.persist.service.MyPOSService;
 import mblog.core.persist.service.NotifyService;
 import mblog.core.persist.service.PointDetailService;
+import mblog.core.persist.service.PointRuleService;
 import mblog.core.persist.service.PointService;
 import mblog.core.persist.service.PostService;
 import mblog.core.persist.service.UserService;
@@ -79,6 +81,8 @@ public class HomeController extends BaseController {
 	MyPOSService myPOSService;
 	@Autowired
 	PointService pointService;	
+	@Autowired
+	PointRuleService pointRuleService;	
 	@Autowired
 	private PointDetailService pointDetailService;
 	@Autowired
@@ -137,11 +141,6 @@ public class HomeController extends BaseController {
 		Paging page = wrapPage(pn);
 		UserProfile up = getSubject().getProfile();
 
-		User curUser = userService.getByUsername(up.getUsername());//TYS 后期再UserProfile加入mobile字段
-		String mobile = curUser.getMobile();
-		if(StringUtils.isBlank(mobile)){
-			mobile = "13812344321";
-		}
 
 		List<QueryRules> qrLst = new ArrayList<>();
 		if(StringUtils.isNotBlank(sysSource)){
@@ -157,13 +156,13 @@ public class HomeController extends BaseController {
 			QueryRules qr = new QueryRules("deal_data",yearmonthdateend+" 23:59:59"	,"le");qrLst.add(qr);
 		}
 	
-		if(StringUtils.isNotBlank(mobile)){
-			QueryRules qr = new QueryRules("moblieNoV",mobile	);qrLst.add(qr);
+		if(1==1){
+			QueryRules qr = new QueryRules("userId",up.getId()	);qrLst.add(qr);
 		}
 		cardTransactionRecordService.paging(page, qrLst);
 
 		model.put("page", page);
-		model.put("user", curUser);
+		initUser(model);
 
 		model.put("yearmonthdatestart", yearmonthdatestart);
 		model.put("yearmonthdateend", yearmonthdateend);
@@ -180,8 +179,12 @@ public class HomeController extends BaseController {
 	public String myPosMgr(  ModelMap model) {
 		UserProfile up = getSubject().getProfile();
 
-		User curUser = userService.getByUsername(up.getUsername());//TYS 后期再UserProfile加入mobile字段
-		model.put("user", curUser);
+		List<QueryRules> qrLst = new ArrayList<>();
+		qrLst.add( new QueryRules("reserve1",up.getId(),QueryRules.OP_EQ));
+		List<MyPOS> myPosLst = myPOSService.findByCondition(qrLst);
+
+		model.put("myPosLst", myPosLst);
+		initUser(model);
 		return getView(Views.HOME_myPosMgr);
 	}
 	
@@ -204,9 +207,17 @@ public class HomeController extends BaseController {
 			return Data.failure("POS终端号格式错误，请重新输入");
 		}
 		
+		List<QueryRules> qrLst = new ArrayList<>();
+//		qrLst.add( new QueryRules("reserve1",curUser.getId(),QueryRules.OP_EQ));
+		qrLst.add( new QueryRules("sysSource",sysSource,QueryRules.OP_EQ));
+		qrLst.add( new QueryRules("moblieNoV",mobile,QueryRules.OP_EQ));
+		qrLst.add( new QueryRules("reserve2",terminalcode,QueryRules.OP_EQ));
+		List<MyPOS> myPosLst = myPOSService.findByCondition(qrLst);
+	    if(myPosLst!=null && myPosLst.size()>0){
+	    	return Data.failure("该POS已录入系统，如不在本人名下，请联系销售方");
+	    }
 		
-		
-		MyPOS mPos = myPOSService.checkMyPos(sysSource, yearmonthdatestart, yearmonthdatestart, mobile, terminalcode,transAcount);
+		MyPOS mPos = myPOSService.checkMyPos(curUser.getId(),sysSource, yearmonthdatestart, yearmonthdatestart, mobile, terminalcode,transAcount);
 		if(mPos.getId()>0){
 			curUser.setMobile(mobile);
 			//
@@ -216,13 +227,13 @@ public class HomeController extends BaseController {
     		new Thread(new Runnable() {
 				@Override
 				public void run() {
-					cardTransactionRecordService.syncDataFromSysSourceByMobile(mPos.getSysSource(), CardTransactionRecordUtils.initStartDateStr, DateFormatUtils.format(new Date(), "yyyyMMdd"), mPos.getMoblieNoV(),mPos.getTerminalId());					
+					cardTransactionRecordService.syncDataFromSysSourceByMobile(mPos.getSysSource(), CardTransactionRecordUtils.initStartDateStr, DateFormatUtils.format(new Date(), "yyyyMMdd"), mPos.getMoblieNoV(),mPos.getReserve2(),mPos.getReserve1());					
 				}
 			}).start();
     		
-			return Data.success("恭喜您通过了VIP验证，数据正在同步中，请稍后查看交易记录");	
+			return Data.success("恭喜您通过了POS验证，数据正在同步中，请稍后查看交易记录");	
 		}
-		return Data.failure("抱歉，您未通过了VIP验证，请填写正确的刷卡记录再次提交验证");
+		return Data.failure("抱歉，您未通过了POS验证，请填写正确的刷卡记录再次提交验证，或联系本站");
 		
 	}
 	
@@ -342,10 +353,11 @@ public class HomeController extends BaseController {
 		if(lst.size()>0){
 			point=lst.get(0);
 		}
-		
-		
-		
 		model.put("point", point );
+		
+		List<PointRule> prLst = pointRuleService.getMyPointRule(profile.getId()	);
+		model.put("prLst", prLst );
+		
 		initUser(model);
 		return getView("/home/point");
 	}
@@ -353,7 +365,7 @@ public class HomeController extends BaseController {
 	
 	@RequestMapping("/home/pointDetail")
 	public String pointDetail(Integer pn, String yearmonthdatestart,String yearmonthdateend,  ModelMap model) throws ParseException {
-		Paging paging = wrapPage(pn,20);
+		Paging paging = wrapPage(pn,10);
 		
 		UserProfile profile = getSubject().getProfile();
 		List<QueryRules> qrLst = new ArrayList<>();
@@ -415,13 +427,45 @@ public class HomeController extends BaseController {
 		goodsOther.setGoodsId(goodsId);
 		goodsOther.setRemark(remark);
 		goodsOther.setUserId(profile.getId());
+		goodsOther.setOpId(profile.getId());
+		goodsOther.setCreateTime(new Date());
 		goodsOtherService.buyGoods(goodsOther );
 		
-		return "redirect:/home/point";
+		return "redirect:/home/goodsOtherLst";
 	}
 
 	
+	@RequestMapping("/home/goodsOtherLst")
+	public String goodsOtherLst(Integer pn, String yearmonthdatestart,String yearmonthdateend,  ModelMap model) throws ParseException {
+		Paging paging = wrapPage(pn,100);
+		
+		UserProfile profile = getSubject().getProfile();
+		List<QueryRules> qrLst = new ArrayList<>();
+		
+		
+		if(profile!=null){
+			QueryRules qr = new QueryRules("userId",profile.getId()	);	
+			qrLst.add(qr);
+		}
+		
+		/*if(StringUtils.isNotBlank(yearmonthdatestart)){
+			QueryRules qr = new QueryRules("updateTime",DateUtils.parseDate(yearmonthdatestart+" 00:00:00", new String[]{"yyyy-MM-dd HH:mm:ss"}),"ge"	);qrLst.add(qr);
+		}
+		
+		if(StringUtils.isNotBlank(yearmonthdateend)){
+			QueryRules qr = new QueryRules("updateTime",DateUtils.parseDate(yearmonthdateend+" 23:59:59", new String[]{"yyyy-MM-dd HH:mm:ss"})	,"le");qrLst.add(qr);
+		}*/
 	
+		goodsOtherService.paging(paging, qrLst);
+
+
+		model.put("yearmonthdatestart", yearmonthdatestart);
+		model.put("yearmonthdateend", yearmonthdateend);
+		
+		model.put("page", paging);
+		initUser(model);
+		return getView("/home/goodsOtherLst");
+	}
 
 	@RequestMapping("/home/missionList")
 	public String missionList(Integer pn,   ModelMap model) throws ParseException {

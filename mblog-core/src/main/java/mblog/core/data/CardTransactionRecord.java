@@ -28,8 +28,10 @@ public class CardTransactionRecord implements Serializable {
     
     private Date dealTime;//
     private Long point;//返现
+    private Long point1;//个人返现
+    private Long point2;//全体返现
     private Long userId;//
-    
+    private String realterminalId;
     @Override
     public String toString() {
     	return "serialNumber:"+serialNumber+",transacount:"+transacount+",moblieNoV:"+moblieNoV+",terminalId:"+terminalId;
@@ -148,6 +150,30 @@ public class CardTransactionRecord implements Serializable {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String getRealterminalId() {
+		return realterminalId;
+	}
+
+	public void setRealterminalId(String realterminalId) {
+		this.realterminalId = realterminalId;
+	}
+
+	public Long getPoint1() {
+		return point1;
+	}
+
+	public void setPoint1(Long point1) {
+		this.point1 = point1;
+	}
+
+	public Long getPoint2() {
+		return point2;
+	}
+
+	public void setPoint2(Long point2) {
+		this.point2 = point2;
 	}
     
 	

@@ -32,9 +32,9 @@ public class PointRule  implements Serializable {
 	private Long reserve1;//用户ID
 	private Long reserve2;//个人用户1,全体用户0
 	private String reserve3;//描述
-	private String reserve4;//程序关键词 如瑞银信-超级支付;瑞刷-闪付
+	private String reserve4;//程序关键词 如瑞银信_超级支付;瑞刷_闪付
 	
-	final public static Integer STATUS_ON = 1;
+	final public static Integer STATUS_ON = 0;
 	final public static Integer STATUS_OFF = 1;
 	public long getId() {
 		return id;

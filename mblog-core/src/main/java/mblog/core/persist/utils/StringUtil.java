@@ -63,7 +63,6 @@ public class StringUtil extends StringUtils {
 			Matcher m = p.matcher(username);
 			return m.matches();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
@@ -103,7 +102,7 @@ public class StringUtil extends StringUtils {
 	 * @return
 	 */
 	public static boolean isRYXSerialNo(String phone) {
-		Pattern p = Pattern.compile("^([0-9]{15})$");
+		Pattern p = Pattern.compile("^([0-9]{8})$");
 		Matcher m = p.matcher(phone);
 		return m.matches();
 	}

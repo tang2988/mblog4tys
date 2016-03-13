@@ -69,7 +69,6 @@ public class RSUtils extends CardTransactionRecordUtils{
 		}
 		replaceSysSource(ctrLst);
 		
-		parseDealTimeFace(ctrLst);
 		return ctrLst;
 	}
 	

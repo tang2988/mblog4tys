@@ -15,11 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import mblog.core.data.PointRule;
 import mblog.core.persist.service.PointRuleService;
 import mblog.core.persist.utils.QueryRules;
 import mblog.web.controller.BaseController;
+import mtons.modules.pojos.Data;
 import mtons.modules.pojos.Paging;
 
 /**
@@ -116,21 +118,15 @@ public class PointRuleController extends BaseController {
 	}
 	
 	
-	/*@RequestMapping("/sync")
-	// @ResponseBody
-	public @ResponseBody Data sync(String sysSource, String mobile,String yearmonthdatestart,String yearmonthdateend,Model model) {
+	@SuppressWarnings("deprecation")
+	@RequestMapping("/sync")
+	public @ResponseBody Data sync(String startTime,String endTime,Model model) {
 		try {
-			if(StringUtils.isNotBlank(mobile)){
-				cardTransactionRecordService.syncDataFromSysSourceByMobile(sysSource,  yearmonthdatestart, yearmonthdateend,mobile);
-			}else{
-				cardTransactionRecordService.syncDataFromSysSource(sysSource, yearmonthdatestart, yearmonthdateend);	
-			}
-			
+			pointRuleService.calCardTransactionRecordPoint(DateUtils.parseDate(startTime+" 00:00:00", new String[]{"yyyy-MM-dd HH:mm:ss"}), DateUtils.parseDate(endTime+" 23:59:59", new String[]{"yyyy-MM-dd HH:mm:ss"}));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return Data.success("ok");
-//		return "redirect:/admin/cardTransactionRecord/sync";
-	}*/
+	}
 	
 }

@@ -103,34 +103,48 @@ public class PointServiceImpl implements PointService {
 		qrLst.add(new QueryRules("userId",pd.getUserId(),QueryRules.OP_EQ));
 		PointPO po =pointDao.findOneByCondition(qrLst );
 		
-		if (po != null) {
-			Long old = po.getCurPoint();
-			long num = pd.getAddPoint();// 变动
-
-			if (num < 0) {// 消费
-				if (old < (-1*num)) {
-					throw new MtonsException("您的积分不足以抵扣该笔交易");
-				}
-				po.setUsedPoint(po.getUsedPoint() + num);
-				po.setCurPoint(old + num);
-
-			} else {
-				po.setHadPoint(po.getHadPoint() + num);
-				po.setCurPoint(old + num);
-			}
-			po.setUpdateTime(new Date());
-			pd.setPid(po.getId());
-			pd.setUserId(po.getUserId());
-			pd.setAddPoint(num);
-			pd.setBeforePoint(old);
-			pd.setAfterPoint(po.getCurPoint());
-			pd.setUpdateTime(new Date());
-			pointDetailService.save(pd);
+		if (po == null) {
+			po = initPoint(pd);
+			pointDao.save(po);
 		}
+		
+		Long old = po.getCurPoint();
+		long num = pd.getAddPoint();// 变动
+
+		if (num < 0) {// 消费
+			if (old < (-1*num)) {
+				throw new MtonsException("您的积分不足以抵扣该笔交易");
+			}
+			po.setUsedPoint(po.getUsedPoint() + num);
+			po.setCurPoint(old + num);
+
+		} else {
+			po.setHadPoint(po.getHadPoint() + num);
+			po.setCurPoint(old + num);
+		}
+		po.setUpdateTime(new Date());
+		pd.setPid(po.getId());
+		pd.setUserId(po.getUserId());
+		pd.setAddPoint(num);
+		pd.setBeforePoint(old);
+		pd.setAfterPoint(po.getCurPoint());
+		pd.setUpdateTime(new Date());
+		pointDetailService.save(pd);
+		
 		Point m = new Point();
 		BeanUtils.copyProperties(po, m);
 		return m;
 	}
 	
-	
+	private PointPO initPoint(PointDetail pd) {
+
+		PointPO po = new PointPO();
+		po.setUserId(pd.getUserId());
+		po.setCurPoint(0L);
+		po.setHadPoint(0L);
+		po.setUsedPoint(0L);
+		po.setUpdateTime(new Date());
+		return po;
+		
+	}
 }

@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.Type;
+
 /**
  * 商品表 品名 价格 库存 描述 图片 状态 vip专享
  * 
@@ -26,11 +28,11 @@ public class GoodsPO {
 	private Long price;// 价格
 	private Integer storeNum;// 库存
 	
-	@Column(name = "descHtm", columnDefinition = "text default ''")
+	@Type(type="text")
 	private String descHtm;// 描述
 	private String mainPic;// 图片
 	private Integer status;// 状态
-	private Boolean isVip;// vip专享
+	private Integer isVip;// vip专享
 
 	private Date startTime;// 开始时间
 	private Date endTime;// 结束时间
@@ -92,10 +94,10 @@ public class GoodsPO {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public Boolean getIsVip() {
+	public Integer getIsVip() {
 		return isVip;
 	}
-	public void setIsVip(Boolean isVip) {
+	public void setIsVip(Integer isVip) {
 		this.isVip = isVip;
 	}
 	public Date getStartTime() {

@@ -24,8 +24,8 @@ public class MyPOS implements Serializable {
     private String moblieNoV;//手机号码
     private String sysSource;//刷卡平台
     
-    private Long reserve1;//
-    private String reserve2;//
+    private Long reserve1;//userid
+    private String reserve2;//IPOS
     private String reserve3;//
     private String reserve4;//
     

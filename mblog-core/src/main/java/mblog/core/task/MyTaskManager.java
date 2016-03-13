@@ -33,7 +33,7 @@ public class MyTaskManager {
 	        System.out.println("I'm doing with rate now!");  
 	    }*/
 	      
-	    @Scheduled(cron = "0 0 6,8 * * *")  
+	    @Scheduled(cron = "0 0 6,8 * * *")
 	    void syncCardTransactionRecord(){  
 	    	log.info("开始同步前一天的交易数据....");
 	    	
@@ -47,7 +47,7 @@ public class MyTaskManager {
 	    }
 	    
 	    
-	    @Scheduled(cron = "0 0 9,11 * * *")  
+	    @Scheduled(cron = "0 0 9,11 * * *")
 	    void calBackPointFromCardTransactionRecord(){  
 	    	log.info("开始发放前一天的交易返现....");
 	    	
@@ -55,9 +55,9 @@ public class MyTaskManager {
 	    	yesterday.add(Calendar.DATE, -1);
 	    	
 			try {
-				Date startTime = DateUtils.parseDate(DateFormatUtils.format(yesterday, "yyyy-MM-dd")+"00:00:00", new String[]{"yyyy-MM-dd HH:mm:ss"});
-				Date endTime=DateUtils.parseDate(DateFormatUtils.format(yesterday, "yyyy-MM-dd")+"23:59:59", new String[]{"yyyy-MM-dd HH:mm:ss"});
-				pointRuleService.calBackPointFromCardTransactionRecord(startTime, endTime);
+				Date startTime = DateUtils.parseDate(DateFormatUtils.format(yesterday, "yyyy-MM-dd")+" 00:00:00", new String[]{"yyyy-MM-dd HH:mm:ss"});
+				Date endTime=DateUtils.parseDate(DateFormatUtils.format(yesterday, "yyyy-MM-dd")+" 23:59:59", new String[]{"yyyy-MM-dd HH:mm:ss"});
+				pointRuleService.calCardTransactionRecordPoint(startTime, endTime);
 		    	
 			} catch (ParseException e) {
 				 log.info("发放前一天的交易返现异常",e);

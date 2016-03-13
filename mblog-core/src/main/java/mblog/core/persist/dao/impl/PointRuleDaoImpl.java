@@ -90,6 +90,6 @@ public class PointRuleDaoImpl extends BaseRepositoryImpl<PointRulePO> implements
 	@Override
 	public PointRulePO findOneByCondition( List<QueryRules> qrLst)   {
 		List<PointRulePO> lst = findByCondition(qrLst);
-		return (PointRulePO) lst.get(0);
+		return (PointRulePO)(lst!=null&& lst.size()>0? lst.get(0):null);
 	}
 }

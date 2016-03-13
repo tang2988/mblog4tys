@@ -66,7 +66,6 @@ public class RYXUtils  extends CardTransactionRecordUtils{
 			paraMap.put("yearmonthdateend",  d);
 			ctrLst.addAll(getCardTransactionRecordLstReal(paraMap));
 		}
-		parseDealTimeFace(ctrLst);
 		return ctrLst;
 	}
 	

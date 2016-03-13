@@ -116,19 +116,48 @@ public class PointRuleServiceImpl implements PointRuleService {
 	
 	@Override
 	public PointRule findOneByCondition( List<QueryRules> qrLst)   {
-		PointRule pointRule = BeanMapUtils.copy(pointRuleDao.findOneByCondition(qrLst));
+		PointRulePO po = pointRuleDao.findOneByCondition(qrLst);
+		if(po==null){
+			return null;
+		}
+		PointRule pointRule = BeanMapUtils.copy(po);
 		return pointRule;
 	}
 
 	
+	/**
+	 * 全员积分规则
+	 * @return
+	 */
+	private List<PointRule> getAllUserPointRuleLst(Date excuTime) {
+		List<PointRule> allUserPointRuleLst = null;
+		if(allUserPointRuleLst==null){
+			List<QueryRules> qrLst = new ArrayList<>();
+			qrLst.add(new QueryRules("status", PointRule.STATUS_ON, QueryRules.OP_EQ));
+			qrLst.add(new QueryRules("startTime", excuTime, QueryRules.OP_GE));
+			qrLst.add(new QueryRules("endTime",excuTime, QueryRules.OP_LE));
+			qrLst.add(new QueryRules("reserve2", 0L, QueryRules.OP_LE));//全体用户
+			
+			allUserPointRuleLst = findByCondition(qrLst);
+		}
+		return allUserPointRuleLst;
+	}
 	
-	public void calBackPointFromCardTransactionRecord(Date startTime,Date endTime) {
-		int pn = 1;
-		Paging paging = new Paging(pn ,100);
+	
+	
+	/**
+	 * 根据积分规则查找需要计算的对象
+	 * @param pr
+	 */
+	public synchronized void calCardTransactionRecordPoint(Date startTime,Date endTime) {
+		
 		List<QueryRules> qrLst = new ArrayList<>();
-		qrLst.add(new QueryRules("point", 0L, QueryRules.OP_EQ));
+		qrLst.add(new QueryRules("point", 0L, QueryRules.OP_EQ));//等于0为未结算
 		qrLst.add(new QueryRules("dealTime", startTime, QueryRules.OP_GE));
 		qrLst.add(new QueryRules("dealTime", endTime, QueryRules.OP_LE));
+		
+		int pn = 1;
+		Paging paging = new Paging(pn ,100);
 		
 		while(true){
 			cardTransactionRecordService.paging(paging , qrLst );
@@ -137,85 +166,123 @@ public class PointRuleServiceImpl implements PointRuleService {
 				break;
 			}
 			for(CardTransactionRecord ctr: lst ){
-				calBackPointFromOneCardTransactionRecord(ctr);
+				calAllRulePointFromOneCardTransactionRecord(ctr);
+				calPersonRulePointFromOneCardTransactionRecord(ctr);
 			}
 		}
 	}
 	
-	private void calBackPointFromOneCardTransactionRecord(CardTransactionRecord ctr) {
-		
+	/**
+	 * 全体规则返现
+	 * @param ctr
+	 */
+	private void calAllRulePointFromOneCardTransactionRecord(CardTransactionRecord ctr) {
 		List<QueryRules> qrLst = new ArrayList<>();
 		qrLst.add(new QueryRules("status", PointRule.STATUS_ON, QueryRules.OP_EQ));
-		qrLst.add(new QueryRules("startTime", new Date(), QueryRules.OP_GE));
-		qrLst.add(new QueryRules("endTime", new Date(), QueryRules.OP_LE));
-		qrLst.add(new QueryRules("reserve1", ctr.getUserId(), QueryRules.OP_EQ));//针对个人的
+		qrLst.add(new QueryRules("startTime",ctr.getDealTime(), QueryRules.OP_LE));
+		qrLst.add(new QueryRules("endTime", ctr.getDealTime(), QueryRules.OP_GE));
+		qrLst.add(new QueryRules("reserve2", 0L, QueryRules.OP_EQ));//针对全体
+		String keyWord = ctr.getSysSource()+"_"+ctr.getDealTypeName();//是否匹配当前规则
+		qrLst.add(new QueryRules("reserve4", keyWord, QueryRules.OP_EQ));//
 		
-		//针对个人的返现
-		List<PointRule> prLst = findByCondition(qrLst);
-		List<PointDetail> pdLst =calBackPointFromPointRule(prLst, ctr);
-		for(PointDetail pd: pdLst){
-			pointService.updatePoint(pd);
+		PointRule pr = findOneByCondition(qrLst);
+		if(pr==null){
+			pr = new PointRule();
+			pr.setRatio(0);
 		}
 		
-		//计算全员返现
-		pdLst =calBackPointFromPointRule(getAllUserPointRuleLst(), ctr);
-		for(PointDetail pd: pdLst){
-			pointService.updatePoint(pd);
+		//包装积分明细
+		PointDetail pd = new PointDetail();
+		Integer getRatio = pr.getRatio();
+		BigDecimal getFeeAmt = ctr.getFeeAmt();
+		if("瑞刷".equals(ctr.getSysSource())){
+			getFeeAmt = getFeeAmt.subtract(BigDecimal.valueOf(2));
 		}
+		BigDecimal backPoint = getFeeAmt.multiply(BigDecimal.valueOf(getRatio));//.divide(BigDecimal.valueOf(100));
+		if(backPoint.longValue()<=0){
+			//若返现小于0，赠送1积分
+			backPoint = BigDecimal.ONE;
+		}
+		pd.setRelateId(ctr.getId());
+		pd.setSourceDesc("刷卡全员专享奖励");
+		pd.setOpId(Consts.SYSTEM_OP_USERID);
+		pd.setAddPoint(backPoint.longValue());
+		pd.setUserId(ctr.getUserId());
+		pointService.updatePoint(pd);
 		
+		//更新交易记录得分
+		ctr.setPoint2(pd.getAddPoint());
+		ctr.setPoint(ctr.getPoint1()+ctr.getPoint2());
+		cardTransactionRecordService.update(ctr);
 	}
 	
+	
 	/**
-	 * 根据积分规则计算积分
-	 * @param prLst
+	 * 个人规则返现
 	 * @param ctr
-	 * @return
 	 */
-	private List<PointDetail> calBackPointFromPointRule(List<PointRule> prLst,CardTransactionRecord ctr) {
-		List<PointDetail> pdLst = new ArrayList<>();
+	private void calPersonRulePointFromOneCardTransactionRecord(CardTransactionRecord ctr) {
+		List<QueryRules> qrLst = new ArrayList<>();
+		qrLst.add(new QueryRules("status", PointRule.STATUS_ON, QueryRules.OP_EQ));
+		qrLst.add(new QueryRules("startTime",ctr.getDealTime(), QueryRules.OP_LE));
+		qrLst.add(new QueryRules("endTime", ctr.getDealTime(), QueryRules.OP_GE));
+		qrLst.add(new QueryRules("reserve1", ctr.getUserId(), QueryRules.OP_EQ));//针对个人
+		String keyWord = ctr.getSysSource()+"_"+ctr.getDealTypeName();//是否匹配当前规则
+		qrLst.add(new QueryRules("reserve4", keyWord, QueryRules.OP_EQ));//
 		
-		for(PointRule pr: prLst ){
-			
-			String keyWord = ctr.getSysSource()+ctr.getDealTypeName();
-			//是否匹配当前规则
-			if(keyWord.equals(pr.getReserve4())){
-				Integer getRatio = pr.getRatio();
-				BigDecimal getFeeAmt = ctr.getFeeAmt();
-				BigDecimal backPoint = getFeeAmt.multiply(BigDecimal.valueOf(getRatio));//.divide(BigDecimal.valueOf(100));
-				if(backPoint.longValue()<=0){
-					//若返现小于0，赠送1积分
-					backPoint = BigDecimal.ONE;
-				}
-				
-				//包装积分明细
-				PointDetail pd = new PointDetail();
-				pd.setOpId(Consts.SYSTEM_OP_USERID);
-				pd.setAddPoint(backPoint.longValue());
-				pd.setUserId(ctr.getUserId());
-				pdLst.add(pd);
-			}
+		PointRule pr = findOneByCondition(qrLst);
+		if(pr==null){
+			return ;
 		}
+		//包装积分明细
+		PointDetail pd = new PointDetail();
+		Integer getRatio = pr.getRatio();
+		BigDecimal getFeeAmt = ctr.getFeeAmt();
+		if("瑞刷".equals(ctr.getSysSource())){
+			getFeeAmt = getFeeAmt.subtract(BigDecimal.valueOf(2));
+		}
+		BigDecimal backPoint = getFeeAmt.multiply(BigDecimal.valueOf(getRatio));//.divide(BigDecimal.valueOf(100));
+		if(backPoint.longValue()<=0){
+			//若返现小于0，赠送1积分
+			backPoint = BigDecimal.ONE;
+		}
+		pd.setRelateId(ctr.getId());
+		pd.setSourceDesc("刷卡个人专享奖励");
+		pd.setOpId(Consts.SYSTEM_OP_USERID);
+		pd.setAddPoint(backPoint.longValue());
+		pd.setUserId(ctr.getUserId());
+		pointService.updatePoint(pd);
 		
-		return pdLst;
+		//更新交易记录得分
+		ctr.setPoint1(pd.getAddPoint());
+		ctr.setPoint(ctr.getPoint1()+ctr.getPoint2());
+		cardTransactionRecordService.update(ctr);
 	}
 	
 	
-	List<PointRule> allUserPointRuleLst = null;
-	/**
-	 * 全员积分规则
-	 * @return
-	 */
-	private List<PointRule> getAllUserPointRuleLst() {
-		if(allUserPointRuleLst==null){
+	public List<PointRule> getMyPointRule(Long userId) {
+		List<PointRule>  prLst  = new ArrayList<>();
+		if(1==1){
 			List<QueryRules> qrLst = new ArrayList<>();
 			qrLst.add(new QueryRules("status", PointRule.STATUS_ON, QueryRules.OP_EQ));
-			qrLst.add(new QueryRules("startTime", new Date(), QueryRules.OP_GE));
-			qrLst.add(new QueryRules("endTime", new Date(), QueryRules.OP_LE));
-			qrLst.add(new QueryRules("reserve2", 0L, QueryRules.OP_LE));//全体用户
+			qrLst.add(new QueryRules("startTime",new Date(), QueryRules.OP_LE));
+			qrLst.add(new QueryRules("endTime", new Date(), QueryRules.OP_GE));
+			qrLst.add(new QueryRules("reserve1", userId, QueryRules.OP_EQ));//针对个人
 			
-			allUserPointRuleLst = findByCondition(qrLst);
+			List<PointRule>  prs = findByCondition(qrLst);
+			prLst.addAll(prs);
 		}
-		return allUserPointRuleLst;
+		
+		if(1==1){
+			List<QueryRules> qrLst = new ArrayList<>();
+			qrLst.add(new QueryRules("status", PointRule.STATUS_ON, QueryRules.OP_EQ));
+			qrLst.add(new QueryRules("startTime",new Date(), QueryRules.OP_LE));
+			qrLst.add(new QueryRules("endTime", new Date(), QueryRules.OP_GE));
+			qrLst.add(new QueryRules("reserve2", 0L, QueryRules.OP_EQ));//针对全体
+			
+			List<PointRule>  prs = findByCondition(qrLst);
+			prLst.addAll(prs);
+		}
+		return prLst;
 	}
-	
 }

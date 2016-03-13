@@ -10,12 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import mblog.core.data.CardTransactionRecord;
 import mblog.core.persist.service.CardTransactionRecordService;
 import mblog.core.persist.utils.QueryRules;
 import mblog.web.controller.BaseController;
@@ -96,7 +93,6 @@ public class CardTransactionRecordController extends BaseController {
 	
 	
 	@RequestMapping("/sync")
-	// @ResponseBody
 	public @ResponseBody Data sync(String sysSource, String mobile,String yearmonthdatestart,String yearmonthdateend,Model model) {
 		try {
 			cardTransactionRecordService.syncDataFromSysSource(sysSource, yearmonthdatestart, yearmonthdateend);
@@ -104,7 +100,6 @@ public class CardTransactionRecordController extends BaseController {
 			e.printStackTrace();
 		}
 		return Data.success("ok");
-//		return "redirect:/admin/cardTransactionRecord/sync";
 	}
 	
 }

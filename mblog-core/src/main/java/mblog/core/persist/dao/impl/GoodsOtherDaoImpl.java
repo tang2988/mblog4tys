@@ -86,6 +86,6 @@ public class GoodsOtherDaoImpl extends BaseRepositoryImpl<GoodsOtherPO> implemen
 	@Override
 	public GoodsOtherPO findOneByCondition( List<QueryRules> qrLst)   {
 		List<GoodsOtherPO> lst = findByCondition(qrLst);
-		return (GoodsOtherPO) lst.get(0);
+		return (GoodsOtherPO) (lst.size()>0?lst.get(0):null);
 	}
 }

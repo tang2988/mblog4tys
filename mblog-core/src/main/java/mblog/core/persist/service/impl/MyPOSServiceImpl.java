@@ -51,12 +51,12 @@ public class MyPOSServiceImpl implements MyPOSService {
 
 	@Override
 	public void save(MyPOS ctr) {
-		MyPOSPO cardTransactionRecordPO = new MyPOSPO();
+		MyPOSPO po = new MyPOSPO();
 
-		BeanUtils.copyProperties(ctr, cardTransactionRecordPO);
+		BeanUtils.copyProperties(ctr, po);
 
-		myPOSDao.saveOrUpdate(cardTransactionRecordPO);
-
+		myPOSDao.saveOrUpdate(po);
+		ctr.setId(po.getId());
 		// servletContext.setAttribute("cardTransactionRecords", findAll());
 	}
 
@@ -88,6 +88,20 @@ public class MyPOSServiceImpl implements MyPOSService {
 		return rets;
 	}
 
+	
+	@Override
+	public List<MyPOS> findByCondition(List<QueryRules> qrLst) {
+		List<MyPOSPO> linkPOs = myPOSDao.findByCondition(qrLst);
+
+		List<MyPOS> rets = new ArrayList<MyPOS>();
+		for (MyPOSPO po : linkPOs) {
+			MyPOS m = new MyPOS();
+			BeanUtils.copyProperties(po, m);
+			rets.add(m);
+		}
+		return rets;
+	}
+	
 	/**
 	 * VIP校验 (某天某刷卡器某账户刷了某笔钱)
 	 * 
@@ -99,7 +113,7 @@ public class MyPOSServiceImpl implements MyPOSService {
 	 * @param transAcount
 	 * @return
 	 */
-	public MyPOS checkMyPos(String sysSource, String yearmonthdatestart, String yearmonthdateend, String moblieNo,
+	public synchronized MyPOS checkMyPos(Long userId,String sysSource, String yearmonthdatestart, String yearmonthdateend, String moblieNo,
 			String terminalcode, String transAcount) {
 		
 		MyPOS myPOS = new MyPOS();
@@ -110,14 +124,18 @@ public class MyPOSServiceImpl implements MyPOSService {
 
 			for (CardTransactionRecord ctr : getCardTransactionRecordLst) {
 				if (AmountUtils.numberFormat(ctr.getTransacount()).equals(AmountUtils.numberFormat(transAcount))) {
-					
+					if("GZ黄淑玲".equals(ctr.getAgencyName())){
+						return myPOS;
+					}
+					myPOS.setReserve1(userId);
 					myPOS.setAgencyName(ctr.getAgencyName());
 					myPOS.setCustomerName(ctr.getCustomerName());
-					myPOS.setDeal_time(ctr.getDeal_data()+ctr.getDeal_time());
+//					myPOS.setDeal_time(ctr.getDeal_data()+ctr.getDeal_time());
 					myPOS.setIdcard(ctr.getIdcard());
 					myPOS.setMoblieNoV(ctr.getMoblieNoV());
 					myPOS.setSysSource(sysSource);
 					myPOS.setTerminalId(ctr.getTerminalId());
+					myPOS.setReserve2(terminalcode);
 					save(myPOS);
 					return myPOS;
 				}

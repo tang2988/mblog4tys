@@ -56,7 +56,7 @@ public class GoodsDaoImpl extends BaseRepositoryImpl<GoodsPO> implements GoodsDa
 			}
 		}
 		
-		q.desc("reserve1");
+		q.asc("reserve1");
 		return q.list();
 	}
 	

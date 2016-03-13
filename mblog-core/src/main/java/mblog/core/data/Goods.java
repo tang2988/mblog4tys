@@ -30,7 +30,7 @@ public class Goods implements Serializable {
 	private String descHtm;// 描述
 	private String mainPic;// 图片
 	private Integer status;// 状态
-	private Boolean isVip;// vip专享
+	private Integer isVip;// vip专享
 
 	private Date startTime;// 开始时间
 	private Date endTime;// 结束时间
@@ -91,10 +91,10 @@ public class Goods implements Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public Boolean getIsVip() {
+	public Integer getIsVip() {
 		return isVip;
 	}
-	public void setIsVip(Boolean isVip) {
+	public void setIsVip(Integer isVip) {
 		this.isVip = isVip;
 	}
 	public Date getStartTime() {

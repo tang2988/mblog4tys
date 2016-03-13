@@ -63,7 +63,7 @@ public class GoodsOtherServiceImpl implements GoodsOtherService {
         BeanUtils.copyProperties(ctr, goodsOtherPO);
 
         goodsOtherDao.save( goodsOtherPO);
-
+        BeanUtils.copyProperties(goodsOtherPO, ctr);
 //        servletContext.setAttribute("goodsOthers", findAll());
     }
 
@@ -110,6 +110,9 @@ public class GoodsOtherServiceImpl implements GoodsOtherService {
 	@Override
 	public GoodsOther findOneByCondition( List<QueryRules> qrLst)   {
 		GoodsOtherPO po = goodsOtherDao.findOneByCondition(qrLst);
+		if(po==null){
+			return null;
+		}
 		GoodsOther m = new GoodsOther();
         BeanUtils.copyProperties(po, m);
         return (m);

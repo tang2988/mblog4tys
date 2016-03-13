@@ -23,5 +23,7 @@ public interface PointRuleService {
 	
 	public PointRule findOneByCondition( List<QueryRules> qrLst) ;
 	
-	public void calBackPointFromCardTransactionRecord(Date startTime,Date endTime) ;
+	public void calCardTransactionRecordPoint(Date startTime,Date endTime) ;
+	
+	public List<PointRule> getMyPointRule(Long userId) ;
 }

@@ -69,7 +69,17 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
     }
     
     
-    public void saveUnique(CardTransactionRecord ctr) {
+    @Override
+    public void update(CardTransactionRecord ctr) {
+        CardTransactionRecordPO cardTransactionRecordPO = cardTransactionRecordDao.get(ctr.getId());
+        BeanUtils.copyProperties(ctr, cardTransactionRecordPO);
+        cardTransactionRecordDao.update(cardTransactionRecordPO);
+
+    }
+    
+    
+    
+    public synchronized void saveUnique(CardTransactionRecord ctr) {
         List<QueryRules> qrLst  =new ArrayList<>();
         QueryRules moblieNoVQR = new QueryRules("moblieNoV", ctr.getMoblieNoV(), QueryRules.OP_EQ	);
         qrLst.add(moblieNoVQR);
@@ -138,9 +148,10 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
      * 根据手机号码同步
      */
     @Transactional
-    public synchronized void syncDataFromSysSourceByMobile(String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode) {
+    public synchronized void syncDataFromSysSourceByMobile(String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode,Long userId) {
     	List<CardTransactionRecord> getCardTransactionRecordLst =  getDataFromSysSource(sysSource,yearmonthdatestart, yearmonthdateend, moblieNo, terminalcode);
     	for(CardTransactionRecord ctr: getCardTransactionRecordLst){
+    		CardTransactionRecordUtils.postDate(ctr, userId, terminalcode);
     		saveUnique(ctr);
 		}
 	}
@@ -158,7 +169,7 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
     			break;
     		}
     		for(MyPOS m: myPosLst){
-				syncDataFromSysSourceByMobile( m.getSysSource(),yearmonthdatestart, yearmonthdateend, m.getMoblieNoV(),m.getTerminalId());
+				syncDataFromSysSourceByMobile( m.getSysSource(),yearmonthdatestart, yearmonthdateend, m.getMoblieNoV(),m.getReserve2(),m.getReserve1());
     		}
 		}
 	}

@@ -18,6 +18,8 @@ public interface MyPOSService {
 
 	List<MyPOS> findAll();
 
-	public MyPOS checkMyPos(String sysSource, String yearmonthdatestart, String yearmonthdateend, String moblieNo,
+	public List<MyPOS> findByCondition(List<QueryRules> qrLst) ;
+	
+	public MyPOS checkMyPos(Long userId,String sysSource, String yearmonthdatestart, String yearmonthdateend, String moblieNo,
 			String terminalcode, String transAcount);
 }
