@@ -13,9 +13,10 @@
     	$(".CurForm").submit();
     }
     
-    function sync(curObj){
+    function sync(curObj,id){
     	curObj.disabled = true;
-    	$.post("$base/admin/cardTransactionRecord/sync", $(".CurForm").serializeArray(),
+		var paras = $(".CurForm").serializeArray();
+    	$.post("sync",paras ,
           function(data){
           curObj.disabled = false;
 		});
@@ -82,7 +83,7 @@ form.CurForm li {list-style:none;padding:5px}
         <div class="pull-out m-t-small">
             <table id="treeTable" class="table table-striped table-bordered b-t text-small">
                 <tr>
-                    <th class="col-lg-1">#</th>
+                    <th >#</th>
                     <th>规则编号</th>
                     <th>类型</th>
 					<th>用户</th>
@@ -92,6 +93,11 @@ form.CurForm li {list-style:none;padding:5px}
                     <th>开始时间</th>
                     <th>结束时间</th>
 					<th>更新时间</th>
+					
+					<th>用户ID</th>
+                    <th>全体用户</th>
+                    <th>描述</th>
+					<th>程序关键词</th>
                     #if($shiro.hasPermission("friendLink:edit"))
                         <th class="col-lg-2">操作</th>
                     #end
@@ -121,7 +127,7 @@ form.CurForm li {list-style:none;padding:5px}
 						减少
 					#end
 						</td>
-                    <td>$!{row.ratio}</td>
+                    <td>$!{row.ratio}%</td>
                     <td>
 					#if($!{row.status}==0)
 						启用
@@ -132,12 +138,28 @@ form.CurForm li {list-style:none;padding:5px}
                     <td>$!{row.startTime}</td>
                     <td>$!{row.endTime}</td>
 					<td>$!{row.updateTime}</td>
+					
+					<td>$!{row.reserve1}</td>
+					<td>
+						#if($!{row.reserve2}==0)
+    						全体用户
+    					#else
+    						个人用户
+    					#end
+					</td>
+					<td>$!{row.reserve3}</td>
+					<td>$!{row.reserve4}</td>
+					
                     #if($shiro.hasPermission("friendLink:edit"))
                         <td class="text-center">
-                            <a href="edit?id=${row.id}" class="btn btn-mini btn-primary">
+							<a href="javascript:sync(this,${row.id})" class="btn btn-mini btn-primary">
+                                <i class="fa fa-check-square-o"></i>计算返现
+                            </a>
+							
+                             #**<a href="edit?id=${row.id}" class="btn btn-mini btn-primary">
                                 <i class="fa fa-check-square-o"></i> 修改
                             </a>
-                            #**
+                           
 							<a href="delete?id=${row.id}" class="btn btn-mini"><i class="fa fa-check-square-o"></i> 删除</a>
 							***#
                         </td>

@@ -25,10 +25,10 @@ input.laydate-icon,div.laydate-icon{
 div.laydate-icon{
 	text-align: left;
 }
+ 
 
-#ul_myPosMgr li {padding: 5px;}
-
-#goods li{float: left;margin:15px; width: 210px;}
+#goods li{float: left;margin:15px; width: 210px;    padding: 2px;}
+.goodsOnhover{background-color: #E2DEFF;    border: 2px solid #61BB8D;}
 </style>
 <script type="text/javascript">
     
@@ -43,28 +43,64 @@ div.laydate-icon{
 		<ul class="">
 			<li><a class="active" href="$base/home/point">我的积分</a></li>
 			<li><a class="" href="$base/home/pointDetail">积分明细</a></li>
+			<li><a class="" href="$base/home/goodsOtherLst">兑换订单</a></li>
 		</ul>
 	</div>
 	<!-- tab panes -->
 	<div class="stream-list">
 		<div style="padding : 20px; ">
-			当前可用积分：$!{point.curPoint}
+			
+			<h4 >
+				当前可用积分：$!{point.curPoint}
+            </h4>
+		</div>
+		
+		<div style="padding : 20px; ">
+			<h5 >
+				我的积分规则
+            </h5>
+			<table id="treeTable" class="table table-striped table-bordered b-t text-small">
+                <tr>
+                    <th>#</th>
+                    <th>刷卡方式</th>
+                    <th>积分系数</th>
+                    <th>开始时间</th>
+                    <th>截至时间</th>
+                    <th>范围</th>
+                </tr>
+                #foreach($row in $prLst)
+				<tr>
+                    <td>$!{velocityCount}</td>
+                    <td>$!{row.reserve4}</td>
+                    <td>$!{row.ratio}%</td>
+                    <td>$!{row.startTime}</td>
+                    <td>$!{row.endTime} </td>
+                    <td>
+					#if($!{row.reserve2}==0)
+						全员专享
+					#else
+						个人专享
+					#end
+					</td>
+                </tr>
+                #end
+            </table>
 		</div>
 	</div>
 	
 	
 		<!-- tab panes -->
 	<div class="stream-list" style="padding-left: 20px">
-      <ul id="goods">
+		<ul id="goods">
 				 #foreach($row in $page.results)
-				<li>
+				<li class="goodsOnhover">
 					<a href="$base/home/goodsDetail?id=$!{row.id}">
-						<img width="180px" src="$base$!{row.mainPic}" />
+						<img width="210px" src="$base$!{row.mainPic}" />
 						<div>
 							<span>$!{row.name}</span><br/>
 							<span style="text-decoration: line-through;color: #999;">市场参考价：$!{row.reserve2} RMB</span><br/>
 							<span>积分兑换价：$!{row.price}</span><br/>
-							<span>库存：$!{row.storeNum}</span>
+							<span>剩余库存：$!{row.storeNum}</span>
 						</div>
 					</a>
 				</li>                    

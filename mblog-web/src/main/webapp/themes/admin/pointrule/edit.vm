@@ -93,13 +93,19 @@ div.laydate-icon{
                     <label class="col-lg-2 control-label">用户</label>
                     <div class="col-lg-5">
                         <input type="text" name="reserve1" class="form-control" value="$!{pointRule.reserve1}">
-							<input type="hidden"  name="reserve2" class="form-control" value="$!{pointRule.reserve2}">
+						<input type="hidden"  name="reserve2" class="form-control" value="$!{pointRule.reserve2}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">描述</label>
                     <div class="col-lg-8">
                         <textarea rows="3" class="form-control" name="reserve3" class="form-control" placeholder="描述">$!{pointRule.reserve3}</textarea>
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label class="col-lg-2 control-label">keyword</label>
+                    <div class="col-lg-5">
+                        <input type="text" name="reserve4" class="form-control" value="$!{pointRule.reserve4}">
                     </div>
                 </div>
                 <div class="form-group">

@@ -67,7 +67,8 @@ div.laydate-icon{
                 <tr>
                     <th class="col-lg-1">#</th>
                     <th>品名</th>
-                    <th>价格</th>
+                    <th>兑换价</th>
+					<th>市场价</th>
                     <th>库存</th>
                     <th>状态</th>
                     <th>vip专享</th>
@@ -84,6 +85,7 @@ div.laydate-icon{
                     <td>$!{velocityCount}</td>
                     <td>$!{row.name}</td>
                     <td>$!{row.price}</td>
+					<td>$!{row.reserve2}</td>
                     <td>$!{row.storeNum}</td>
                     <td>
                     #if($!{row.status}==0)

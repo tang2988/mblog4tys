@@ -83,6 +83,7 @@ div.laydate-icon{
                     <th>银行卡号</th>
                     <th>刷卡平台</th>
                     <th>交易流水号</th>
+					<th>返现积分</th>
                     #if($shiro.hasPermission("friendLink:edit1"))
                     	<th>所属代理</th>
                         <th width="300" class="col-lg-2">操作</th>
@@ -99,6 +100,7 @@ div.laydate-icon{
                     <td>$!{row.bankcardNumber}</td>
                     <td>$!{row.sysSource}</td>
                     <td>$!{row.serialNumber}</td>
+					<td>$!{row.point}</td>
                     #if($shiro.hasPermission("friendLink:edit1"))
                     	<td>$!{row.agencyName}</td>
                         <td class="text-center">

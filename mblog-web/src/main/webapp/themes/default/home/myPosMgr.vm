@@ -52,12 +52,17 @@ div.laydate-icon{
 	
 		
 		<div>
-			#if( ${user.mobile})
-					<div style="padding: 50px;">
-                 		  您的瑞银信POS账户：${user.mobile}<br/>
-                 	</div>
-            #end
-            
+			
+			 
+			<div style="padding: 30px;">
+				<ul >
+					 #foreach($row in $myPosLst)
+                          <li >
+							 您的$!{row.sysSource}POS账户：${row.moblieNoV}&nbsp;&nbsp;设备号：${row.terminalId}
+                          </li>
+        			 #end
+                </ul>
+         	</div>
             <div style="padding: 30px;  ">
 		    		<form class="CurForm" action="$base/home?method=myPosMgr" method="post">
 		    		<ul id="ul_myPosMgr">
@@ -85,6 +90,8 @@ div.laydate-icon{
 						</li>
 					</ul>
 		    		</form>
+					<h5 style=" color: #F508EB; padding-top: 20px;">PS:本站POS机返现服务由<a href="http://shop.m.taobao.com/shop/shopIndex.htm?shop_id=140597713">糖胖纸
+                    </a>赞助提供，仅能添加<a href="http://shop.m.taobao.com/shop/shopIndex.htm?shop_id=140597713">糖胖纸</a>售出的POS设备！</h5>
 				</div>  
 		</div>        
     
