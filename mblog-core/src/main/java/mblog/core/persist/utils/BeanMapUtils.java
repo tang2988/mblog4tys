@@ -180,4 +180,10 @@ public class BeanMapUtils {
 		BeanUtils.copyProperties(po, ret);
 		return ret;
 	}
+
+	public static CardTransactionRecord copy(CardTransactionRecordPO po) {
+		CardTransactionRecord ret = new CardTransactionRecord();
+		BeanUtils.copyProperties(po, ret);
+		return ret;
+	}
 }

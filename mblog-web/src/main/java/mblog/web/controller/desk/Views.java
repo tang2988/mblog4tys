@@ -31,7 +31,7 @@ public interface Views {
 
 	String HOME_FEEDS = "/home/feeds";
 	String HOME_POSTS = "/home/posts";
-
+	String HOME_myPos = "/home/myPos";
 	String REDIRECT_HOME_POSTS = "redirect:/home?method=posts";
 	String REDIRECT_POSTS_UPDATE = "redirect:/view/%s";
 	String HOME_COMMENTS = "/home/comments";

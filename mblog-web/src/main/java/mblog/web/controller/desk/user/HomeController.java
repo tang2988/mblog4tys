@@ -9,6 +9,10 @@
 */
 package mblog.web.controller.desk.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import mblog.base.lang.EnumPrivacy;
 import mblog.core.data.AccountProfile;
 import mblog.core.data.User;
+import mblog.core.persist.service.CardTransactionRecordService;
 import mblog.core.persist.service.CommentService;
 import mblog.core.persist.service.FavorService;
 import mblog.core.persist.service.FeedsService;
@@ -24,6 +29,7 @@ import mblog.core.persist.service.FollowService;
 import mblog.core.persist.service.NotifyService;
 import mblog.core.persist.service.PostService;
 import mblog.core.persist.service.UserService;
+import mblog.core.persist.utils.QueryRules;
 import mblog.shiro.authc.AccountSubject;
 import mblog.web.controller.BaseController;
 import mblog.web.controller.desk.Views;
@@ -53,6 +59,9 @@ public class HomeController extends BaseController {
 	@Autowired
 	private NotifyService notifyService;
 
+	@Autowired
+	private CardTransactionRecordService cardTransactionRecordService;
+	
 	/**
 	 * 用户主页
 	 * @param pn
@@ -90,6 +99,49 @@ public class HomeController extends BaseController {
 		return getView(Views.HOME_POSTS);
 	}
 
+	
+	/**
+	 * 我POS
+	 * @param pn
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/home", params = "method=myPos")
+	public String myPos(Integer pn, String sysSource,String yearmonthdatestart,String yearmonthdateend, ModelMap model) {
+		Paging page = wrapPage(pn);
+		UserProfile up = getSubject().getProfile();
+
+		User curUser = userService.getByUsername(up.getName());//TYS 后期再UserProfile加入mobile字段
+		String mobile = curUser.getMobile();
+		if(StringUtils.isBlank(mobile)){
+			mobile = "12345678901";
+		}
+
+		List<QueryRules> qrLst = new ArrayList<>();
+		if(StringUtils.isNotBlank(sysSource)){
+			QueryRules qr = new QueryRules("sysSource",sysSource	);	
+			qrLst.add(qr);
+		}
+		
+		if(StringUtils.isNotBlank(yearmonthdatestart)){
+			QueryRules qr = new QueryRules("deal_data",yearmonthdatestart+" 00:00:00","ge"	);qrLst.add(qr);
+		}
+		
+		if(StringUtils.isNotBlank(yearmonthdateend)){
+			QueryRules qr = new QueryRules("deal_data",yearmonthdateend+" 23:59:59"	,"le");qrLst.add(qr);
+		}
+	
+		if(StringUtils.isNotBlank(mobile)){
+			QueryRules qr = new QueryRules("moblieNoV",mobile	);qrLst.add(qr);
+		}
+		cardTransactionRecordService.paging(page, qrLst);
+
+		model.put("page", page);
+		model.put("user", curUser);
+
+		return getView(Views.HOME_myPos);
+	}
+	
 	/**
 	 * 我发表的评论
 	 * @param pn
