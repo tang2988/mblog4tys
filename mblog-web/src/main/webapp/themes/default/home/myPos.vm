@@ -1,0 +1,119 @@
+#set($title = "我的主页")
+#set($layout="default/layout/columns_left_sidebar.vm")
+
+<div class="shadow-box">
+	<div class="filter">
+		<ul class="">
+			<li><a class="active" href="$base/home?method=myPos">我的POS</a></li>
+		</ul>
+	</div>
+	<!-- tab panes -->
+	<div class="stream-list">
+	
+	
+	<div>
+    		<form class="CurForm" action="$base/admin/cardTransactionRecord/list" method="post">
+    		<input type="hidden" id="pn" name="pn" value="${page.pageNo}" />
+    		<ul>
+				<li>
+				<select name="sysSource">
+					<option value="瑞银信" select="select">瑞银信</option>
+				</select>
+				</li>
+				<li>
+					<input name="yearmonthdatestart" onclick="laydate({ format: 'YYYYMMDD'})" >
+					<input name="yearmonthdateend" onclick="laydate({ format: 'YYYYMMDD'})"  > 
+				</li>
+				<li>
+					<input type="button" value="同步数据" onclick="sync(this)"  >
+					<input type="button" value="查询" onclick="submitCurForm(1)"  >
+				</li>
+			</ul>
+    		</form>
+		</div>
+        <div class="pull-out m-t-small">
+            <table id="treeTable" class="table table-striped table-bordered b-t text-small">
+                <tr>
+                    <th class="col-lg-1">#</th>
+                    <th>手机号码</th>
+                    <th>终端编号</th>
+                    <th>交易金额</th>
+                    <th>手续费</th>
+                    <th>交易日期</th>
+                    <th>交易时间</th>
+                    <th>交易类型</th>
+                    <th>银行卡号</th>
+                    <th>刷卡平台</th>
+                    <th>交易流水号</th>
+                    <th>所属代理</th>
+                    #if($shiro.hasPermission("friendLink:edit"))
+                        <th width="300" class="col-lg-2">操作</th>
+                    #end
+                </tr>
+                #foreach($row in $page.results)
+                    <td>$!{velocityCount}</td>
+                    <td>$!{row.moblieNoV}</td>
+                    <td>$!{row.terminalId}</td>
+                    <td>$!{row.transacount}</td>
+                    <td>$!{row.feeAmt}</td>
+                    <td>$!{row.deal_data}</td>
+                    <td>$!{row.deal_time}</td>
+                    <td>$!{row.dealTypeName}</td>
+                    <td>$!{row.bankcardNumber}</td>
+                    <td>$!{row.sysSource}</td>
+                    <td>$!{row.serialNumber}</td>
+                    <td>$!{row.agencyName}</td>
+                    #if($shiro.hasPermission("friendLink:edit"))
+                        <td class="text-center">
+                            <a href="$base/admin/cardTransactionRecord/edit?id=${row.id}" class="btn btn-mini btn-primary">
+                                <i class="fa fa-check-square-o"></i> 修改
+                            </a>
+                            <a href="$base/admin/cardTransactionRecord/delete?id=${row.id}" class="btn btn-mini"><i class="fa fa-check-square-o"></i> 删除</a>
+                        </td>
+                    #end
+                </tr>
+                #end
+            </table>
+            
+        </div>
+        
+        
+        
+        
+        
+	</div>
+</div>
+<div class="text-center clr">
+	#pageHtm("home?method=myPos" $page 5)
+</div>
+
+<script type="text/javascript">
+$(function() {
+	// delete
+	$('a[data-evt=trash]').click(function () {
+		var id = $(this).attr('data-id');
+
+		layer.confirm('确定删除此项吗?', {
+            btn: ['确定','取消'], //按钮
+            shade: false //不显示遮罩
+        }, function(){
+			jQuery.getJSON('$base/post/delete/' + id, function (ret) {
+				layer.msg(ret.message, {icon: 1});
+				if (ret.code >=0) {
+					$('#loop-' + id).fadeOut();
+					$('#loop-' + id).remove();
+				}
+			});
+
+        }, function(){
+
+        });
+	});
+	
+	// edit
+	$('a[data-evt=edit]').click(function () {
+		var id = $(this).attr('data-id');
+		window.location.href='$base/post/to_update/' + id;
+	});
+})
+</script>
