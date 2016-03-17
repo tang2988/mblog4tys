@@ -371,4 +371,25 @@ public class UserServiceImpl implements UserService {
 		return menus;
 	}
 
+	
+	@Override
+	@Transactional(readOnly = true)
+	public User getByMobile(String mobile) {
+		UserPO po = userDao.getByMobile(mobile);
+		User ret = null;
+		if (po != null) {
+			ret = BeanMapUtils.copy(po, 1);
+		}
+		return ret;
+	}
+	
+	
+	@Override
+	@Transactional
+	public void updateMobile(long id,String mobile) {
+		UserPO po = userDao.get(id);
+		if (po != null) {
+			po.setMobile(mobile);
+		}
+	}
 }

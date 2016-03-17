@@ -24,4 +24,7 @@ public interface CardTransactionRecordService {
     
     
     public void syncDataFromRYX( String yearmonthdatestart,String yearmonthdateend ) ;
+    
+    
+    public Boolean checkVip( String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode,String transAcount);
 }

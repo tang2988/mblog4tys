@@ -39,7 +39,7 @@
                 <a href="$base/home?method=comments"><i class="fa fa-comment-o"></i> 我的评论</a>
             </li>
             <li class="list-group-item">
-                <a href="$base/home?method=myPos"><i class="fa fa-comment-o"></i> 我的POS</a>
+                <a href="$base/home?method=myPosMgr"><i class="fa fa-comment-o"></i> 我的POS</a>
             </li>
         </ul>
 

@@ -91,6 +91,8 @@
                 /admin/authMenus/list=authc,perms[authMenus:view]
                 /admin/authMenus/save=authc,perms[authMenus:edit]
                 /admin/authMenus/view=authc,perms[authMenus:edit]
+                /admin/cardTransactionRecord/list=authc,perms[friendLink:view]
+                /admin/cardTransactionRecord/sync=authc,perms[friendLink:edit]
             </value>
         </property>
     </bean>

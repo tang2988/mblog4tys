@@ -17,4 +17,8 @@ public interface CardTransactionRecordDao extends BaseRepository<CardTransaction
     List<CardTransactionRecordPO> findAll();
     
     public List<CardTransactionRecordPO> paging(Paging paging, List<QueryRules> qrLst)  ;
+    
+    
+	public List<CardTransactionRecordPO> findByCondition( List<QueryRules> qrLst)   ;
+
 }

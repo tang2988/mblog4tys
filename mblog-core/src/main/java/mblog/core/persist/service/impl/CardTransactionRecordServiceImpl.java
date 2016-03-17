@@ -1,10 +1,12 @@
 package mblog.core.persist.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +20,7 @@ import mblog.core.persist.dao.CardTransactionRecordDao;
 import mblog.core.persist.entity.CardTransactionRecordPO;
 import mblog.core.persist.service.CardTransactionRecordService;
 import mblog.core.persist.service.UserService;
+import mblog.core.persist.utils.AmountUtils;
 import mblog.core.persist.utils.BeanMapUtils;
 import mblog.core.persist.utils.CardTransactionRecordUtils;
 import mblog.core.persist.utils.QueryRules;
@@ -26,6 +29,7 @@ import mtons.modules.pojos.Paging;
 /**
  * @author Beldon 2015/10/25
  */
+@SuppressWarnings({ "unchecked", "unchecked" })
 @Service
 @Transactional
 public class CardTransactionRecordServiceImpl implements CardTransactionRecordService {
@@ -64,6 +68,23 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
 
 //        servletContext.setAttribute("cardTransactionRecords", findAll());
     }
+    
+    
+    public void saveUnique(CardTransactionRecord ctr) {
+        List<QueryRules> qrLst  =new ArrayList<>();
+        QueryRules moblieNoVQR = new QueryRules("moblieNoV", ctr.getMoblieNoV(), "eq"	);
+        qrLst.add(moblieNoVQR);
+        QueryRules onlyCodeQR = new QueryRules("onlyCode", ctr.getOnlyCode(), "eq"	);
+        qrLst.add(onlyCodeQR);
+        QueryRules sysSourceQR = new QueryRules("sysSource", ctr.getSysSource(), "eq"	);
+        qrLst.add(sysSourceQR);		
+        
+		if(cardTransactionRecordDao.findByCondition(qrLst  ).size()<1){
+			  CardTransactionRecordPO cardTransactionRecordPO = new CardTransactionRecordPO();
+		        BeanUtils.copyProperties(ctr, cardTransactionRecordPO);
+			cardTransactionRecordDao.save(cardTransactionRecordPO);	
+		}
+    }
 
     @Override
     public void delete(long id) {
@@ -93,22 +114,27 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
         return rets;
     }
     
-    
-    public void syncDataFromRYXByMobile( String yearmonthdatestart,String yearmonthdateend,String moblieNo) {
+    private List<CardTransactionRecord> getDataFromRYX ( String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode) {
     	
 		HashMap<String,String> param = new HashMap<String,String>();
 		param.put("yearmonthdatestart", yearmonthdatestart);
 		param.put("yearmonthdateend", yearmonthdateend);
 		param.put("moblieNo", moblieNo);
+		param.put("terminalcode", terminalcode);
 		
 		log.info("开始获取RYX系统数据,param={}"+param);
-		List<CardTransactionRecord> getCardTransactionRecordLst = CardTransactionRecordUtils.instance
+		return CardTransactionRecordUtils.instance
 				.getCardTransactionRecordLst(param);
 		
-		for(CardTransactionRecord ctr: getCardTransactionRecordLst){
-			save(ctr);
-		}
 		
+	}
+    
+    @Transactional
+    public synchronized void syncDataFromRYXByMobile( String yearmonthdatestart,String yearmonthdateend,String moblieNo) {
+    	List<CardTransactionRecord> getCardTransactionRecordLst =  getDataFromRYX(yearmonthdatestart, yearmonthdateend, moblieNo, "");
+    	for(CardTransactionRecord ctr: getCardTransactionRecordLst){
+    		saveUnique(ctr);
+		}
 	}
     
     
@@ -129,4 +155,44 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
     		}
 		}
 	}
+    
+    
+    public Boolean checkVipFromRYX( String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode,String transAcount){
+    	List<CardTransactionRecord> getCardTransactionRecordLst =  getDataFromRYX(yearmonthdatestart, yearmonthdateend, moblieNo, terminalcode);
+    	
+    	Boolean isVip = false;
+    	for(CardTransactionRecord ctr: getCardTransactionRecordLst){
+    		
+    		if(AmountUtils. numberFormat(ctr.getTransacount()).equals(AmountUtils. numberFormat(transAcount))){
+    			isVip = true;break;
+    		}
+    	}
+    	
+    	
+    	if(isVip){
+    		return true;
+    	}
+    	return false;
+    }
+    
+    /**
+     * VIP校验 (某天某刷卡器某账户刷了某笔钱)
+     * @param sysSource
+     * @param yearmonthdatestart
+     * @param yearmonthdateend
+     * @param moblieNo
+     * @param terminalcode
+     * @param transAcount
+     * @return
+     */
+    public Boolean checkVip(String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode,String transAcount){
+    	if("瑞银信".equals(sysSource)){
+    		return checkVipFromRYX(yearmonthdatestart, yearmonthdateend, moblieNo, terminalcode,transAcount);
+//    	}else if("瑞银信".equals(sysSource)){
+    		
+    	}else{
+    		
+    		return false;
+    	}
+    }
 }

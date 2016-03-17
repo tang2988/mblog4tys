@@ -38,6 +38,14 @@ public class UserDaoImpl extends BaseRepositoryImpl<UserPO> implements UserDao {
 		return findUniqueBy("username", username);
 	}
 
+	
+	@Override
+	public UserPO getByMobile(String mobile) {
+		return findUniqueBy("mobile", mobile);
+	}
+
+	
+	
 	@Override
 	public UserPO getByEmail(String email) {
 		return findFirst("email", email);

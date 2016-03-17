@@ -9,14 +9,12 @@
 */
 package mblog.core.persist.dao;
 
-import mtons.modules.persist.BaseRepository;
-import mtons.modules.pojos.Paging;
-
 import java.util.List;
 import java.util.Set;
 
-import mblog.core.data.User;
 import mblog.core.persist.entity.UserPO;
+import mtons.modules.persist.BaseRepository;
+import mtons.modules.pojos.Paging;
 
 /**
  * @author langhsu
@@ -24,6 +22,9 @@ import mblog.core.persist.entity.UserPO;
 public interface UserDao extends BaseRepository<UserPO> {
     UserPO getByUsername(String username);
 
+
+    public UserPO getByMobile(String mobile) ;
+    
     UserPO getByEmail(String email);
     
     List<UserPO> getHotUserByfans(int maxResults);

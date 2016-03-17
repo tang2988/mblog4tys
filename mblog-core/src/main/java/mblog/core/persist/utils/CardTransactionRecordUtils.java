@@ -11,11 +11,14 @@ package mblog.core.persist.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -33,6 +36,7 @@ import mblog.core.persist.service.CardTransactionRecordService;
  *
  */
 public class CardTransactionRecordUtils {
+	
 	private static final Logger log = LoggerFactory.getLogger(CardTransactionRecordService.class);
 	
 	static String RYX_SYS_URL ="http://119.254.93.71:8002/qtfr/";
@@ -55,6 +59,21 @@ public class CardTransactionRecordUtils {
 	 * @throws IOException
 	 */
 	public List<CardTransactionRecord> getCardTransactionRecordLst( Map<String,String> paraMap)   {
+		List<CardTransactionRecord> ctrLst = new ArrayList<>();
+	
+		
+		List<String> daysLst = parseDateInternal(paraMap);
+		//一天天查询
+		for(String d : daysLst){
+			paraMap.put("yearmonthdatestart",  d);
+			paraMap.put("yearmonthdateend",  d);
+			ctrLst.addAll(getCardTransactionRecordLstReal(paraMap));
+		}
+		return ctrLst;
+	}
+	
+	
+	public List<CardTransactionRecord> getCardTransactionRecordLstReal( Map<String,String> paraMap)   {
 		
 		try {
 			loginRYXSystem();
@@ -65,7 +84,7 @@ public class CardTransactionRecordUtils {
 			
 			paraMap.put("queryFlag", "1");//所属机构类型
 			paraMap.put("merchantCode", "");
-			paraMap.put("terminalcode", "");//刷卡机编号
+//			paraMap.put("terminalcode", "");//刷卡机编号
 			paraMap.put("dealType", "-1");//交易类型
 			paraMap.put("agencySelect", "");//代理ID
 			paraMap.put("serialNumber", "");//流水编号
@@ -83,14 +102,14 @@ public class CardTransactionRecordUtils {
 			if(StringUtils.isNotBlank(paraUrl)){
 				url +=paraUrl;
 			}
-			
+			log.info("瑞银信查询：{}",url);
 			Document resp = Jsoup.connect(url). userAgent(BROWER_USER_AGENT ).cookie("JSESSIONID",loginRYXSystemJsession).ignoreContentType(true) .post() ;
 
 			String jsonStr = resp.toString().replaceAll("<html>", "").replaceAll("</html>", "")
 					.replaceAll("<head>", "").replaceAll("</head>", "")
 					.replaceAll("<body>", "").replaceAll("</body>", "");
 			
-			log.info("返回：" + jsonStr);
+			log.info("瑞银信查询返回：{}" , jsonStr);
 			JSONObject  holdJson = JSONObject.parseObject(jsonStr);
 			
 			List<CardTransactionRecord> ctrLst = JSONObject.parseArray(holdJson.getString("rows"), CardTransactionRecord.class);
@@ -101,7 +120,7 @@ public class CardTransactionRecordUtils {
 		}
 		return new ArrayList<>();
 	}
-	
+
 	
 	private synchronized String loginRYXSystem(){
 		/*$.post("/qtfr/users/users.do?method=checkLogin&loginname=111118879&password=200820e3227815ed1756a6b531e7e0d2", function(data) {
@@ -154,15 +173,57 @@ public class CardTransactionRecordUtils {
 	}
 
 
-	
-	public void bb() {
-		System.out.println(loginRYXSystem());
+	/**
+	 * 根据前后时间获取区间所有日期
+	 * @param yearmonthdatestart
+	 * @param yearmonthdateend
+	 * @return
+	 */
+	public List<String> parseDateInternal( Map<String,String> paraMap) {
+		String yearmonthdatestart = paraMap.get("yearmonthdatestart");
+		String yearmonthdateend = paraMap.get("yearmonthdateend");
+		
+		Integer initStartDate = 20150901;
+		Integer initEndDate = Integer.valueOf(DateFormatUtils.format(Calendar.getInstance(), "yyyyMMdd"));
+		
+		List<String> daysLst = new ArrayList<>(); 
+		try {
+			Integer yearmonthdatestartI = Integer.valueOf(yearmonthdatestart);
+			Integer yearmonthdateendI = Integer.valueOf(yearmonthdateend);
+			
+			if(initStartDate-yearmonthdatestartI>0){
+				yearmonthdatestart = initStartDate+"";
+			}
+			
+			if(initEndDate-yearmonthdateendI<0){
+				yearmonthdateend = initEndDate+"";
+			}
+			
+			
+			Date yearmonthdatestartD = DateUtils.parseDate(yearmonthdatestart, new String[]{"yyyyMMdd"});
+			Date yearmonthdateendD = DateUtils.parseDate(yearmonthdateend, new String[]{"yyyyMMdd"});
+			
+			Date tmpDate= new Date(yearmonthdatestartD.getTime());
+			while(true){
+				String s = DateFormatUtils.format(tmpDate, "yyyyMMdd");
+//				System.out.println(s);
+				daysLst.add(s);
+				tmpDate=DateUtils.addDays(tmpDate, 1);
+				if(tmpDate.compareTo(yearmonthdateendD)>0){
+					break;
+				}
+			}
+		} catch (Exception e) {
+			log.error("获取日期失败{}",paraMap, e);
+		}
+		return daysLst;
 	}
 	
 	
 	@Test
 	public void aa()  {
-		HashMap param = new HashMap<>();
+		
+		/*HashMap param = new HashMap<>();
 		param.put("yearmonthdatestart", "20160301");
 		param.put("yearmonthdateend", "20160304");
 		param.put("moblieNo", "");//手机
@@ -171,7 +232,7 @@ public class CardTransactionRecordUtils {
 		System.out.println(lst.size());
 		for(CardTransactionRecord ctr :lst){
 			System.out.println(ctr);
-		}
+		}*/
 	}
 
 	

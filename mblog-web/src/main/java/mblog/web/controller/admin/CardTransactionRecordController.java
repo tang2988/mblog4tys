@@ -34,7 +34,7 @@ public class CardTransactionRecordController extends BaseController {
 
 	@RequestMapping("/list")
 	public String list(Integer pn, String sysSource,String yearmonthdatestart,String yearmonthdateend,String mobile, ModelMap model) {
-		Paging paging = wrapPage(pn,50);
+		Paging paging = wrapPage(pn,30);
 		
 		List<QueryRules> qrLst = new ArrayList<>();
 		if(StringUtils.isNotBlank(sysSource)){
@@ -64,7 +64,7 @@ public class CardTransactionRecordController extends BaseController {
 		return "/admin/cardTransactionRecord/list";
 	}
 
-	@RequestMapping("/delete")
+	/*@RequestMapping("/delete")
 	public String delete(Long id) {
 		cardTransactionRecordService.delete(id);
 		return "redirect:/admin/cardTransactionRecord/CardTransactionRecord";
@@ -77,9 +77,9 @@ public class CardTransactionRecordController extends BaseController {
 			model.addAttribute("cardTransactionRecord", cardTransactionRecord);
 		}
 		return "/admin/cardTransactionRecord/edit";
-	}
+	}*/
 
-	@RequestMapping("/save")
+/*	@RequestMapping("/save")
 	// @ResponseBody
 	public String save(@ModelAttribute(value = "cardTransactionRecord") CardTransactionRecord cardTransactionRecord) {
 		// if (cardTransactionRecord == null ||
@@ -92,7 +92,7 @@ public class CardTransactionRecordController extends BaseController {
 			e.printStackTrace();
 		}
 		return "redirect:/admin/cardTransactionRecord/list";
-	}
+	}*/
 	
 	
 	@RequestMapping("/sync")

@@ -10,13 +10,17 @@
 package mblog.web.controller.desk.user;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import mblog.base.lang.EnumPrivacy;
 import mblog.core.data.AccountProfile;
@@ -29,11 +33,14 @@ import mblog.core.persist.service.FollowService;
 import mblog.core.persist.service.NotifyService;
 import mblog.core.persist.service.PostService;
 import mblog.core.persist.service.UserService;
+import mblog.core.persist.utils.AmountUtils;
 import mblog.core.persist.utils.QueryRules;
+import mblog.core.persist.utils.StringUtil;
 import mblog.shiro.authc.AccountSubject;
 import mblog.web.controller.BaseController;
 import mblog.web.controller.desk.Views;
 import mtons.modules.lang.Const;
+import mtons.modules.pojos.Data;
 import mtons.modules.pojos.Paging;
 import mtons.modules.pojos.UserProfile;
 
@@ -111,10 +118,10 @@ public class HomeController extends BaseController {
 		Paging page = wrapPage(pn);
 		UserProfile up = getSubject().getProfile();
 
-		User curUser = userService.getByUsername(up.getName());//TYS 后期再UserProfile加入mobile字段
+		User curUser = userService.getByUsername(up.getUsername());//TYS 后期再UserProfile加入mobile字段
 		String mobile = curUser.getMobile();
 		if(StringUtils.isBlank(mobile)){
-			mobile = "12345678901";
+			mobile = "13812344321";
 		}
 
 		List<QueryRules> qrLst = new ArrayList<>();
@@ -139,8 +146,67 @@ public class HomeController extends BaseController {
 		model.put("page", page);
 		model.put("user", curUser);
 
+		model.put("yearmonthdatestart", yearmonthdatestart);
+		model.put("yearmonthdateend", yearmonthdateend);
 		return getView(Views.HOME_myPos);
 	}
+	
+	
+	/**
+	 * 我myPosMgr
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/home", params = "method=myPosMgr")
+	public String myPosMgr(  ModelMap model) {
+		UserProfile up = getSubject().getProfile();
+
+		User curUser = userService.getByUsername(up.getUsername());//TYS 后期再UserProfile加入mobile字段
+		model.put("user", curUser);
+		return getView(Views.HOME_myPosMgr);
+	}
+	
+	
+	/**
+	 * 我myPosMgr
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/home", params = "method=myPosMgrAdd")
+	public @ResponseBody Data myPosMgrAdd( String sysSource,String mobile,String yearmonthdatestart,String yearmonthdateend,String terminalcode,String transAcount, ModelMap model) {
+		
+		UserProfile up = getSubject().getProfile();
+		User curUser = userService.getByUsername(up.getUsername());
+		if(!StringUtil.isMobilePhone(mobile) ){
+			return Data.failure("手机号格式错误，请重新输入");
+		}
+		
+		if(!StringUtil.isRYXSerialNo(terminalcode) ){
+			return Data.failure("POS终端号格式错误，请重新输入");
+		}
+		
+		
+		
+		Boolean isVip = cardTransactionRecordService.checkVip(sysSource, yearmonthdatestart, yearmonthdatestart, mobile, terminalcode,transAcount);
+		if(isVip){
+			curUser.setMobile(mobile);
+			//
+			userService.updateMobile(curUser.getId(), mobile);
+			
+			//是我们的POS客户，同步他的POS交易记录
+    		new Thread(new Runnable() {
+				@Override
+				public void run() {
+					cardTransactionRecordService. syncDataFromRYXByMobile("20150301", DateFormatUtils.format(new Date(), "yyyyMMdd"), mobile);					
+				}
+			}).start();
+    		
+			return Data.success("恭喜您通过了VIP验证，数据正在同步中，请稍后查看交易记录");	
+		}
+		return Data.failure("抱歉，您未通过了VIP验证，请填写正确的刷卡记录再次提交验证");
+		
+	}
+	
 	
 	/**
 	 * 我发表的评论
