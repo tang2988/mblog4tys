@@ -60,7 +60,7 @@ div.laydate-icon{
 					
 				</li>
 				<li>
-					开始日<input name="yearmonthdatestart" onclick="laydate({max:laydate.now(), format: 'YYYYMMDD'})" value="$!{yearmonthdateend}">
+					开始日<input name="yearmonthdatestart" onclick="laydate({max:laydate.now(), format: 'YYYYMMDD'})" value="$!{yearmonthdatestart}">
 					截止日<input name="yearmonthdateend" onclick="laydate({max:laydate.now(), format: 'YYYYMMDD'})" value="$!{yearmonthdateend}" > 
 					<input type="button" value="查询" onclick="submitCurForm(1)"  >
 				</li>
