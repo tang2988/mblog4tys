@@ -1,12 +1,10 @@
 package mblog.core.persist.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -20,7 +18,6 @@ import mblog.core.persist.dao.CardTransactionRecordDao;
 import mblog.core.persist.entity.CardTransactionRecordPO;
 import mblog.core.persist.service.CardTransactionRecordService;
 import mblog.core.persist.service.UserService;
-import mblog.core.persist.utils.AmountUtils;
 import mblog.core.persist.utils.BeanMapUtils;
 import mblog.core.persist.utils.CardTransactionRecordUtils;
 import mblog.core.persist.utils.QueryRules;
@@ -114,7 +111,9 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
         return rets;
     }
     
-    private List<CardTransactionRecord> getDataFromRYX ( String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode) {
+    
+    
+    public List<CardTransactionRecord> getDataFromSysSource (String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode ) {
     	
 		HashMap<String,String> param = new HashMap<String,String>();
 		param.put("yearmonthdatestart", yearmonthdatestart);
@@ -122,23 +121,23 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
 		param.put("moblieNo", moblieNo);
 		param.put("terminalcode", terminalcode);
 		
-		log.info("开始获取RYX系统数据,param={}"+param);
-		return CardTransactionRecordUtils.instance
+		log.info("开始获取{}系统数据,param={}",sysSource,param);
+		return CardTransactionRecordUtils.getInstance(sysSource)
 				.getCardTransactionRecordLst(param);
 		
 		
 	}
     
     @Transactional
-    public synchronized void syncDataFromRYXByMobile( String yearmonthdatestart,String yearmonthdateend,String moblieNo) {
-    	List<CardTransactionRecord> getCardTransactionRecordLst =  getDataFromRYX(yearmonthdatestart, yearmonthdateend, moblieNo, "");
+    public synchronized void syncDataFromSysSourceByMobile(String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo) {
+    	List<CardTransactionRecord> getCardTransactionRecordLst =  getDataFromSysSource(sysSource,yearmonthdatestart, yearmonthdateend, moblieNo, "");
     	for(CardTransactionRecord ctr: getCardTransactionRecordLst){
     		saveUnique(ctr);
 		}
 	}
     
     
-    public void syncDataFromRYX( String yearmonthdatestart,String yearmonthdateend ) {
+    public void syncDataFromSysSource(String sysSource, String yearmonthdatestart,String yearmonthdateend ) {
     	int pageNo = 1;
     	while (true) {
     		Paging paging = new Paging(pageNo++, 500);
@@ -150,49 +149,9 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
     		for(User user: userLst){
     			String moblieNo =user.getMobile();
     			if(StringUtils.isNotBlank(moblieNo)){
-    				syncDataFromRYXByMobile( yearmonthdatestart, yearmonthdateend, moblieNo);
+    				syncDataFromSysSourceByMobile( sysSource,yearmonthdatestart, yearmonthdateend, moblieNo);
     			}
     		}
 		}
 	}
-    
-    
-    public Boolean checkVipFromRYX( String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode,String transAcount){
-    	List<CardTransactionRecord> getCardTransactionRecordLst =  getDataFromRYX(yearmonthdatestart, yearmonthdateend, moblieNo, terminalcode);
-    	
-    	Boolean isVip = false;
-    	for(CardTransactionRecord ctr: getCardTransactionRecordLst){
-    		
-    		if(AmountUtils. numberFormat(ctr.getTransacount()).equals(AmountUtils. numberFormat(transAcount))){
-    			isVip = true;break;
-    		}
-    	}
-    	
-    	
-    	if(isVip){
-    		return true;
-    	}
-    	return false;
-    }
-    
-    /**
-     * VIP校验 (某天某刷卡器某账户刷了某笔钱)
-     * @param sysSource
-     * @param yearmonthdatestart
-     * @param yearmonthdateend
-     * @param moblieNo
-     * @param terminalcode
-     * @param transAcount
-     * @return
-     */
-    public Boolean checkVip(String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode,String transAcount){
-    	if("瑞银信".equals(sysSource)){
-    		return checkVipFromRYX(yearmonthdatestart, yearmonthdateend, moblieNo, terminalcode,transAcount);
-//    	}else if("瑞银信".equals(sysSource)){
-    		
-    	}else{
-    		
-    		return false;
-    	}
-    }
 }
