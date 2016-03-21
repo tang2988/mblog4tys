@@ -49,10 +49,10 @@ div.laydate-icon{
 </style>
 
 <div class="panel m-t-large m-b">
-    <header class="panel-heading">POS记录</header>
+    <header class="panel-heading">商品管理</header>
     <div class="panel-body">
     	<div>
-    		<form class="CurForm" action="$base/admin/cardTransactionRecord/list" method="post">
+    		<form class="CurForm" action="$base/admin/goods/list" method="post">
     		<input type="hidden" id="pn" name="pn" value="${page.pageNo}" />
     		<ul>
 				<li>产商：

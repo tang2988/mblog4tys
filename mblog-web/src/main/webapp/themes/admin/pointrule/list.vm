@@ -46,30 +46,31 @@ input.laydate-icon,div.laydate-icon{
 div.laydate-icon{
 	text-align: left;
 }
+form.CurForm li {list-style:none;padding:5px}
 </style>
 
 <div class="panel m-t-large m-b">
-    <header class="panel-heading">POS记录</header>
+    <header class="panel-heading">积分规则</header>
     <div class="panel-body">
     	<div>
-    		<form class="CurForm" action="$base/admin/cardTransactionRecord/list" method="post">
+    		<form class="CurForm" action="$base/admin/pointrule/list" method="post">
     		<input type="hidden" id="pn" name="pn" value="${page.pageNo}" />
     		<ul>
-				<li>产商：
-				<select name="sysSource">
-					<option value="瑞银信" select="select">瑞银信</option>
-					<option value="瑞刷" select="select">瑞刷</option>
+				<li>类型：
+				<select name="type">
+					<option value="">全部</option>
+					<option value="10" #if($!{type}==10)selected="selected"#end >10-注册</option>
+					<option value="20" #if($!{type}==20)selected="selected"#end >20-POS</option>
+					<option value="30" #if($!{type}==30)selected="selected"#end>30-网赚</option>
+					<option value="40" #if($!{type}==40)selected="selected"#end>40-消费</option>
 				</select>
 				</li>
 				<li>
-					开始日：<input name="yearmonthdatestart" onclick="laydate({ format: 'YYYYMMDD'})" >
-					截止日：<input name="yearmonthdateend" onclick="laydate({ format: 'YYYYMMDD'})"  > 
+					开始日：<input name="startTime" onclick="laydate({ format: 'YYYY-MM-DD'})" >
+					截止日：<input name="endTime" onclick="laydate({ format: 'YYYY-MM-DD'})"  > 
 				</li>
 				<li>
-					手机号码：<input name="mobile" >
-				</li>
-				<li>
-					<input type="button" value="同步数据" onclick="sync(this)"  >
+					<input type="button" value="添加" onclick="window.location='edit'"  >
 					<input type="button" value="查询" onclick="submitCurForm(1)"  >
 				</li>
 			</ul>
@@ -79,40 +80,61 @@ div.laydate-icon{
             <table id="treeTable" class="table table-striped table-bordered b-t text-small">
                 <tr>
                     <th class="col-lg-1">#</th>
-                    <th>手机号码</th>
-                    <th>终端编号</th>
-                    <th>交易金额</th>
-                    <th>手续费</th>
-                    <th>交易日期</th>
-                    <th>交易时间</th>
-                    <th>交易类型</th>
-                    <th>银行卡号</th>
-                    <th>刷卡平台</th>
-                    <th>交易流水号</th>
-                    <th>所属代理</th>
+                    <th>规则编号</th>
+                    <th>类型</th>
+                    <th>变动方向</th>
+                    <th>系数</th>
+                    <th>状态</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+					<th>更新时间</th>
                     #if($shiro.hasPermission("friendLink:edit"))
-                        <th width="300" class="col-lg-2">操作</th>
+                        <th class="col-lg-2">操作</th>
                     #end
                 </tr>
+                <tr>
                 #foreach($row in $page.results)
                     <td>$!{velocityCount}</td>
-                    <td>$!{row.moblieNoV}</td>
-                    <td>$!{row.terminalId}</td>
-                    <td>$!{row.transacount}</td>
-                    <td>$!{row.feeAmt}</td>
-                    <td>$!{row.deal_data}</td>
-                    <td>$!{row.deal_time}</td>
-                    <td>$!{row.dealTypeName}</td>
-                    <td>$!{row.bankcardNumber}</td>
-                    <td>$!{row.sysSource}</td>
-                    <td>$!{row.serialNumber}</td>
-                    <td>$!{row.agencyName}</td>
+                    <td>$!{row.serialNo}</td>
+                    <td>
+						#if($!{row.type}==10)
+						10-注册
+						#elseif($!{row.type}==20)
+						20-POS
+						#elseif($!{row.type}==30)
+						30-网赚
+						#elseif($!{row.type}==40)
+						40-消费
+    					#else
+    						$!{row.type}
+    					#end
+					</td>
+                    <td>
+						#if($!{row.direction}==0)
+						增加
+					#else
+						减少
+					#end
+						</td>
+                    <td>$!{row.ratio}</td>
+                    <td>
+					#if($!{row.status}==0)
+						启用
+					#else
+						停用
+					#end
+					</td>
+                    <td>$!{row.startTime}</td>
+                    <td>$!{row.endTime}</td>
+					<td>$!{row.updateTime}</td>
                     #if($shiro.hasPermission("friendLink:edit"))
                         <td class="text-center">
-                            <a href="$base/admin/cardTransactionRecord/edit?id=${row.id}" class="btn btn-mini btn-primary">
+                            <a href="edit?id=${row.id}" class="btn btn-mini btn-primary">
                                 <i class="fa fa-check-square-o"></i> 修改
                             </a>
-                            <a href="$base/admin/cardTransactionRecord/delete?id=${row.id}" class="btn btn-mini"><i class="fa fa-check-square-o"></i> 删除</a>
+                            #**
+							<a href="delete?id=${row.id}" class="btn btn-mini"><i class="fa fa-check-square-o"></i> 删除</a>
+							***#
                         </td>
                     #end
                 </tr>
@@ -124,11 +146,6 @@ div.laydate-icon{
 	
 	<footer class="panel-footer">
 		<div class="row">
-			#if($shiro.hasPermission("posts:edit"))
-			<div class="col-lg-6">
-				<a href="javascrit:void(0);" class="btn btn-mini btn-success" data-action="batch_del">批量删除</a>
-			</div>
-			#end
 			<div class="col-lg-6 text-right text-center-sm">    
 				#pageHtm("list" $page 5)
 			</div>

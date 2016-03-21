@@ -1,0 +1,109 @@
+#set($layout = "/admin/layout/default.vm")
+<script type="text/javascript" src="$base/assets/vendors/laydate/laydate.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var option = {
+            expandLevel : 4,
+        };
+        $('#treeTable').treeTable(option);
+    });
+    
+    function submitCurForm(p){
+    	$("#pn").val(p);
+    	$(".CurForm").submit();
+    }
+</script>
+
+<style>
+.laydate_box, .laydate_box * {
+      box-sizing:content-box;
+}
+
+input.laydate-icon,div.laydate-icon{
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+div.laydate-icon{
+	text-align: left;
+}
+form.CurForm li {list-style:none;padding:5px}
+</style>
+
+<div class="panel m-t-large m-b">
+    <header class="panel-heading">积分规则</header>
+    <div class="panel-body">
+    	<div>
+    		<form class="CurForm" action="$base/admin/point/list" method="post">
+    		<input type="hidden" id="pn" name="pn" value="${page.pageNo}" />
+    		<ul>
+				<li>
+					用户：<input name="userId" value="$!{userId}" >
+				</li>
+				<li>
+					大于或等于：<input name="curPoint_ge" value="$!{curPoint_ge}" >
+						小于或等于：<input name="curPoint_le" value="$!{curPoint_le}" >
+				</li>
+				<li>
+					<input type="button" value="查询" onclick="submitCurForm(1)"  >
+				</li>
+			</ul>
+    		</form>
+		</div>
+        <div class="pull-out m-t-small">
+            <table id="treeTable" class="table table-striped table-bordered b-t text-small">
+                <tr>
+                    <th class="col-lg-1">#</th>
+                    <th>用户</th>
+                    <th>当前积分</th>
+                    <th>获得总积分</th>
+                    <th>消费总积分</th>
+					<th>更新时间</th>
+                    #if($shiro.hasPermission("friendLink:edit"))
+                        <th class="col-lg-2">操作</th>
+                    #end
+                </tr>
+                <tr>
+                #foreach($row in $page.results)
+                    <td>$!{velocityCount}</td>
+                    <td>$!{row.userId}</td>
+                    <td>$!{row.curPoint}</td>
+                    <td>$!{row.hadPoint}</td>
+                    <td>$!{row.usedPoint}</td>
+					<td>$!{row.updateTime}</td>
+                    #if($shiro.hasPermission("friendLink:edit"))
+                        <td class="text-center">
+                            <a href="edit?id=${row.id}" class="btn btn-mini btn-primary">
+                                <i class="fa fa-check-square-o"></i> 积分调整
+                            </a>
+                            #**
+							<a href="delete?id=${row.id}" class="btn btn-mini"><i class="fa fa-check-square-o"></i> 删除</a>
+							***#
+                        </td>
+                    #end
+                </tr>
+                #end
+            </table>
+            
+        </div>
+    </div>
+	
+	<footer class="panel-footer">
+		<div class="row">
+			<div class="col-lg-6 text-right text-center-sm">    
+				#pageHtm("list" $page 5)
+			</div>
+		</div>
+	</footer>
+</div>

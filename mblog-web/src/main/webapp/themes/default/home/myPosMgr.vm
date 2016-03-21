@@ -56,8 +56,9 @@ div.laydate-icon{
 					<div style="padding: 50px;">
                  		  您的瑞银信POS账户：${user.mobile}<br/>
                  	</div>
-            #else
-                 	<div style="padding: 30px;  ">
+            #end
+            
+            <div style="padding: 30px;  ">
 		    		<form class="CurForm" action="$base/home?method=myPosMgr" method="post">
 		    		<ul id="ul_myPosMgr">
 		    			<li>请选择您最近一笔刷卡交易来验证您的身份
@@ -65,13 +66,14 @@ div.laydate-icon{
 						<li>产商：
 						<select name="sysSource">
 							<option value="瑞银信" select="select">瑞银信</option>
+							<option value="瑞刷" select="select">瑞刷</option>
 						</select>
 						</li>
 						<li>
 						手机号：<input name="mobile" value="" >*开通POS绑定的手机号码 
 						</li>
 						<li>
-						终端编号：<input name="terminalcode" value="" >*pos机正面第二行从8870开始填写，最后4位数字不填 
+						终端编号：<input name="terminalcode" value="" >*pos机正面第一行IPOS后面8位数字 
 						</li>
 						<li>
 							刷卡日：<input name="yearmonthdatestart" onclick="laydate({max:laydate.now(), format: 'YYYYMMDD'})" >
@@ -84,7 +86,6 @@ div.laydate-icon{
 					</ul>
 		    		</form>
 				</div>  
-            #end
 		</div>        
     
     
