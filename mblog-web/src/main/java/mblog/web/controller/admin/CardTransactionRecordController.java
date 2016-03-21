@@ -97,17 +97,12 @@ public class CardTransactionRecordController extends BaseController {
 	
 	@RequestMapping("/sync")
 	// @ResponseBody
-	public @ResponseBody Data sync(String mobile,String yearmonthdatestart,String yearmonthdateend,Model model) {
+	public @ResponseBody Data sync(String sysSource, String mobile,String yearmonthdatestart,String yearmonthdateend,Model model) {
 		try {
-//			jsessionStr=l5R2WyCKgChQNmvqvJlhlt2SGbvLg1R90bQKZB7Mv2rqwVzfqp0q!-59185613&yearmonthdatestart=20160301&yearmonthdateend=20160304
-//			String jsessionStr ="";
-//			String yearmonthdatestart="";
-//			String yearmonthdateend="";
-			
 			if(StringUtils.isNotBlank(mobile)){
-				cardTransactionRecordService.syncDataFromRYXByMobile(  yearmonthdatestart, yearmonthdateend,mobile);
+				cardTransactionRecordService.syncDataFromSysSourceByMobile(sysSource,  yearmonthdatestart, yearmonthdateend,mobile);
 			}else{
-				cardTransactionRecordService.syncDataFromRYX(  yearmonthdatestart, yearmonthdateend);	
+				cardTransactionRecordService.syncDataFromSysSource(sysSource, yearmonthdatestart, yearmonthdateend);	
 			}
 			
 		} catch (Exception e) {

@@ -14,12 +14,49 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import mblog.base.lang.Consts;
-import mblog.core.data.*;
-import mblog.core.persist.entity.*;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
+
+import mblog.base.lang.Consts;
+import mblog.core.data.AccountProfile;
+import mblog.core.data.Attach;
+import mblog.core.data.AuthMenu;
+import mblog.core.data.CardTransactionRecord;
+import mblog.core.data.Comment;
+import mblog.core.data.Favor;
+import mblog.core.data.Feeds;
+import mblog.core.data.FriendLink;
+import mblog.core.data.Goods;
+import mblog.core.data.GoodsOther;
+import mblog.core.data.Group;
+import mblog.core.data.MyPOS;
+import mblog.core.data.Notify;
+import mblog.core.data.Point;
+import mblog.core.data.PointDetail;
+import mblog.core.data.PointRule;
+import mblog.core.data.Post;
+import mblog.core.data.Role;
+import mblog.core.data.Tag;
+import mblog.core.data.User;
+import mblog.core.persist.entity.AttachPO;
+import mblog.core.persist.entity.AuthMenuPO;
+import mblog.core.persist.entity.CardTransactionRecordPO;
+import mblog.core.persist.entity.CommentPO;
+import mblog.core.persist.entity.FavorPO;
+import mblog.core.persist.entity.FeedsPO;
+import mblog.core.persist.entity.FriendLinkPO;
+import mblog.core.persist.entity.GoodsOtherPO;
+import mblog.core.persist.entity.GoodsPO;
+import mblog.core.persist.entity.GroupPO;
+import mblog.core.persist.entity.MyPOSPO;
+import mblog.core.persist.entity.NotifyPO;
+import mblog.core.persist.entity.PointDetailPO;
+import mblog.core.persist.entity.PointPO;
+import mblog.core.persist.entity.PointRulePO;
+import mblog.core.persist.entity.PostPO;
+import mblog.core.persist.entity.RolePO;
+import mblog.core.persist.entity.TagPO;
+import mblog.core.persist.entity.UserPO;
 
 /**
  * @author langhsu
@@ -186,4 +223,47 @@ public class BeanMapUtils {
 		BeanUtils.copyProperties(po, ret);
 		return ret;
 	}
+	
+	
+	public static MyPOS copy(MyPOSPO po) {
+		MyPOS ret = new MyPOS();
+		BeanUtils.copyProperties(po, ret);
+		return ret;
+	}
+	
+	
+	public static Point copy(PointPO po) {
+		Point ret = new Point();
+		BeanUtils.copyProperties(po, ret);
+		return ret;
+	}
+	
+	
+	public static PointDetail copy(PointDetailPO po) {
+		PointDetail ret = new PointDetail();
+		BeanUtils.copyProperties(po, ret);
+		return ret;
+	}
+	
+	
+	public static PointRule copy(PointRulePO po) {
+		PointRule ret = new PointRule();
+		BeanUtils.copyProperties(po, ret);
+		return ret;
+	}
+	
+	
+	public static Goods copy(GoodsPO po) {
+		Goods ret = new Goods();
+		BeanUtils.copyProperties(po, ret);
+		return ret;
+	}
+	
+	
+	public static GoodsOther copy(GoodsOtherPO po) {
+		GoodsOther ret = new GoodsOther();
+		BeanUtils.copyProperties(po, ret);
+		return ret;
+	}
+	
 }

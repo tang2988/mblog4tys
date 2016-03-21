@@ -30,10 +30,12 @@ import mblog.core.persist.service.CommentService;
 import mblog.core.persist.service.FavorService;
 import mblog.core.persist.service.FeedsService;
 import mblog.core.persist.service.FollowService;
+import mblog.core.persist.service.MyPOSService;
 import mblog.core.persist.service.NotifyService;
 import mblog.core.persist.service.PostService;
 import mblog.core.persist.service.UserService;
 import mblog.core.persist.utils.AmountUtils;
+import mblog.core.persist.utils.CardTransactionRecordUtils;
 import mblog.core.persist.utils.QueryRules;
 import mblog.core.persist.utils.StringUtil;
 import mblog.shiro.authc.AccountSubject;
@@ -65,7 +67,9 @@ public class HomeController extends BaseController {
 	private FavorService favorService;
 	@Autowired
 	private NotifyService notifyService;
-
+	@Autowired
+	MyPOSService myPOSService;
+	
 	@Autowired
 	private CardTransactionRecordService cardTransactionRecordService;
 	
@@ -187,7 +191,7 @@ public class HomeController extends BaseController {
 		
 		
 		
-		Boolean isVip = cardTransactionRecordService.checkVip(sysSource, yearmonthdatestart, yearmonthdatestart, mobile, terminalcode,transAcount);
+		Boolean isVip = myPOSService.checkVip(sysSource, yearmonthdatestart, yearmonthdatestart, mobile, terminalcode,transAcount);
 		if(isVip){
 			curUser.setMobile(mobile);
 			//
@@ -197,7 +201,7 @@ public class HomeController extends BaseController {
     		new Thread(new Runnable() {
 				@Override
 				public void run() {
-					cardTransactionRecordService. syncDataFromRYXByMobile("20150301", DateFormatUtils.format(new Date(), "yyyyMMdd"), mobile);					
+					cardTransactionRecordService.syncDataFromSysSourceByMobile(sysSource, CardTransactionRecordUtils.initStartDateStr, DateFormatUtils.format(new Date(), "yyyyMMdd"), mobile);					
 				}
 			}).start();
     		

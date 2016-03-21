@@ -8,23 +8,21 @@ import mtons.modules.pojos.Paging;
 
 public interface CardTransactionRecordService {
 
-	public void paging(Paging paging, List<QueryRules> qrLst) ;
+	public void paging(Paging paging, List<QueryRules> qrLst);
+
+	void save(CardTransactionRecord ctr);
+
+	void delete(long id);
+
+	CardTransactionRecord findById(long id);
+
+	List<CardTransactionRecord> findAll();
 	
-    void save(CardTransactionRecord ctr);
+	public List<CardTransactionRecord> getDataFromSysSource (String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode ) ;
 
-    void delete(long id);
+	public void syncDataFromSysSourceByMobile(String sysSource, String yearmonthdatestart, String yearmonthdateend,
+			String moblieNo);
 
-    CardTransactionRecord findById(long id);
+	public void syncDataFromSysSource(String sysSource, String yearmonthdatestart, String yearmonthdateend);
 
-    List<CardTransactionRecord> findAll();
-    
-    
-    
-    public void syncDataFromRYXByMobile( String yearmonthdatestart,String yearmonthdateend,String moblieNo);
-    
-    
-    public void syncDataFromRYX( String yearmonthdatestart,String yearmonthdateend ) ;
-    
-    
-    public Boolean checkVip( String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode,String transAcount);
 }

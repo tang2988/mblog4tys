@@ -26,15 +26,17 @@ public class MyTaskManager {
 	        System.out.println("I'm doing with rate now!");  
 	    }*/
 	      
-	    @Scheduled(cron = "0 0 0/1 * * *")  
+	    @Scheduled(cron = "0 0 6,8 * * *")  
 	    void doSomethingWith(){  
-	    	log.info("开始同步RYX数据....");
+	    	log.info("开始同步前一天的交易数据....");
 	    	
 	    	Calendar yesterday = Calendar.getInstance();
 	    	yesterday.add(Calendar.DATE, -1);
-	        cardTransactionRecordService.syncDataFromRYX(DateFormatUtils.format(yesterday, "yyyyMMdd"), DateFormatUtils.format(yesterday, "yyyyMMdd"));
+	        cardTransactionRecordService.syncDataFromSysSource("瑞银信",DateFormatUtils.format(yesterday, "yyyyMMdd"), DateFormatUtils.format(yesterday, "yyyyMMdd"));
 	        
-	        log.info("结束同步RYX数据....");
+	        cardTransactionRecordService.syncDataFromSysSource("瑞刷",DateFormatUtils.format(yesterday, "yyyyMMdd"), DateFormatUtils.format(yesterday, "yyyyMMdd"));
+	        
+	        log.info("结束同步前一天的交易数据....");
 	    }
 	
 }
