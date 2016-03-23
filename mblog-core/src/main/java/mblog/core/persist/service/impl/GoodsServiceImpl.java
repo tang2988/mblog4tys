@@ -14,6 +14,7 @@ import mblog.core.data.AccountProfile;
 import mblog.core.data.Goods;
 import mblog.core.persist.dao.GoodsDao;
 import mblog.core.persist.entity.GoodsPO;
+import mblog.core.persist.entity.PointRulePO;
 import mblog.core.persist.entity.UserPO;
 import mblog.core.persist.service.GoodsService;
 import mblog.core.persist.service.UserService;
@@ -52,12 +53,15 @@ public class GoodsServiceImpl implements GoodsService {
 	
     @Override
     public void save(Goods ctr) {
-        GoodsPO goodsPO = new GoodsPO();
-
-        BeanUtils.copyProperties(ctr, goodsPO);
-
-        goodsDao.saveOrUpdate(goodsPO);
-
+        GoodsPO goodsPO = goodsDao.get(ctr.getId());
+        if (goodsPO == null) {
+        	goodsPO = new GoodsPO();
+			BeanUtils.copyProperties(ctr, goodsPO);
+			goodsDao.save(goodsPO);
+		} else {
+			BeanUtils.copyProperties(ctr, goodsPO);
+			goodsDao.update(goodsPO);
+		}
 //        servletContext.setAttribute("goodss", findAll());
     }
 

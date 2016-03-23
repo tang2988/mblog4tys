@@ -17,24 +17,26 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import mblog.base.lang.EnumPrivacy;
 import mblog.core.data.AccountProfile;
+import mblog.core.data.Point;
 import mblog.core.data.User;
 import mblog.core.persist.service.CardTransactionRecordService;
 import mblog.core.persist.service.CommentService;
 import mblog.core.persist.service.FavorService;
 import mblog.core.persist.service.FeedsService;
 import mblog.core.persist.service.FollowService;
+import mblog.core.persist.service.GoodsService;
 import mblog.core.persist.service.MyPOSService;
 import mblog.core.persist.service.NotifyService;
+import mblog.core.persist.service.PointDetailService;
+import mblog.core.persist.service.PointService;
 import mblog.core.persist.service.PostService;
 import mblog.core.persist.service.UserService;
-import mblog.core.persist.utils.AmountUtils;
 import mblog.core.persist.utils.CardTransactionRecordUtils;
 import mblog.core.persist.utils.QueryRules;
 import mblog.core.persist.utils.StringUtil;
@@ -69,7 +71,12 @@ public class HomeController extends BaseController {
 	private NotifyService notifyService;
 	@Autowired
 	MyPOSService myPOSService;
-	
+	@Autowired
+	PointService pointService;	
+	@Autowired
+	private PointDetailService pointDetailService;
+	@Autowired
+	private GoodsService goodsService;
 	@Autowired
 	private CardTransactionRecordService cardTransactionRecordService;
 	
@@ -305,6 +312,71 @@ public class HomeController extends BaseController {
 
 		return getView(Views.HOME_NOTIFIES);
 	}
+	
+	@RequestMapping("/home/point")
+	public String point( ModelMap model) {
+		List<QueryRules> qrLst = new ArrayList<>();
+		
+		Paging paging = wrapPage(1,30);
+		goodsService.paging(paging, qrLst);
+		model.put("page", paging );
+		
+		
+		Paging paging2 = wrapPage(1,1);
+		UserProfile profile = getSubject().getProfile();
+		
+		QueryRules qr = new QueryRules("userId",profile.getId()	);	
+		qrLst.add(qr);
+		pointService.paging(paging2, qrLst);
+		List<Point> lst = (List<Point>)paging2.getResults()	;
+		
+		Point point =new Point();
+		if(lst.size()>0){
+			point=lst.get(0);
+		}
+		
+		
+		
+		model.put("point", point );
+		
+		return getView("/home/point");
+	}
+	
+	
+	@RequestMapping("/home/pointDetail")
+	public String pointDetail(Integer pn, String yearmonthdatestart,String yearmonthdateend,  ModelMap model) {
+		Paging paging = wrapPage(pn,30);
+		
+		UserProfile profile = getSubject().getProfile();
+		List<QueryRules> qrLst = new ArrayList<>();
+		
+		
+		if(profile!=null){
+			QueryRules qr = new QueryRules("userId",profile.getId()	);	
+			qrLst.add(qr);
+		}
+		
+		if(StringUtils.isNotBlank(yearmonthdatestart)){
+			QueryRules qr = new QueryRules("updateTime",yearmonthdatestart+" 00:00:00","ge"	);qrLst.add(qr);
+		}
+		
+		if(StringUtils.isNotBlank(yearmonthdateend)){
+			QueryRules qr = new QueryRules("updateTime",yearmonthdateend+" 23:59:59"	,"le");qrLst.add(qr);
+		}
+	
+		pointDetailService.paging(paging, qrLst);
+
+
+		model.put("yearmonthdatestart", yearmonthdatestart);
+		model.put("yearmonthdateend", yearmonthdateend);
+		
+		
+		pointService.paging(paging, qrLst);
+		model.put("page", paging);
+		
+		return getView("/home/pointDetail");
+	}
+	
 
 	private void initUser(ModelMap model) {
 		UserProfile up = getSubject().getProfile();

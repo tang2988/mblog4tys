@@ -13,11 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import mblog.core.data.PointRule;
-import mblog.core.persist.service.PointRuleService;
+import mblog.core.data.Goods;
+import mblog.core.persist.service.GoodsService;
 import mblog.core.persist.utils.QueryRules;
 import mblog.web.controller.BaseController;
 import mtons.modules.pojos.Paging;
@@ -26,27 +29,20 @@ import mtons.modules.pojos.Paging;
  * @author tys
  */
 @Controller
-@RequestMapping("/admin/pointrule")
-public class PointRuleController extends BaseController {
-	private static final Logger log = LoggerFactory.getLogger(PointRuleController.class);
+@RequestMapping("/admin/goods")
+public class GoodsController extends BaseController {
+	private static final Logger log = LoggerFactory.getLogger(GoodsController.class);
 	@Autowired
-	private PointRuleService pointRuleService;
+	private GoodsService goodsService;
 
 	@RequestMapping("/list")
-	public String list(Integer pn, String serialNo,String type, 
-			String status,String startTime,String endTime, ModelMap model) throws ParseException {
+	public String list(Integer pn,  
+			String name,String startTime,String endTime, ModelMap model) throws ParseException {
 		Paging paging = wrapPage(pn,30);
 		
 		List<QueryRules> qrLst = new ArrayList<>();
-		if(StringUtils.isNotBlank(serialNo)){
-			QueryRules qr = new QueryRules("sysSource",serialNo,"like"	);	
-			qrLst.add(qr);
-		}
-		if(StringUtils.isNotBlank(type)){
-			QueryRules qr = new QueryRules("type",Integer.valueOf(type)	);qrLst.add(qr);
-		}
-		if(StringUtils.isNotBlank(status)){
-			QueryRules qr = new QueryRules("status",status	);qrLst.add(qr);
+		if(StringUtils.isNotBlank(name)){
+			QueryRules qr = new QueryRules("name",name,"like"	);qrLst.add(qr);
 		}
 		
 		if(StringUtils.isNotBlank(startTime)){
@@ -57,15 +53,13 @@ public class PointRuleController extends BaseController {
 			QueryRules qr = new QueryRules("endTime",DateUtils.parseDate(endTime+" 23:59:59", new String[]{"yyyy-MM-dd hh:mm:ss"}),"le");qrLst.add(qr);
 		}
 	
-		pointRuleService.paging(paging, qrLst);
+		goodsService.paging(paging, qrLst);
 		model.put("page", paging);
-		model.put("serialNo", serialNo);
-		model.put("type", type);
-		model.put("status", status);
+		model.put("name", name);
 		model.put("startTime", startTime);
 		model.put("endTime", endTime);
 		
-		return "/admin/pointrule/list";
+		return "/admin/goods/list";
 	}
 
 	/*@RequestMapping("/delete")
@@ -77,37 +71,40 @@ public class PointRuleController extends BaseController {
 	@RequestMapping("/edit")
 	public String edit(@RequestParam(value = "id", required = false, defaultValue = "0") long id, Model model) {
 		if (id != 0) {
-			PointRule pointRule = pointRuleService.findById(id);
-			model.addAttribute("pointRule", pointRule);
+			Goods goods = goodsService.findById(id);
+			model.addAttribute("goods", goods);
 		}
-		return "/admin/pointrule/edit";
+		return "/admin/goods/edit";
 	}
 
 	@RequestMapping("/save")
 	// @ResponseBody
-	public String save(Long id, String serialNo,Integer type,Integer direction,Integer ratio, 
-			Integer status,String startTime,String endTime,String reserve3,ModelMap model) {
+	public String save(long id,String name,Long price,Integer storeNum,String mainPic,Integer status,Boolean isVip,String startTime,String endTime,Long reserve1,
+			String content ,ModelMap model) {
 		try {
 			long opId = getSubject().getProfile().getId();
-			PointRule pointRule = new PointRule();
-			pointRule.setId(id);
-			pointRule.setSerialNo(serialNo);
-			pointRule.setType(type);
-			pointRule.setDirection(direction);
-			pointRule.setRatio(ratio);
-			pointRule.setStatus(status);;
-			pointRule.setStartTime(DateUtils.parseDate(startTime+" 00:00:00", new String[]{"yyyy-MM-dd hh:mm:ss"}));
-			pointRule.setEndTime(DateUtils.parseDate(endTime+" 23:59:59", new String[]{"yyyy-MM-dd hh:mm:ss"}));
-			pointRule.setReserve3(reserve3);
-			pointRule.setOpId(opId);
-			pointRule.setUpdateTime(new Date());
-			pointRuleService.save(pointRule);//TODO SAVEORUPDATE BUG
+			Goods goods = new Goods();
+			goods.setId(id);
+			goods.setName(name);
+			goods.setPrice(price);
+			goods.setStoreNum(storeNum);
+			goods.setMainPic(mainPic);
+			goods.setStatus(status);
+			goods.setIsVip(isVip);
+			goods.setStartTime(DateUtils.parseDate(startTime+" 00:00:00", new String[]{"yyyy-MM-dd hh:mm:ss"}));
+			goods.setEndTime(DateUtils.parseDate(endTime+" 23:59:59", new String[]{"yyyy-MM-dd hh:mm:ss"}));
+			goods.setReserve1(reserve1);
+			goods.setDescHtm(content);
+			
+			goods.setOpId(opId);
+			goods.setUpdateTime(new Date());
+			goodsService.save(goods); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/admin/pointrule/list";
+		return "redirect:/admin/goods/list";
 	}
-	
+
 	
 	/*@RequestMapping("/sync")
 	// @ResponseBody

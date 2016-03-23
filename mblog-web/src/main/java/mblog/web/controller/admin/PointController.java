@@ -42,11 +42,11 @@ public class PointController extends BaseController {
 			qrLst.add(qr);
 		}
 		if(StringUtils.isNotBlank(curPoint_ge)){
-			QueryRules qr = new QueryRules("curPoint",curPoint_ge,"ge"	);qrLst.add(qr);
+			QueryRules qr = new QueryRules("curPoint",Long.valueOf(curPoint_ge),"ge"	);qrLst.add(qr);
 		}
 		
 		if(StringUtils.isNotBlank(curPoint_le)){
-			QueryRules qr = new QueryRules("curPoint",curPoint_le,"le"	);qrLst.add(qr);
+			QueryRules qr = new QueryRules("curPoint",Long.valueOf(curPoint_le),"le"	);qrLst.add(qr);
 		}
 		
 		pointService.paging(paging, qrLst);
