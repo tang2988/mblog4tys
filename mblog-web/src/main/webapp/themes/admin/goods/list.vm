@@ -13,13 +13,6 @@
     	$(".CurForm").submit();
     }
     
-    function sync(curObj){
-    	curObj.disabled = true;
-    	$.post("$base/admin/cardTransactionRecord/sync", $(".CurForm").serializeArray(),
-          function(data){
-          curObj.disabled = false;
-		});
-    }
 </script>
 
 <style>
@@ -55,21 +48,15 @@ div.laydate-icon{
     		<form class="CurForm" action="$base/admin/goods/list" method="post">
     		<input type="hidden" id="pn" name="pn" value="${page.pageNo}" />
     		<ul>
-				<li>产商：
-				<select name="sysSource">
-					<option value="瑞银信" select="select">瑞银信</option>
-					<option value="瑞刷" select="select">瑞刷</option>
-				</select>
+				<li>
+					开始日：<input name="startTime" onclick="laydate({ format: 'YYYY-MM-DD'})" value="$!{startTime}" >
+					截止日：<input name="endTime" onclick="laydate({ format: 'YYYY-MM-DD'})"  value="$!{endTime}"> 
 				</li>
 				<li>
-					开始日：<input name="yearmonthdatestart" onclick="laydate({ format: 'YYYYMMDD'})" >
-					截止日：<input name="yearmonthdateend" onclick="laydate({ format: 'YYYYMMDD'})"  > 
+					品名：<input name="name" value="$!{name}" >
 				</li>
 				<li>
-					手机号码：<input name="mobile" >
-				</li>
-				<li>
-					<input type="button" value="同步数据" onclick="sync(this)"  >
+					<input type="button" value="添加" onclick="window.location='edit'"  >
 					<input type="button" value="查询" onclick="submitCurForm(1)"  >
 				</li>
 			</ul>
@@ -79,40 +66,49 @@ div.laydate-icon{
             <table id="treeTable" class="table table-striped table-bordered b-t text-small">
                 <tr>
                     <th class="col-lg-1">#</th>
-                    <th>手机号码</th>
-                    <th>终端编号</th>
-                    <th>交易金额</th>
-                    <th>手续费</th>
-                    <th>交易日期</th>
-                    <th>交易时间</th>
-                    <th>交易类型</th>
-                    <th>银行卡号</th>
-                    <th>刷卡平台</th>
-                    <th>交易流水号</th>
-                    <th>所属代理</th>
+                    <th>品名</th>
+                    <th>价格</th>
+                    <th>库存</th>
+                    <th>状态</th>
+                    <th>vip专享</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>图片</th>
+                    <th>描述</th>
                     #if($shiro.hasPermission("friendLink:edit"))
                         <th width="300" class="col-lg-2">操作</th>
                     #end
                 </tr>
+                <tr>
                 #foreach($row in $page.results)
                     <td>$!{velocityCount}</td>
-                    <td>$!{row.moblieNoV}</td>
-                    <td>$!{row.terminalId}</td>
-                    <td>$!{row.transacount}</td>
-                    <td>$!{row.feeAmt}</td>
-                    <td>$!{row.deal_data}</td>
-                    <td>$!{row.deal_time}</td>
-                    <td>$!{row.dealTypeName}</td>
-                    <td>$!{row.bankcardNumber}</td>
-                    <td>$!{row.sysSource}</td>
-                    <td>$!{row.serialNumber}</td>
-                    <td>$!{row.agencyName}</td>
+                    <td>$!{row.name}</td>
+                    <td>$!{row.price}</td>
+                    <td>$!{row.storeNum}</td>
+                    <td>
+                    #if($!{row.status}==0)
+						启用
+					#else
+						停用
+					#end
+					</td>
+                    <td>
+                    #if($!{row.isVip}==0)
+						是
+					#else
+						否
+					#end
+                    </td>
+                    <td>$!{row.startTime}</td>
+                    <td>$!{row.endTime}</td>
+                    <td>$!{row.mainPic}</td>
+                    <td>#***$!{row.descHtm}**#</td>
                     #if($shiro.hasPermission("friendLink:edit"))
                         <td class="text-center">
-                            <a href="$base/admin/cardTransactionRecord/edit?id=${row.id}" class="btn btn-mini btn-primary">
+                            <a href="edit?id=${row.id}" class="btn btn-mini btn-primary">
                                 <i class="fa fa-check-square-o"></i> 修改
                             </a>
-                            <a href="$base/admin/cardTransactionRecord/delete?id=${row.id}" class="btn btn-mini"><i class="fa fa-check-square-o"></i> 删除</a>
+                            <a href="delete?id=${row.id}" class="btn btn-mini"><i class="fa fa-check-square-o"></i> 删除</a>
                         </td>
                     #end
                 </tr>
@@ -124,11 +120,6 @@ div.laydate-icon{
 	
 	<footer class="panel-footer">
 		<div class="row">
-			#if($shiro.hasPermission("posts:edit"))
-			<div class="col-lg-6">
-				<a href="javascrit:void(0);" class="btn btn-mini btn-success" data-action="batch_del">批量删除</a>
-			</div>
-			#end
 			<div class="col-lg-6 text-right text-center-sm">    
 				#pageHtm("list" $page 5)
 			</div>

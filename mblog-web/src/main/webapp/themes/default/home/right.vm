@@ -37,7 +37,7 @@
                 <a href="$base/home?method=myPosMgr"><i class="fa fa-comment-o"></i>我的POS</a>
             </li>
             <li class="list-group-item">
-                <a href="$base/home?method=posts"><i class="fa fa-file-text-o"></i>我的返现</a>
+                <a href="$base/home/point"><i class="fa fa-file-text-o"></i>我的返现</a>
             </li>
 			<li class="list-group-item">
                 <a href="$base/home/notifies">
