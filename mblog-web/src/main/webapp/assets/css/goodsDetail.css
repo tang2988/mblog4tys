@@ -1,0 +1,1876 @@
+.lumi-main-wrap {
+    width: 99%;
+    /* height: auto!important; */
+    /* height: 220px; */
+    /* min-height: 220px; */
+    margin: 0 auto;
+}
+/*--------------------------------------points-exchange-wrap---------------------------------*/
+.img-product-large{
+    width: 420px;
+    height: 420px;
+    display: block;
+}
+.btn-bid{
+    display: inline-block;
+    width: 135px;
+    height: 36px;
+    line-height: 36px;
+    background-color: #d12600;
+    border-radius: 2px;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.btn-bid:hover{
+    color: #fff0a8;
+    text-decoration: none;
+}
+
+.icon-vip-product {
+    width: 32px;
+    height: 16px;
+    background: url(../images/lumi/detail-icon_95bed43.png) no-repeat 0 0;
+    display: inline-block;
+    margin-right: 5px;
+    *display: inline;
+    *zoom: 1;
+    vertical-align: middle;
+}
+
+.contentHead  .breadcrumb{
+    float: left;
+}
+.contentHead  .link-rule{
+    float: right;
+}
+.product-intro-wrap{
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+.product-intro-wrap .product-img{
+    position: relative;
+    width: 400px;
+    padding-right: 30px;
+    float: left;
+    margin: 0;
+}
+.product-intro-wrap .product-intro{
+    float: left;
+    width: 320px;
+    position: relative;
+    /*height: 320px;*/
+}
+.product-intro-wrap .product-title {
+    height: 66px;
+}
+.product-intro-wrap .product-name{
+    width: 720px;
+    font-size: 22px;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    font-weight: normal;
+    overflow: inherit;
+    white-space: inherit;
+}
+.product-intro-wrap .product-sub-name{
+    font-size: 12px;
+    color: #ff5a00;
+    font-weight: normal;
+    margin-top: 2px;
+}
+.product-intro-wrap .product-style{
+    font-size: 12px;
+    color: #999;
+    font-weight: normal;
+}
+.product-intro-wrap .product-style .product-style-physical{
+    cursor: pointer;
+    border-bottom: 1px dashed #999;
+}
+.product-intro-wrap .product-summary{
+    border-top: 1px dashed #e4e4e4;
+    padding: 15px 0;
+    position: relative;
+    z-index: 2;
+}
+.product-intro-wrap .product-summary li{
+    clear: both;
+    height: 26px;
+    line-height: 26px;
+    padding: 3px 0;
+}
+.product-intro-wrap .summary-name{
+    float: left;
+    width: 90px;
+}
+.product-intro-wrap .summary-data{
+    float: left;
+    white-space: nowrap;
+}
+.product-intro-wrap .end-time {
+    color: #999;
+}
+.product-intro-wrap .summary-data .mi-icon{
+    background: url(../images/lumi/lumi-icon_1ba1237.png) -408px -73px no-repeat;
+    padding-left: 17px;
+}
+.product-intro-wrap .summary-data .price-num{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+.product-intro-wrap .summary-data .vip-price{
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: bold;
+    color: #666;
+    line-height: 26px;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+.product-intro-wrap .summary-data .cash-unit{
+    font-size: 14px;
+    font-weight: bold;
+    color: #ec6522;
+}
+/*.product-intro-wrap .summary-data .plus {*/
+    /*font-size: 16px;*/
+    /*font-weight: bold;*/
+    /*color: #686868;*/
+/*}*/
+.product-intro-wrap .summary-data .lumi-delprice{
+    color: #999;
+    text-decoration:line-through;
+    font-size: 16px;
+}
+.product-intro-wrap .summary-data .lumi-text{
+    color:#999;
+
+}
+.product-intro-wrap .summary-data .refresh{
+    margin-left: 10px;
+    font-size: 12px;
+}
+.product-intro-wrap .points {
+    position: absolute;
+    right: 0;
+}
+.product-intro-wrap .points a{
+    font-size: 12px;
+    margin:0 8px 0 8px;
+}
+.product-intro-wrap .points .highlight{
+    color: #e50000;
+    margin:0 8px 0 8px;
+}
+.product-intro-wrap .summary-data .highlight{
+    font-size: 18px;
+}
+.product-intro-wrap .end-time .highlight{
+    font-size: 16px;
+    color: #999;
+}
+.product-intro-wrap .summary-data
+.product-intro-wrap .synchro-height .summary-data .highlight{
+    font-size: 28px;
+    color: #e50000;
+    font-weight: bold;
+    margin-right: 5px;
+}
+.product-intro-wrap .count-down {
+    float: left;
+    margin-left: 40px;
+    font-size: 12px;
+    padding-left: 20px;
+    background: url(../images/lumi/lumi-icon_1ba1237.png) no-repeat -475px -500px;
+}
+.product-intro-wrap .count-down .highlight {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 2px;
+}
+.product-intro-wrap .count-down .summary-name{
+    padding-top: 3px;
+}
+
+.product-intro-wrap .countDown{
+    font-size: 12px;
+    margin: 0 20px;
+    vertical-align: middle;
+}
+.product-intro-wrap .countDown .highlight{
+    font-size: 16px;
+    margin-left: 3px;
+}
+.product-intro-wrap .operation .btn-grey{
+    width: 73px;
+    height: 21px;
+    padding-top: 8px;
+}
+.product-intro-wrap .operation{
+    /**width: 688px;**/
+    min-height: 85px;
+    background: #f6f6f6;
+    padding: 10px 16px;
+    position: relative;
+    display: block;
+}
+.product-intro-wrap .operation.finished {
+    line-height: 85px;
+}
+.product-intro-wrap .operation .stock {
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+    margin-left: 15px;
+    vertical-align: middle;
+}
+.product-intro-wrap .operation .stock .stock-num {
+    font-size: 14px;
+    font-weight: bold;
+}
+.product-intro-wrap .operation.operation-middle{
+    height: 72px;
+    padding: 36px 0 0 8px;
+}
+.product-intro-wrap .operation .start-time {
+    margin-left: 20px;
+    vertical-align: middle;
+}
+.product-intro-wrap .operation .start-time .highlight {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 2px;
+}
+.product-intro-wrap .form-horizontal .icon-point{
+    margin-right: 15px;
+}
+.product-intro-wrap .icon-refresh {
+    background-position: -425px -607px;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    vertical-align: middle;
+}
+.product-intro-wrap .operation.no-time{
+    height: 62px;
+    padding: 46px 0 0 8px;
+    text-align: center;
+    color: #999;
+    font-size: 16px;
+}
+.product-intro-wrap .operation.operation-lottery{
+    height: auto;
+    padding: 20px 16px 0 16px;
+}
+.product-intro-wrap .product-share-wrap {
+    line-height: 20px;
+    color: #999;
+}
+.product-intro-wrap .btn-like {
+    text-decoration: none;
+    cursor: pointer;
+    color: #333;
+}
+.product-intro-wrap .btn-like .icon-like{
+    width: 14px;
+    height: 14px;
+    margin-left: 0;
+    display: inline-block;
+    vertical-align: middle;
+    background: url(../images/lumi/detail-icon_95bed43.png) no-repeat -280px -5px;
+}
+.product-intro-wrap .btn-like:hover .icon-like {
+    background-position: -248px -41px;
+}
+.product-intro-wrap .product-extra {
+    border-top: 1px dashed #e4e4e4;
+    margin-top: 20px;
+    padding-top: 12px;
+}
+.product-intro-wrap .product-extra .delivery-time {
+    margin-left: 20px;
+    border-bottom: 1px dashed #d0d0d0;
+    cursor: pointer;
+}
+.product-intro-wrap .product-summary .points .J_mouseTip {
+    border-bottom: 1px dashed #d0d0d0;
+    cursor: pointer;
+}
+.product-intro-wrap .product-extra .freight-intro {
+    margin-left: 20px;
+}
+.product-intro-wrap .extra-intro {
+    width: 720px;
+    height: 32px;
+    line-height: 32px;
+}
+.product-intro-wrap .extra-intro .service-promise {
+    color: #999;
+    border: 1px solid #d8d8d8;
+    display: inline-block;
+    vertical-align: middle;
+}
+.extra-intro i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    background: url(../images/lumi/detail-icon_95bed43.png) no-repeat -81px -204px #f6f6f6;
+}
+.extra-intro .service-icon-1 {
+    background-position: -81px -204px;
+}
+.extra-intro .service-icon-2 {
+    background-position: -145px -142px;
+}
+.extra-intro .service-icon-3 {
+    background-position: -115px -172px;
+}
+.extra-intro .service-text {
+    line-height: 18px;
+    float: left;
+    padding: 0 8px;
+}
+.extra-intro .service-promise {
+    margin-right: 15px;
+}
+.product-intro-wrap .product-extra .pay-type {
+    border-bottom: 1px dashed #d0d0d0;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.icon-weixin-details{
+    background-position: -700px -90px;
+}
+.icon-sinaWeibo-details{
+    background-position: -725px -90px;
+}
+.icon-tencentWeibo-details{
+    background-position: -751px -90px;
+}
+.icon-qqZone-details{
+    background-position: -776px -90px;
+}
+.icon-bubble-details{
+    background-position: -632px -50px;
+    *background-position: -632px -49px;
+}
+.points-exchange-wrap.white{
+    background-color: #fff;
+}
+
+.pop-exchange-product .product-info{
+    padding-bottom: 10px;
+}
+.pop-exchange-product .product-sub-info{
+    padding-bottom: 10px;
+    color: #6a6a6a;
+}
+.pop-exchange-product .form-horizontal.normal{
+    margin-top: 10px;
+}
+.pop-exchange-product .form-horizontal .errorPanel{
+    max-width: 140px;
+    display: none;
+}
+.pop-exchange-product .form-horizontal.normal .control-label{
+    width: 73px;
+}
+.pop-exchange-product .form-horizontal.normal .controls{
+    margin-left: 83px;
+    *padding-left: 0;
+}
+.pop-exchange-product .form-horizontal .control-group.last-child{
+    margin-bottom: 0;
+}
+.pop-exchange-product .form-horizontal .control-group .controls.form-select{
+    z-index: 9;
+}
+.pop-exchange-product .modal-footer{
+    text-align: center;
+}
+.pop-exchange-product .modal-footer a{
+    margin: 0 10px;
+}
+.pop-exchange-product .help-line {
+    width: 40px;
+}
+.pop-exchange-product  .form-horizontal.normal .form_select.ullh div a {
+    background-position: 80px -88px;
+}
+.pop-exchange-product .form_select.ullh.normal.small div{
+    width: 102px;
+    margin-right: 10px;
+}
+.pop-exchange-product .form_select{
+    float: left;
+}
+.form-horizontal.normal .control-label{
+    float: left;
+    width: 110px;
+    color: #333;
+    font-size: 12px;
+    font-weight: normal;
+    padding-top: 10px;
+    text-align: right;
+}
+.form-horizontal.normal .radio-group .control-label{
+    padding-top: 4px;
+}
+.form-horizontal .auction-hint{
+    width: 88px;
+    font-size: 14px;
+}
+.form-horizontal.normal .form_select.ullh div a{
+    height: 28px;
+    line-height: 28px;
+    background-position: 175px -88px;
+}
+.pop-exchange-product {
+    width: 570px;
+}
+.pop-exchange-product .modal-body {
+    padding: 25px 40px;
+}
+
+/*product-info-wrap*/
+.product-info-wrap{
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: #fff;
+    line-height: 200%;
+}
+.product-info-wrap img{
+    margin: 0 0 0 14px;
+    width: 750px;
+}
+.product-info-wrap .tab-title {
+    width: 100%;
+    background-color: #f5f6f6;
+}
+
+
+
+
+
+.tab-content .list-table {
+    width: 99%;
+    table-layout: fixed;
+    text-align: center;
+    border: 1px solid #d0d0d0;
+    margin: 0 auto;
+}
+.tab-content .list-table thead th{
+    height: 38px;
+    border-style: solid;
+    border-width: 1px 0 1px 0;
+    border-color: #d0d0d0;
+    background-color: #fffcec;
+}
+.tab-content .list-table tr{
+    height: 38px;
+    border-bottom: 1px solid #d0d0d0;
+}
+.tab-content .list-table .first {
+    color: #d02700;
+}
+.tab-content .list-table .icon-point {
+    margin-left: 5px;
+    margin-top: -2px;
+}
+.tab-content.auction .tab-content-wrap-account{
+    padding-top: 10px;
+}
+.tab-content-wrap-account .tab-content {
+    padding:50px 85px;
+    min-height: 100px;
+}
+.tab-wrap-account {
+    border: 1px solid #e1dddd;
+    background-color: #fafafa;
+}
+.tab-wrap-account .tab{
+    font-size: 14px;
+    font-weight: bold;
+    color: #999;
+    position: relative;
+    float: left;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    padding: 0 38px;
+    min-width: 40px;
+    border-color: transparent;
+    border-style: solid;
+    border-width:1px 1px 0 1px;
+    margin-right: 4px;
+    margin-bottom: -1px;
+    cursor: pointer;
+}
+.tab-wrap-account .tab a{
+    color: #999;
+}
+.tab-wrap-account .tab a:hover{
+    text-decoration: none;
+}
+.tab-wrap-account .tab.current{
+    color: #333;
+    cursor: default;
+    border-color: #ff6614 #e1dddd transparent #e1dddd;
+    border-style: solid;
+    border-width:2px 1px 0 1px;
+    margin-top: -1px;
+    margin-left: -1px;
+    background-color: #fff;
+    z-index: 1;
+}
+.tab-wrap-account .tab.current a{
+    color: #333;
+}
+.no-project {
+    width: 776px;
+    margin: 0 auto;
+    padding: 48px 0;
+    text-align: center;
+    color: #999;
+    font-weight: bold;
+    border-width: 0 1px 1px 1px;
+    border-color: #d9d9d9;
+    border-style: solid;
+    display: none;
+}
+/*----------------------------------------翻页------------------------------------------*/
+.pagination{
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin-top: 10px;
+}
+.pagination .paginationBtn{
+    display: inline-block;
+    background: url(../images/icon_points_account_a30e8bb.png) no-repeat -9999px -9999px;
+    width: 25px;
+    height: 12px;
+    vertical-align: middle;
+}
+.pagination .preBtn{
+    background-position: -57px -41px;
+}
+.pagination .preBtn:hover{
+    cursor: pointer;
+}
+.pagination .preBtn.disabled{
+    background-position: 7px -72px;
+}
+.pagination .preBtn.disabled:hover{
+    cursor: default;
+}
+.pagination .nextBtn{
+    background-position: -85px -41px;
+}
+.pagination .nextBtn:hover{
+    cursor: pointer;
+}
+.pagination .nextBtn.disabled{
+    background-position: -21px -72px;
+}
+.pagination .nextBtn.disabled:hover{
+    cursor: default;
+}
+
+.product-intro-wrap .product-name .icon-cellphone-b{
+    vertical-align: 0;
+}
+.product-intro-wrap .operation-app .operation-lcode-status,.operation-lcode .operation-lcode-status {
+    font-size: 16px;
+    color: #999999;
+    text-align: center;
+    position: relative;
+    display: block;
+    width:688px;
+    overflow: hidden;
+    word-wrap:break-word;
+    /*word-break:break-all;*/
+    top:32px;
+}
+
+.product-intro-wrap .operation-lcode .operation-lcode-status span {
+    color:#ff6600;
+}
+
+
+/*----------------------------------------------买多件------------------------------------------------*/
+.choose-amount-wrap {
+    border: 3px solid #e8e8e8;
+    display: inline-block;
+    border-radius: 4px;
+    *float: left;
+    vertical-align: middle;
+}
+.choose-amount {
+    width: 72px;
+    height: 30px;
+    border: 1px solid #9f9f9f;
+}
+.choose-amount .quantity {
+    width: 56px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0;
+    border: 0;
+    border-right: 1px solid #e4e4e4;
+    box-shadow: inset 1px 1px 2px #e2e2e2;
+    display: inline-block;
+    float: left;
+    text-align: center;
+}
+.choose-amount .choose-btn {
+    width: 15px;
+    height: 30px;
+    display: inline-block;
+    float: left;
+    background-color: #f3f3f3;
+}
+.choose-btn .btn-increase,
+.choose-btn .btn-decrease {
+    width: 13px;
+    height: 15px;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+}
+.choose-btn .btn-increase {
+    background: url(../images/lumi/detail-icon_95bed43.png) no-repeat -283px -199px;
+    border-bottom: 1px solid #e2e2e2;
+}
+.choose-btn .btn-decrease {
+    background: url(../images/lumi/detail-icon_95bed43.png) no-repeat -283px -225px;
+    border-top: 1px solid #fff;
+}
+.choose-btn .btn-increase.disabled {
+    background-position: -257px -199px;
+    cursor: default;
+}
+.choose-btn .btn-decrease.disabled {
+    background-position: -257px -225px;
+    cursor: default;
+}
+.amount-form {
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.amount-form .errorPanel {
+    *float: left;
+    *margin-top: 2px;
+}
+.btn-bid.disabled {
+    background-color: #c0c0c0;
+    border-radius: 2px;
+}
+.btn-bid.disabled:hover {
+    color: #fff;
+    cursor: default;
+}
+
+/*----------------------------------------------返陆金币------------------------------------------------*/
+.product-intro-wrap .summary-onsale{
+    float: left;
+    width: 640px;
+    height: 26px;
+}
+.product-intro-wrap .summary-onsale .yellow-icon{
+    height: 18px;
+    line-height: 18px;
+    font-style: normal;
+    color: #FFF;
+    background-color: #FFC600;
+    border-radius: 2px;
+    padding: 0 6px;
+    margin-right: 6px;
+    float: left;
+    margin-top: 4px;
+}
+.product-intro-wrap .return-coin-wrap{
+    height: 26px;
+    float: left;
+}
+.product-intro-wrap .return-coin-icon{
+    height: 16px;
+    line-height: 16px;
+    background-color: #FFF9EC;
+    border: 1px solid #FFAE82;
+    padding: 0 20px 0 12px;
+    color: #ff6c22;
+    float: left;
+    margin-top: 4px;
+    position: relative;
+    z-index: 4;
+    cursor: pointer;
+}
+.product-intro-wrap .return-coin-icon:hover{
+    text-decoration: none;
+}
+.product-intro-wrap .return-coin-icon strong{
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: -1px;
+    *vertical-align: 1px;
+}
+.product-intro-wrap .return-coin-icon b{
+    position: absolute;
+    top:6px;
+    width: 5px;
+    height: 5px;
+    overflow: hidden;
+    background: url(../images/lumi/detail-icon_95bed43.png) no-repeat -5px -86px;
+    right: 10px;
+}
+.product-intro-wrap .synchro-height{
+    position: relative;
+}
+.product-intro-wrap .return-coin-detail{
+    position: absolute;
+    width: 682px;
+    border: 1px solid #FFAE82;
+    z-index: 3;
+    background-color: #FFF9EC;
+    left: 0;
+    margin-top: 24px;
+    padding: 16px 18px 0;
+}
+.product-intro-wrap .return-coin-detail dt{
+    position: absolute;
+    width: 60px;
+    left: 8px;
+    color: #928dd0;
+}
+.product-intro-wrap .return-coin-detail dd strong{
+    font-weight: normal;
+    color: #ff6716;
+    padding: 0 2px;
+}
+.product-intro-wrap .return-coin-detail dl{
+    overflow: hidden;
+    padding-left: 68px;
+    padding-right: 8px;
+    position: relative;
+}
+.product-intro-wrap .return-coin-detail table{
+    table-layout: fixed;
+    margin: 10px 0 0;
+    width: 100%;
+}
+.product-intro-wrap .return-coin-detail th{
+    border-top: 1px solid #E1DBD0;
+    border-bottom: 1px solid #E1DBD0;
+    text-align: center;
+}
+.product-intro-wrap .return-coin-detail td{
+    text-align: center;
+    color: #999;
+    line-height: 18px;
+    padding: 6px;
+    vertical-align: top;
+}
+.product-intro-wrap .return-coin-detail .example{
+    line-height: 18px;
+    background-color: #FFF;
+    padding: 10px 26px;
+    margin: 0 -18px;
+}
+.product-intro-wrap .return-coin-detail .example span{
+    color: #ff6716;
+    padding: 0 2px;
+}
+.product-intro-wrap .return-coin-detail .example em{
+    font-style: normal;
+    display: inline-block;
+}
+.product-intro-wrap .return-coin-detail .return_total_coin{
+    text-align: right;
+    border-top: 1px solid #E1DBD0;
+    color: #333;
+    padding-right: 29px;
+}
+.product-intro-wrap .return-coin-detail .return_total_coin strong{
+    font-size: 16px;
+    color: #ff6c22;
+    font-weight: normal;
+}
+.product-intro-wrap .return-coin-detail .close{
+    position: absolute;
+    top:10px;
+    right: 10px;
+    z-index: 1;
+    width: 16px;
+    height: 16px;
+    background: url(../images/lumi/detail-icon_95bed43.png) no-repeat 0 -60px;
+}
+
+.detail-wrap .detail-left {
+    width: 188px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 40px;
+    padding: 0 10px;
+    border: 1px solid #e0dddd;
+}
+.detail-wrap .detail-right {
+    width: 100%;
+    float: left;
+}
+.no-recommend .detail-left {
+    display: none;
+}
+.no-recommend .detail-right {
+    width: 1170px;
+}
+.detail-left h2 {
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;
+}
+.recommend-list li {
+    width: 188px;
+    border-top: 1px solid #e0dddd;
+    padding-bottom: 10px;
+}
+.recommend-list .product-img {
+    text-align: center;
+    margin-top: 10px;
+}
+.recommend-list .product-img img {
+    width: 150px;
+    height: 150px;
+}
+.recommend-list .product-name {
+    padding: 0;
+}
+.recommend-list .product-name a {
+    color: #333;
+}
+.recommend-list .price {
+    margin: 0px;
+}
+.points-auction-wrap .recommend-list .price{
+    display: block;
+}
+.recommend-list .product-name a {
+    cursor: pointer;
+    color: #666;
+    display: inline-block;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 188px;
+    text-align: left;
+    height: 18px;
+    line-height: 18px;
+}
+/*----------------------------------------------同商品不同价------------------------------------------------*/
+.submit-price-wrap{
+    position: absolute;
+}
+#productDetailTemplate02_div{
+    float: left;
+}
+.price-choose-wrap{
+    border: 1px solid #FFD1B8;
+    cursor: pointer;
+    float: left;
+    position: relative;
+    height: 28px;
+    overflow: hidden;
+    z-index: 5;
+    transition: .2s ease-in;
+    -webkit-transition: .2s ease;
+    -moz-transition: .2s ease;
+    -ms-transition: .2s ease;
+    -o-transition: .2s ease;
+}
+.price-choose-wrap:hover{
+    border-color: #FF6614;
+}
+.price-choose-wrap .price_list{
+    padding: 0 20px 0 6px;
+    border-bottom: 2px solid #FFF;
+    background-color: #FFF;
+    line-height: 28px;
+    position: static;
+}
+.price-choose-wrap .price_list:hover,.price-choose-wrap .price_list_current{
+    background-color: #FFF5F5;
+}
+.price-choose-wrap span{
+    vertical-align: middle;
+}
+.price-choose-wrap .icon-vip-product{
+    margin: 0 4px;
+}
+.price-choose-wrap b{
+    position: absolute;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    line-height: 0;
+    font-size: 0;
+    border-bottom: 0 none;
+    border-left: 5px solid transparent;
+    border-top: 5px solid #6E6E6E;
+    border-right: 5px solid transparent;
+    right: 6px;
+    top: 13px;
+}
+.price-choose-wrap .price {
+    display: inline-block;
+    *display:inline;
+    *zoom:1;
+    line-height: 28px;
+    height: 28px;
+}
+.price-choose-wrap .price span{
+    line-height: 26px;
+}
+.price-choose-click{
+    height: 58px;
+    border-color: #FF6614;
+    transition: .2s ease-in;
+    -webkit-transition: .2s ease;
+    -moz-transition: .2s ease;
+    -ms-transition: .2s ease;
+    -o-transition: .2s ease;
+}
+/*.price-choose-click b{*/
+    /*border: 0 none;*/
+    /*width: 23px;*/
+    /*height: 23px;*/
+    /*background: url(../images_source/lumi/detail-icon.png) no-repeat 0 -273px;*/
+    /*top:0;*/
+    /*right: 0;*/
+/*}*/
+.tab-content .mi-icon{
+    width: 14px;
+    height: 16px;
+    line-height: 20px;
+    display: inline-block;
+    background: url(../images/lumi/lumi-icon_1ba1237.png) no-repeat -409px -79px;
+    vertical-align: middle;
+}
+.tab-content .unit-price{
+    color: #ec6522;
+}
+.tab-content .unit-price span{
+    color: #333;
+    font-family: Tahoma,Arial;
+}
+.tab-content .unit-price .price-num {
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fc6628;
+}
+.tab-content .unit-price .unit {
+    color: #666;
+}
+.tab-content .unit-price .plus {
+    color: #999;
+}
+.vip-icon{
+    width: 28px;
+    height: 16px;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    background: url(../images/lumi/lumi-icon_1ba1237.png) no-repeat 0 -345px;
+    margin-left: 4px;
+}
+.tab-content .list-table .vip-icon{
+    position: absolute;
+    margin-top: 2px;
+}
+/*-----------------------------auction detail-----------------------------------------*/
+.product-intro-wrap .summary-data .refresh{
+    margin-left: 10px;
+    font-size: 12px;
+}
+.product-intro-wrap .icon-refresh {
+    background: url(../images/icon-points-new_7daa547.png) no-repeat -425px -607px;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    vertical-align: middle;
+}
+.currentUser{
+    margin-left: 10px;
+    font-size: 12px;
+    color: #999;
+}
+.auction-input-wrap {
+    border: 3px solid #e8e8e8;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    margin-right: 12px;
+    vertical-align: middle;
+}
+.auction-input-wrap .input {
+    width: 118px;
+    height: 26px;
+    line-height: 26px;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    box-shadow: inset 1px 1px 2px #e2e2e2;
+    border: 1px solid #9f9f9f;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-right: 0;
+    background-color: #fff;
+    border-radius: 0;
+}
+.auction-input-wrap .lumi-icon {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    background: url(../images/lumi/lumi-icon_1ba1237.png) -401px -70px no-repeat;
+    z-index: 1;
+}
+.product-intro-wrap .auction-operation {
+    height: auto;
+    padding: 20px 16px 0 16px;
+}
+.auction-operation .btn-bid {
+    margin-right: 10px;
+    background-color: #d12700;
+}
+.auction-operation .highest-bid {
+    background-color: #fd8603;
+}
+.auction-operation .help-line {
+    margin-top: 10px;
+    color: #666;
+}
+.auction-operation .points-auction-state,
+.operation-lottery .points-lottery-state {
+    width: 688px;
+    height: 36px;
+    line-height: 36px;
+    border-top: 1px solid #e3e3e3;
+    margin-top: 25px;
+    color: #666;
+}
+.auction-operation .top-num {
+    color: #fb7b04;
+}
+.auction-price {
+    padding-left: 12px;
+    background: url(../images/lumi/detail-icon_95bed43.png) no-repeat -53px -239px;
+}
+.points-auction-state .number {
+    margin-right: 100px;
+}
+.points-auction-state .number.last {
+    margin-right: 0;
+}
+.points-auction-wrap .product-intro-wrap .countDown,
+.points-lottery-wrap .product-intro-wrap .hasCountdown {
+    margin: 0;
+    color: #999;
+}
+.points-auction-wrap .product-intro-wrap .countDown .highlight,
+.points-lottery-wrap .product-intro-wrap .hasCountdown .highlight {
+    margin: 0;
+    color: #999;
+}
+.points-auction-wrap .product-intro-wrap .operation.operation-middle {
+    width: 712px;
+    position: relative;
+}
+.tab-content .auction-records {
+    border: 0 none;
+}
+.tab-content .auction-records thead th {
+    border-width: 0;
+    background-color: #f6f6f6;
+}
+.tab-content .no-records thead th {
+    border-bottom: 1px solid #d9d9d9;
+}
+.tab-content .auction-records tbody tr {
+    border-bottom: 1px solid #f3f3f3;
+}
+.tab-content .auction-records .icon-top {
+    width: 22px;
+    height: 12px;
+    position: absolute;
+    top: 12px;
+    left: 48px;
+    background: url(../images/lumi/detail-icon_95bed43.png) no-repeat -278px -272px;
+}
+.tab-content .auction-records .icon-win {
+    width: 22px;
+    height: 12px;
+    display: inline-block;
+    position: absolute;
+    top: 12px;
+    left: 48px;
+    background: url(../images/lumi/detail-icon_95bed43.png) no-repeat -278px -289px;
+}
+.tab-content .auction-records .myself {
+    color: #f5140c;
+}
+.tab-content .top-container {
+    border: 1px solid #ffc47e;
+}
+.tab-content .list-table .top-container tr {
+    border-bottom: 1px solid #ffefe0;
+}
+.tab-content .list-table .top-container tr.last {
+    border-bottom: 0 none;
+}
+.tab-content .list-table .top-container .top-title {
+    color: #f92208;
+    height: 20px;
+    line-height: 20px;
+    background-color: #ffefe0;
+    border-bottom: 0 none;
+}
+.tab-content .auction-records thead tr {
+    border-top: 1px solid #f6f6f6;
+    border-right: 1px solid #f6f6f6;
+    border-left: 1px solid #f6f6f6;
+    border-bottom: 0 none;
+}
+.tab-content .list-table .user-name {
+    position: relative;
+}
+
+.pop-auction-ensure,
+.pop-exchange-ensure {
+    width: 570px;
+}
+.pop-auction-ensure .modal-body{
+    height: 85px;
+}
+.pop-auction-ensure .auction-tips.first{
+    margin-top: 35px;
+    font-size: 14px;
+}
+.modal-body .queueLoadingIcon {
+    background: url(../images/icon-queue-loading_6bd847e.png) no-repeat 0 0;
+    width: 43px;
+    height: 43px;
+    margin-top: 0;
+}
+.pop-auction-ensure .auction-tips .tips-title {
+    font-size: 18px;
+    line-height: 150%;
+}
+.pop-auction-ensure .form_checkbox label {
+    color: #999;
+}
+.pop-auction-ensure .auction-tips .tips-prompt {
+    color: #999;
+}
+.pop-auction-ensure .form_checkbox {
+    margin-left: 19px;
+}
+.bid-remind{
+    margin-top: 25px;
+    margin-bottom: -10px;
+    color: #666;
+}
+.pop-auction-ensure .tips-content {
+    display: inline-block;
+}
+.icon-auction-fail {
+    width: 75px;
+    height: 45px;
+    display: block;
+    position: absolute;
+    top: 25px;
+    left: 117px;
+    background: url(../images/lumi/detail-icon_95bed43.png) no-repeat -222px -314px;
+}
+.points-auction-state .line,
+.points-lottery-state .line {
+    margin: 0 10px;
+    color: #e3e3e3;
+}
+
+/*---------------------------------scratch-----------------------------------------*/
+.content-box {
+    height: 78px;
+    width: 520px;
+    margin-left: 5px;
+}
+.content-box .scratch {
+    width: 336px;
+    height: 78px;
+    position: relative;
+    float: left;
+}
+.content-box .select {
+    float: left;
+    width: 160px;
+    height: 78px;
+    margin-left: 10px;
+}
+.content-box .scratch .scratch-init {
+    background-image: url('../images/init_c874dd3.png');
+    width: 336px;
+    height: 78px;
+}
+.content-box .scratch .scratch-area {
+    display: none;
+    width: 336px;
+    height: 78px;
+}
+.content-box .scratch .scratch-area-overlay {
+    display: none;
+    width: 336px;
+    height: 78px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: url('../images/overlay_d1c6076.png');
+
+}
+.content-box .scratch .scratch-icon {
+    position: absolute;
+    width: 42px;
+    height: 51px;
+    display: none;
+    background: url('../images/cursor_2a79fd2.gif') no-repeat;
+    top: 20px;
+    left: 30px;
+    z-index: 10;
+}
+
+.content-box .scratch .scratch-text {
+    display: none;
+    position:absolute;
+    top: 48px;
+    left: 113px;
+    z-index: 20;
+}
+.content-box .scratch .scratch-text .scratch-time{
+    color: #b97b2a;
+    font-size: 18px;
+    vertical-align: middle;
+    width: 20px;
+    display: inline-block;
+    text-align: right;
+}
+.content-box .select .select-time {
+    color: red;
+}
+.content-box .select .select-button {
+    text-align: center;
+}
+.content-box .select .select .btn-bid{
+    margin-left: 0;
+}
+.content-box .select .select-button-disable{
+    background: #E1E1E1;
+    background: linear-gradient(#E1E1E1, #CFCFCF) repeat scroll 0 0 #E1E1E1;
+    color: #999999;
+    cursor: default;
+    text-shadow: none;
+    border-color: #D3D3D3 #D3D3D3 #A6A6A6;
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    display: inline-block;
+}
+.auction-remind {
+    margin-left: 10px;
+}
+
+.content-box .scratch .scratch-loading {
+    display: none;
+    color: #999;
+    font-size: 14px;
+    position: absolute;
+    top:24px;
+    left: 108px;
+    z-index: 1;
+    vertical-align: middle;
+}
+.content-box .scratch .scratch-loading .img-loading{
+    margin-right: 8px;
+}
+.content-box .scratch .scratch-fail {
+    display: none;
+    color: #a5a5a5;
+    font-size: 14px;
+    position: absolute;
+    top:31px;
+    left: 100px;
+    z-index: 1;
+}
+.content-box .scratch .scratch-fail .icon-refresh {
+    background-position: -423px -603px;
+    width: 14px;
+    height: 20px;
+    *height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.content-box .scratch .success-text {
+    display: none;
+    font-size: 14px;
+    position: absolute;
+    top: 43.5px;
+    left: 142px;
+    z-index: -100;
+}
+.content-box .select .select-hint{
+    font-size: 14px;
+    line-height: 33px;
+    width: 142px;
+    height: 33px;
+    text-align: center;
+    overflow: hidden;
+    display: block;
+}
+.content-box .select .select-hint .select-time{
+    font-size: 18px;
+    color: #e95504;
+}
+.content-box .scratch .reload{
+    cursor: pointer;
+}
+.product-intro-wrap .summary-data .currentNumber {
+    font-weight: bold;
+    color: #ec6522;
+}
+
+
+/**** Win prize popup window ****/
+.win-prize-popup-window {
+    padding:32px 30px;
+    width: 549px;
+    border-top: 3px solid #4d4398;
+}
+
+.win-prize-popup-window .win-prize-information {
+}
+
+.win-prize-popup-window .win-prize-information .win-prize-confirm-information {
+    font-size: 12px;
+    color:#333333;
+    padding: 10px 0px 10px 0px;
+}
+
+.win-prize-popup-window .win-prize-information .win-prize-product .win-prize-product-name {
+    padding: 0 0 0 190px;
+    display: inline-block;
+    zoom:1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 360px;
+}
+.win-prize-popup-window .win-prize-information .win-prize-product {
+    position:relative;
+    font-size: 14px;
+    color:#666666;
+    padding-top:7px;
+    padding-bottom:7px;
+}
+
+.win-prize-popup-window .win-prize-information .win-prize-product i {
+    background: url('../images/lumi/scratch_win_prize_congratulations_149a971.gif') no-repeat;
+    position: absolute;
+    width:170px;
+    height:50px;
+    top:-10px;
+    left:0px;
+}
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-tabs li {
+    float:left;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-tabs {
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-tabs li {
+    font-size: 14px;
+    color:#333333;
+    padding:0px 95px 0 95px;
+    border-bottom: solid 4px #cccccc;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-tabs .selected-tab {
+    font-weight: bold;
+    border-bottom: solid 4px #ff6c00;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-tabs .single-tab {
+    float:none;
+    text-align: left;
+    font-weight: bold;
+    border-bottom: solid 2px #cccccc;
+    padding: 0px 0px 5px 0px;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .win-prize-address-lists {
+    list-style: none;
+    /**height:239px;**/
+    overflow: hidden;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .win-prize-address-lists .win-prize-address-list {
+    font-size: 14px;
+    color:#333333;
+    padding:16px 8px 16px 5px;
+    position: relative;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .win-prize-address-lists .win-prize-address-list:hover {
+    background-color: #fff5f5;
+}
+
+.delivery-address-icon {
+    width: 12px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    background: url(../images/lumi/order-icon_c4c4164.png) no-repeat -11px -613px;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .unfold-all-address-list {
+    font-size: 14px;
+    color:#2438cd;
+    margin-left: 28px;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-confirm-button-wrap {
+    padding:40px 0px;
+    text-align: center;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-confirm-button-wrap .win-prize-address-confirm-button {
+    background: #ff6613;
+    background-image: -webkit-linear-gradient(top, #ff6613, #ff6613);
+    background-image: -moz-linear-gradient(top, #ff6613, #ff6613);
+    background-image: -ms-linear-gradient(top, #ff6613, #ff6613);
+    background-image: -o-linear-gradient(top, #ff6613, #ff6613);
+    background-image: linear-gradient(to bottom, #ff6613, #ff6613);
+    -webkit-border-radius: 5;
+    -moz-border-radius: 5;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 12px 82px 12px 82px;
+    text-decoration: none;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-confirm-button-wrap .win-prize-address-confirm-button:hover {
+    background: #f59f73;
+    text-decoration: none;
+}
+
+.highlight-address {
+    display: none;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    background: url(../images/lumi/order-icon_c4c4164.png) no-repeat -318px -554px;
+}
+
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .win-prize-address-lists .win-prize-address-list{
+    border-bottom: 1px solid #eeeeee;
+    /**height: 40px;**/
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .win-prize-address-lists .win-prize-address-selected {
+    border: 2px solid #ff6c00;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .win-prize-address-lists .win-prize-address-selected .highlight-address {
+    display: inline-block;
+}
+
+.unfold-all-address-list-wrap {
+    padding:15px 0px;
+    position: relative;
+}
+
+.unfold-all-address-list-icon {
+    position: absolute;
+    height:0px;
+    width:0px;
+    top: 22px;
+    left: 13px;
+    border-top:solid 4px #6e6e6e;
+    border-left:solid 4px transparent;
+    border-right:solid 4px transparent;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .form-horizontal .prompt-row {
+    color:#666666;
+    font-size: 14px;
+    padding-bottom: 20px;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .form-horizontal .control-group .control-label {
+    width:73px;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .form-horizontal .control-group .controls {
+    margin-left:83px;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .form-horizontal .control-group .errorPanel {
+    display: none;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .form-horizontal .control-group .form-select {
+    z-index: 9;
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .form-horizontal .control-group .controls .form_select {
+    float:left;
+
+}
+
+.win-prize-popup-window .win-prize-address-wrap .win-prize-address-container .win-prize-address-content .form-horizontal .control-group .controls .help-line {
+    width:auto;
+}
+
+.win-prize-popup-window .close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.form-horizontal .control-group .form_select.ullh ul {
+    max-height: 130px;
+    overflow: auto;
+}
+
+
+
+/**** Win prize popup window ****/
+
+
+/*---------------------------------scratch-----------------------------------------*/
+
+.auction_step2 .bid-remind {
+    margin-left: 48px;
+}
+.auction_step2 .bid-remind .form-checkbox label {
+    padding-left: 0;
+}
+
+.product-img .icon-vip {
+    width: 100px;
+    height: 100px;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background: url(../images/lumi/tag-icon_81fe110.png) no-repeat -69px 0;
+}
+
+.points-auction-wrap .price {
+    display: inline;
+}
+.product-intro-wrap .price .price-num {
+    font-size: 16px;
+    font-weight: normal;
+}
+.product-intro-wrap .price .unit {
+    font-size: 14px;
+    color: #686868;
+}
+
+/*--------------------系列商品---------------------*/
+.series-pic-nav{
+    height: 60px;
+    padding: 0 20px;
+    margin: 15px 0;
+    position: relative;
+}
+.series-pic-nav ul{
+    white-space: nowrap;
+    font-size: 0;
+    width: 100%;
+    overflow: hidden;
+}
+.series-pic-nav li{
+    display: inline-block;
+    padding:0 8px;
+    *display:inline;
+    *zoom: 1;
+}
+.series-pic-nav .series-pic{
+    border: 1px solid #FFF;
+    display: block;
+}
+.series-pic-nav li .current,.series-pic-nav .series-pic:hover{
+    border-color: #FF6614;
+}
+.series-pic-nav .series-pic img{
+    height: 58px;
+    width: 58px;
+}
+.series-pic-left,.series-pic-right{
+    width: 10px;
+    height: 16px;
+    position: absolute;
+    top: 50%;
+    margin-top: -8px;
+    left: 0;
+    cursor: pointer;
+    background: url(../images/lumi/detail-icon_95bed43.png) -30px -301px no-repeat;
+}
+.series-pic-right{
+    background-position: -52px -301px;
+    left: auto;
+    right: 0;
+}
+.series-pic-left:hover{
+    background-position: -30px -326px;
+}
+.series-pic-right:hover{
+    background-position: -52px -326px;
+}
+.series-name-wrap{
+    *zoom: 1;
+    padding-bottom: 6px;
+}
+.series-name-wrap li{
+    float: left;
+    padding: 6px 8px 6px 0;
+}
+.series-name-wrap .series-name,.series-name-wrap .series-name-disable{
+    display: block;
+    height: 22px;
+    line-height: 22px;
+    padding: 0 12px;
+    background-color: #FFF;
+    border: 1px solid #B0B2B4;
+    color: #333;
+    position: relative;
+}
+.series-name-wrap .series-name-disable,.series-name-wrap .series-name-disable.current,.series-name-wrap .series-name-disable.current:hover{
+    border: 1px dashed #E4E3E3;
+    color: #E4E3E3;
+    cursor: default;
+    text-decoration: none;
+}
+.series-name-wrap li .current,.series-name-wrap .series-name:hover{
+    text-decoration: none;
+    border-color: #FF6614;
+    color: #FF6614;
+}
+.series-name-wrap li .current i{
+    background: url(../images/lumi/detail-icon_95bed43.png) 0 -328px no-repeat;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    right: -1px;
+    bottom: -1px;
+}
+.series-name-wrap .series-name-disable.current i{
+    display: none;
+ }
+/*L码作为商品*/
+.luma-detail-banner{
+    display: block;
+    width: 780px;
+    height: 154px;
+    margin-bottom: 30px;
+}
+.luma-detail{
+    width: 780px;
+    margin: 0 auto;
+}
+.luma-detail h3{
+    color: #FF6D1F;
+    font-size: 24px;
+    font-weight: normal;
+    padding-bottom: 10px;
+}
+.luma-detail .activity-time{
+    font-size: 14px;
+    color: #999;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #E0DDDD;
+}
+.luma-detail .luma-regular{
+    margin-left: 10px;
+}
+.luma-detail .product-list{
+    padding-top: 20px;
+    overflow: hidden;
+}
+.luma-detail .product-list .state-tip{
+    display: none;
+}
+.luma-detail .product-list .begin-time {
+    float: right;
+    padding-left: 20px;
+    background: url(../images/lumi/lumi-icon_1ba1237.png) no-repeat -473px -505px;
+}
+.luma-detail .product-list .end-time {
+    float: right;
+    padding-left: 23px;
+    background: url(../images/lumi/lumi-icon_1ba1237.png) no-repeat -435px -540px;
+}
+.luma-detail .product-list .not-started .begin-time {
+    display: block;
+}
+.luma-detail .product-list .started .end-time {
+    display: block;
+}
+.luma-detail .product-list .finished .finished-tip {
+    display: block;
+}
+.luma-detail .product-list li{
+    float: left;
+    width: 350px;
+    height: 385px;
+    margin: 0 20px;
+    border-bottom: 1px solid #E0DDDD;
+    position: relative;
+    margin-top: 16px;
+}
+.luma-detail .product-list .product-img{
+    position: relative;
+}
+.luma-detail .product-list .product-img img{
+    display: block;
+    width: 260px;
+    height: 260px;
+    margin: 0 auto 20px;
+}
+.luma-detail .product-list .product-name{
+    padding: 0 0 10px;
+    font-size: 16px;
+    text-overflow: ellipsis;
+}
+.luma-detail .product-list .product-name a{
+    color: #333;
+}
+.luma-detail .product-list .price span{
+    color: #666;
+    font-size: 16px;
+    font-weight: normal;
+}
+.luma-detail .product-list .price .price-title{
+    display: inline-block;
+    width: 64px;
+}
+.luma-detail .product-list .price .price-num{
+    color: #ff6614;
+}
+.luma-detail .luma-regular-detail{
+    border-top: 1px solid #E0DDDD;
+    margin-top: -1px;
+    color: #666;
+    padding: 20px 20px 0;
+}
+.luma-detail .luma-regular-title{
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+.luma-detail .series-tab-wrap{
+    position: absolute;
+    bottom: 0;
+    padding:2px 4px 0;
+    text-align: left;
+    height: 26px;
+    overflow: hidden;
+    width: 252px;
+    left: 50%;
+    margin-left: -130px;
+}
+.luma-detail .series-tab-wrap a{
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    background-color: rgba(256,256,256,.8);
+    border: 1px solid #999;
+    color: #999;
+    padding: 0 6px;
+    margin-right: 2px;
+    margin-bottom: 4px;
+    filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#CCFFFFFF', endColorstr='#CCFFFFFF');
+}
+:root .luma-detail .series-tab-wrap a{filter:none;}/*for IE9*/
+.luma-detail .series-tab-wrap a.current,.series-tab-wrap a:hover{
+    color:#FF6614;
+    border-color: #FF6614;
+    text-decoration: none;
+}
+.luma-detail .product-list li.finished .finished-tip{
+    display: block;
+    width: 108px;
+    height: 108px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: url(../images/lumi/lumi-icon_1ba1237.png) no-repeat -301px -359px;
+    z-index: 2;
+}
+.luma-detail .product-list li.finished .exchange-finished {
+    background-position: -572px -359px;
+}
+.luma-detail .product-list li.finished img {
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+}
+:root .luma-detail .product-list li.finished img{
+    filter:none;
+}/*for IE9*/
+.luma-detail .product-list .icon-vip {
+    width: 54px;
+    height: 54px;
+    top: 10px;
+    left: 56px;
+    background-position: 0 0;
+}
+.checkbox-row label {
+    display: inline-block;
+    width: 390px;
+}
+.checkbox-row .fund-check {
+    margin-right: 5px;
+    float: left;
+}
+.fund-check-row {
+    margin-bottom: 20px;
+}
