@@ -28,7 +28,7 @@ div.laydate-icon{
 
 #ul_myPosMgr li {padding: 5px;}
 
-#goods li{float: left;    margin:15px;    width: 180px;}
+#goods li{float: left;margin:15px; width: 210px;}
 </style>
 <script type="text/javascript">
     
@@ -50,24 +50,26 @@ div.laydate-icon{
 		<div style="padding : 20px; ">
 			当前可用积分：$!{point.curPoint}
 		</div>
-
-        <div style="padding : 20px; ">
-			<ul id="goods">
+	</div>
+	
+	
+		<!-- tab panes -->
+	<div class="stream-list" style="padding-left: 20px">
+      <ul id="goods">
 				 #foreach($row in $page.results)
 				<li>
-				<a href="$!{row.name}">
-					<img width="180px" src="$!{row.mainPic}" />
-				<div>
-				<span>品名：$!{row.name}</span><br/>
-				<span>积分：$!{row.price}</span><br/>
-				<span>库存：$!{row.storeNum}</span>
-				</div>
-				</a>
+					<a href="$base/home/goodsDetail?id=$!{row.id}">
+						<img width="180px" src="$!{row.mainPic}" />
+						<div>
+							<span>$!{row.name}</span><br/>
+							<span style="text-decoration: line-through;color: #999;">市场参考价：$!{row.price}</span><br/>
+							<span>积分兑换价：$!{row.price}</span><br/>
+							<span>库存：$!{row.storeNum}</span>
+						</div>
+					</a>
 				</li>                    
                 #end
 			</ul>
-        </div>
-        
 	</div>
 </div>
 
