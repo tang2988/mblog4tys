@@ -62,7 +62,7 @@ div.laydate-icon{
 						<img width="180px" src="$!{row.mainPic}" />
 						<div>
 							<span>$!{row.name}</span><br/>
-							<span style="text-decoration: line-through;color: #999;">市场参考价：$!{row.price}</span><br/>
+							<span style="text-decoration: line-through;color: #999;">市场参考价：$!{row.reserve2} RMB</span><br/>
 							<span>积分兑换价：$!{row.price}</span><br/>
 							<span>库存：$!{row.storeNum}</span>
 						</div>

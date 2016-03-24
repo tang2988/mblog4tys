@@ -2,41 +2,62 @@
 
 <div class="col-lg-6">
     <div class="panel m-t-large m-b">
-        <header class="panel-heading">友情链接#if($friendLink)修改#else添加#end</header>
+        <header class="panel-heading">交易#if($goodsOther)修改#else添加#end</header>
         <div class="panel-body">
-            <form id="qForm" class="form-horizontal" method="post" action="save">
-                <input type="hidden" name="id" value="#if($friendLink)$!friendLink.id#else 0#end">
+            <form id="qForm" class="form-horizontal" method="post" action="edit">
+                <input type="hidden" name="id" value="#if($goodsOther)$!goodsOther.id#else 0#end">
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">站点名称</label>
+                    <label class="col-lg-2 control-label">商品ID</label>
                     <div class="col-lg-5">
-                        <input type="text" name="siteName" class="form-control" value="$!{friendLink.siteName}">
+                        <input type="text" name="goodsId" class="form-control" value="$!{goodsOther.goodsId}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">LOGO</label>
+                    <label class="col-lg-2 control-label">下单用户</label>
                     <div class="col-lg-5">
-                        <input type="text" name="logo" class="form-control" value="$!{friendLink.logo}">
-                        <p class="help-block">示例：http://mtons.com/logo.png</p>
+                        <input type="text" name="userId" class="form-control" value="$!{goodsOther.userId}">
+                        <p class="help-block"></p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">网址</label>
+                    <label class="col-lg-2 control-label">购买数量</label>
                     <div class="col-lg-8">
-                        <input type="text" name="url" class="form-control" value="$!{friendLink.url}">
-                        <p class="help-block">示例: http://mtons.com</p>
+                        <input type="text" name="buyNum" class="form-control" value="$!{goodsOther.buyNum}">
+                        <p class="help-block"></p>
                     </div>
                 </div>
-
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">站点描述</label>
+                    <label class="col-lg-2 control-label">支付金额</label>
                     <div class="col-lg-8">
-                        <textarea rows="3" class="form-control" name="remark" class="form-control" placeholder="站点描述">$!{friendLink.remark}</textarea>
+                        <input type="text" name="cost" class="form-control" value="$!{goodsOther.cost}">
+                        <p class="help-block"></p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">排序</label>
-                    <div class="col-lg-2">
-                        <input type="text" name="sort" class="form-control {digits:true}" value="$#if(!$friendLink)0#else$!friendLink.sort#end">
+                    <label class="col-lg-2 control-label">下单备注</label>
+                    <div class="col-lg-8">
+                        <input type="text" name="remark" class="form-control" value="$!{goodsOther.remark}">
+                        <p class="help-block"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">状态</label>
+                    <div class="col-lg-8">
+                        <select name="status">
+        					<option value="0" #if($!{goodsOther.status}==0)selected="selected"#end>已下单</option>
+        					<option value="1" #if($!{goodsOther.status}==1)selected="selected"#end>已支付</option>
+        					<option value="2" #if($!{goodsOther.status}==2)selected="selected"#end>已发货</option>
+        					<option value="3" #if($!{goodsOther.status}==3)selected="selected"#end>已完成</option>
+        					<option value="4" #if($!{goodsOther.status}==4)selected="selected"#end>退货申请</option>
+        					<option value="5" #if($!{goodsOther.status}==5)selected="selected"#end>退货完成</option>
+        				</select>
+                        <p class="help-block"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">订单处理备注</label>
+                    <div class="col-lg-8">
+                        <textarea rows="3" class="form-control" name="reserve3" class="form-control" placeholder="关联的系统外订单号，方便核查">$!{goodsOther.reserve3}</textarea>
                     </div>
                 </div>
                 <div class="form-group">

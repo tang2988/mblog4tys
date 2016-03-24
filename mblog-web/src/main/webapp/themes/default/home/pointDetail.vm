@@ -69,31 +69,18 @@ div.laydate-icon{
                     <th>更新时间</th>
                     <th>关联id</th>
                     <th>来源</th>
-                    <th>刷卡平台</th>
-                    <th>交易流水号</th>
-                    #if($shiro.hasPermission("friendLink:edit1"))
-                    	<th>所属代理</th>
-                        <th width="300" class="col-lg-2">操作</th>
-                    #end
+                    <th>操作人</th>
                 </tr>
-                 <tr>
                 #foreach($row in $page.results)
+				<tr>
                     <td>$!{velocityCount}</td>
                     <td>$!{row.beforePoint}</td>
                     <td>$!{row.addPoint}</td>
                     <td>$!{row.afterPoint}</td>
                     <td>$!{row.updateTime} </td>
-                    <td>$!{row.opId}</td>
                     <td>$!{row.relateId}</td>
                     <td>$!{row.sourceDesc}</td>
-                    #if($shiro.hasPermission("friendLink:edit1"))
-                    	<td>$!{row.agencyName}</td>
-                        <td class="text-center">
-                            <a href="edit?id=${row.id}" class="btn btn-mini btn-primary">
-                                <i class="fa fa-check-square-o"></i> 修改
-                            </a>
-                        </td>
-                    #end
+                    <td>$!{row.opId}</td>
                 </tr>
                 #end
             </table>

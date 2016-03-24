@@ -12,14 +12,6 @@
     	$("#pn").val(p);
     	$(".CurForm").submit();
     }
-    
-    function sync(curObj){
-    	curObj.disabled = true;
-    	$.post("$base/admin/cardTransactionRecord/sync", $(".CurForm").serializeArray(),
-          function(data){
-          curObj.disabled = false;
-		});
-    }
 </script>
 
 <style>
@@ -52,24 +44,27 @@ div.laydate-icon{
     <header class="panel-heading">POS记录</header>
     <div class="panel-body">
     	<div>
-    		<form class="CurForm" action="$base/admin/cardTransactionRecord/list" method="post">
+    		<form class="CurForm" action="$base/admin/goodsother/list" method="post">
     		<input type="hidden" id="pn" name="pn" value="${page.pageNo}" />
     		<ul>
 				<li>产商：
-				<select name="sysSource">
-					<option value="瑞银信" select="select">瑞银信</option>
-					<option value="瑞刷" select="select">瑞刷</option>
+				<select name="status">
+					<option value="0" #if($!{status}==0)selected="selected"#end>已下单</option>
+					<option value="1" #if($!{status}==1)selected="selected"#end>已支付</option>
+					<option value="2" #if($!{status}==2)selected="selected"#end>已发货</option>
+					<option value="3" #if($!{status}==3)selected="selected"#end>已完成</option>
+					<option value="4" #if($!{status}==4)selected="selected"#end>退货申请</option>
+					<option value="5" #if($!{status}==5)selected="selected"#end>退货完成</option>
 				</select>
 				</li>
 				<li>
-					开始日：<input name="yearmonthdatestart" onclick="laydate({ format: 'YYYYMMDD'})" >
-					截止日：<input name="yearmonthdateend" onclick="laydate({ format: 'YYYYMMDD'})"  > 
+					开始日：<input name="createTime_le" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" >
+					截止日：<input name="createTime_ge" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"  > 
 				</li>
 				<li>
 					手机号码：<input name="mobile" >
 				</li>
 				<li>
-					<input type="button" value="同步数据" onclick="sync(this)"  >
 					<input type="button" value="查询" onclick="submitCurForm(1)"  >
 				</li>
 			</ul>
@@ -79,40 +74,39 @@ div.laydate-icon{
             <table id="treeTable" class="table table-striped table-bordered b-t text-small">
                 <tr>
                     <th class="col-lg-1">#</th>
-                    <th>手机号码</th>
-                    <th>终端编号</th>
-                    <th>交易金额</th>
-                    <th>手续费</th>
-                    <th>交易日期</th>
-                    <th>交易时间</th>
-                    <th>交易类型</th>
-                    <th>银行卡号</th>
-                    <th>刷卡平台</th>
-                    <th>交易流水号</th>
-                    <th>所属代理</th>
+                    <th>用户ID</th>
+                    <th>商品ID</th>
+                    <th>订单状态</th>
+                    <th>数量</th>
+                    <th>金额</th>
+                    <th>下单时间</th>
+                    <th>下单备注</th>
+                    <th>处理用户</th>
+                    <th>订单处理备注</th>
+                    <th>更新时间</th>
                     #if($shiro.hasPermission("friendLink:edit"))
                         <th width="300" class="col-lg-2">操作</th>
                     #end
                 </tr>
                 #foreach($row in $page.results)
+				<tr>
                     <td>$!{velocityCount}</td>
-                    <td>$!{row.moblieNoV}</td>
-                    <td>$!{row.terminalId}</td>
-                    <td>$!{row.transacount}</td>
-                    <td>$!{row.feeAmt}</td>
-                    <td>$!{row.deal_data}</td>
-                    <td>$!{row.deal_time}</td>
-                    <td>$!{row.dealTypeName}</td>
-                    <td>$!{row.bankcardNumber}</td>
-                    <td>$!{row.sysSource}</td>
-                    <td>$!{row.serialNumber}</td>
-                    <td>$!{row.agencyName}</td>
+                    <td>$!{row.userId}</td>
+                    <td>$!{row.goodsId}</td>
+                    <td>$!{row.status}</td>
+                    <td>$!{row.buyNum}</td>
+                    <td>$!{row.cost}</td>
+                    <td>$!{row.createTime}</td>
+                    <td>$!{row.remark}</td>
+                    <td>$!{row.opId}</td>
+                    <td>$!{row.reserve3}</td>
+                    <td>$!{row.updateTime}</td>
                     #if($shiro.hasPermission("friendLink:edit"))
                         <td class="text-center">
-                            <a href="$base/admin/cardTransactionRecord/edit?id=${row.id}" class="btn btn-mini btn-primary">
+                            <a href="edit?id=${row.id}" class="btn btn-mini btn-primary">
                                 <i class="fa fa-check-square-o"></i> 修改
                             </a>
-                            <a href="$base/admin/cardTransactionRecord/delete?id=${row.id}" class="btn btn-mini"><i class="fa fa-check-square-o"></i> 删除</a>
+                            <a href="delete?id=${row.id}" class="btn btn-mini"><i class="fa fa-check-square-o"></i> 删除</a>
                         </td>
                     #end
                 </tr>

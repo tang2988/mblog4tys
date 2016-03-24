@@ -39,6 +39,14 @@ div.laydate-icon{
 		$(".tab").toggleClass("current");
 		$(".tab-content").toggleClass("hidden");
     }
+	
+	$(function(){
+		$("#buyNum").blur(function(){
+			var _goodsprice=$("#goodsprice").val();	_goodsprice=_goodsprice==""?0:_goodsprice;
+			var _buyNum=$("#buyNum").val();	_buyNum=_buyNum==""?0:_buyNum;
+			$("#usePoint_expect").html(_buyNum*_goodsprice);
+		});
+	});
 </script>
 <div class="shadow-box">
 	<div class="filter">
@@ -70,26 +78,36 @@ div.laydate-icon{
                         <li class="synchro-height clearfix" id="productDetailTemplate01_div">            
 							<div class="summary-name">市场参考价</div>
                             <div class="summary-data">
-                                <span class="lumi-delprice">￥$!{goods.price}</span>
+                                <span class="lumi-delprice">￥$!{goods.reserve2} RMB</span>
                             </div>
 						</li>
 						<li class="synchro-height clearfix">
 							<div class="summary-name">积分兑换价</div>
                             <div class="summary-data">
                                 <p class="price">
-									<span class="price-num">$!{goods.price}</span><span class="unit">分</span>
+									<span class="price-num">$!{goods.price}</span><span class="unit"> 分</span>
+									<input type="hidden" name="goodsprice" id="goodsprice" value="$!{goods.price}" />
+								</p>
+							</div>
+						</li>
+						<li class="synchro-height clearfix">
+							<div class="summary-name">当前库存</div>
+                            <div class="summary-data">
+                                <p class="price">
+									<span class="price-num">$!{goods.storeNum}</span><span class="unit"> 件</span>
 								</p>
 							</div>
 						</li>
                     </ul>
 					<div class="operation">
-						<form class="form-horizontal amount-form CurForm">
+						<form class="form-horizontal amount-form CurForm" method="post" action="$!{base}/home/goodsOther">
 							<input type="hidden" name="goodsId" id="goodsId" value="$!{goods.id}" />
 							<div style="padding: 5px;">
-								换购数量：<input style="    text-align: right" type="text" name="buyNum" id="buyNum" value="1" size="5" maxlength="5"/>&nbsp;当前库存：$!{goods.storeNum}
+								换购数量：<input style="    text-align: right" type="text" name="buyNum" id="buyNum" value="1" size="5" maxlength="5"/><br>
+									<span style="color: #999">本次交易预计花费 <i id="usePoint_expect">1000</i> 积分</span>
 							</div>
 							<div style="padding: 5px;">
-								手机号码：<input style="    text-align: right" type="text" name="remark" id="remark" value="" size="18" maxlength="13" placeholder="不联系怎么发福利?"/>
+								手机号码：<input style="    text-align: right" type="text" name="remark" id="remark" value="" size="18" maxlength="11" placeholder="对应收款账户"/>
 							</div>
 							
 						</form>
