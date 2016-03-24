@@ -7,7 +7,15 @@ public class QueryRules {
 	private Object val;
 	private String op;//eq like
 	
+	public static String OP_EQ="eq";
+	public static String OP_LE="le";
+	public static String OP_GE="ge";
+	public static String OP_LT="lt";
+	public static String OP_GT="gt";
+	public static String OP_LIKE="like";
+	public static String OP_NE="ne";
 	
+		
 	public QueryRules( String name,Object val,String op) {
 		this.name = name;
 		this.val = val;

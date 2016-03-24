@@ -73,12 +73,19 @@ public class GoodsOtherDaoImpl extends BaseRepositoryImpl<GoodsOtherPO> implemen
 				q.add(Restrictions.le(qr.getName(),qr.getVal()));
 			}else if("ge".equals(qr.getOp())){
 				q.add(Restrictions.ge(qr.getName(),qr.getVal()));
-				
+			}else if("ne".equals(qr.getOp())){
+				q.add(Restrictions.ne(qr.getName(),qr.getVal()));
 			}else{
 				throw new RuntimeException("查询刷卡交易记录异常："+qr);
 			}
 		}
 //		q.addOrder(Order.desc("id"));
 		return q.list();
+	}
+	
+	@Override
+	public GoodsOtherPO findOneByCondition( List<QueryRules> qrLst)   {
+		List<GoodsOtherPO> lst = findByCondition(qrLst);
+		return (GoodsOtherPO) lst.get(0);
 	}
 }

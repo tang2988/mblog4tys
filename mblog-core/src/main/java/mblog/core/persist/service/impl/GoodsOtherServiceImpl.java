@@ -8,17 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import mblog.core.data.AccountProfile;
 import mblog.core.data.Goods;
 import mblog.core.data.GoodsOther;
 import mblog.core.data.PointDetail;
 import mblog.core.persist.dao.GoodsOtherDao;
 import mblog.core.persist.entity.GoodsOtherPO;
-import mblog.core.persist.entity.UserPO;
 import mblog.core.persist.service.GoodsOtherService;
 import mblog.core.persist.service.GoodsService;
 import mblog.core.persist.service.PointService;
@@ -65,11 +62,23 @@ public class GoodsOtherServiceImpl implements GoodsOtherService {
 
         BeanUtils.copyProperties(ctr, goodsOtherPO);
 
-        goodsOtherDao.saveOrUpdate(goodsOtherPO);
+        goodsOtherDao.save( goodsOtherPO);
 
 //        servletContext.setAttribute("goodsOthers", findAll());
     }
 
+    
+    @Override
+    public void update(GoodsOther ctr) {
+        GoodsOtherPO goodsOtherPO = new GoodsOtherPO();
+
+        BeanUtils.copyProperties(ctr, goodsOtherPO);
+
+        goodsOtherDao.update(goodsOtherPO);
+
+//        servletContext.setAttribute("goodsOthers", findAll());
+    }
+    
     @Override
     public void delete(long id) {
         GoodsOtherPO goodsOtherPO = goodsOtherDao.get(id);
@@ -82,6 +91,27 @@ public class GoodsOtherServiceImpl implements GoodsOtherService {
     	GoodsOther goodsOther = BeanMapUtils.copy(goodsOtherDao.get(id));
         return goodsOther;
     }
+    @Override
+    public List<GoodsOther> findByCondition( List<QueryRules> qrLst)   {
+    	
+    	List<GoodsOtherPO> linkPOs = goodsOtherDao.findByCondition(qrLst);
+
+        List<GoodsOther> rets = new ArrayList<GoodsOther>();
+        for (GoodsOtherPO po : linkPOs) {
+        	GoodsOther m = new GoodsOther();
+            BeanUtils.copyProperties(po, m);
+            rets.add(m);
+        }
+        return rets;
+    }
+    
+	@Override
+	public GoodsOther findOneByCondition( List<QueryRules> qrLst)   {
+		GoodsOtherPO po = goodsOtherDao.findOneByCondition(qrLst);
+		GoodsOther m = new GoodsOther();
+        BeanUtils.copyProperties(po, m);
+        return (m);
+	}
 
     @Override
     public List<GoodsOther> findAll() {
@@ -104,15 +134,21 @@ public class GoodsOtherServiceImpl implements GoodsOtherService {
 		
 		goodsOther.setCost(goodsOther.getBuyNum()*goods.getPrice());
 		goodsOther.setUpdateTime(new Date());
+		goodsOther.setStatus(GoodsOther.STATUS_BUYED);
+		save(goodsOther);
+		
 		
 		PointDetail pd = new PointDetail();
 		pd.setAddPoint(-1* goodsOther.getCost());
 		pd.setOpId(goodsOther.getUserId());
 		pd.setUserId(goodsOther.getUserId());
-		
+		pd.setSourceDesc("支出："+goods.getName());
+		pd.setRelateId(goodsOther.getId());
 		pointService.updatePoint(pd);
 		
-		save(goodsOther);
+		
+		goodsOther.setStatus(GoodsOther.STATUS_PAYED);
+		update(goodsOther);
 		return goodsOther;
 	}
     

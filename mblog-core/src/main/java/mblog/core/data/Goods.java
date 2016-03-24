@@ -40,7 +40,7 @@ public class Goods implements Serializable {
 	private Long version;//
 
 	private Long reserve1;//排序
-	private Long reserve2;//
+	private Long reserve2;//市场价
 	private String reserve3;//
 	private String reserve4;//
 	public long getId() {

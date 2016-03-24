@@ -19,4 +19,6 @@ public interface PointDao extends BaseRepository<PointPO> {
     
 	public List<PointPO> findByCondition( List<QueryRules> qrLst)   ;
 
+	
+	public PointPO findOneByCondition( List<QueryRules> qrLst)   ;
 }

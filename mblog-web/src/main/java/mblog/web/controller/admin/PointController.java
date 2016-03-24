@@ -75,7 +75,7 @@ public class PointController extends BaseController {
 
 	@RequestMapping("/save")
 	// @ResponseBody
-	public String save(Long id, String addPoint,String sourceDesc , ModelMap model) {
+	public String save(Long userId, String addPoint,String sourceDesc , ModelMap model) {
 		try {
 			if(StringUtils.isBlank(addPoint)){
 				throw new RuntimeException("请填写本次调整积分");
@@ -90,7 +90,7 @@ public class PointController extends BaseController {
 			PointDetail pd = new PointDetail();
 			pd.setAddPoint(Long.valueOf(addPoint));
 			pd.setSourceDesc(sourceDesc);
-			pd.setPid(id);
+			pd.setUserId(userId);
 			pd.setOpId(opId);
 			pointService.updatePoint(pd);
 		} catch (Exception e) {

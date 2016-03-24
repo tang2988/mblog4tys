@@ -19,4 +19,5 @@ public interface GoodsOtherDao extends BaseRepository<GoodsOtherPO> {
     
 	public List<GoodsOtherPO> findByCondition( List<QueryRules> qrLst)   ;
 
+	public GoodsOtherPO findOneByCondition( List<QueryRules> qrLst)   ;
 }

@@ -9,12 +9,14 @@
 */
 package mblog.web.controller.desk.user;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -349,8 +351,8 @@ public class HomeController extends BaseController {
 	
 	
 	@RequestMapping("/home/pointDetail")
-	public String pointDetail(Integer pn, String yearmonthdatestart,String yearmonthdateend,  ModelMap model) {
-		Paging paging = wrapPage(pn,30);
+	public String pointDetail(Integer pn, String yearmonthdatestart,String yearmonthdateend,  ModelMap model) throws ParseException {
+		Paging paging = wrapPage(pn,20);
 		
 		UserProfile profile = getSubject().getProfile();
 		List<QueryRules> qrLst = new ArrayList<>();
@@ -362,11 +364,11 @@ public class HomeController extends BaseController {
 		}
 		
 		if(StringUtils.isNotBlank(yearmonthdatestart)){
-			QueryRules qr = new QueryRules("updateTime",yearmonthdatestart+" 00:00:00","ge"	);qrLst.add(qr);
+			QueryRules qr = new QueryRules("updateTime",DateUtils.parseDate(yearmonthdatestart+" 00:00:00", new String[]{"yyyy-MM-dd HH:mm:ss"}),"ge"	);qrLst.add(qr);
 		}
 		
 		if(StringUtils.isNotBlank(yearmonthdateend)){
-			QueryRules qr = new QueryRules("updateTime",yearmonthdateend+" 23:59:59"	,"le");qrLst.add(qr);
+			QueryRules qr = new QueryRules("updateTime",DateUtils.parseDate(yearmonthdateend+" 23:59:59", new String[]{"yyyy-MM-dd HH:mm:ss"})	,"le");qrLst.add(qr);
 		}
 	
 		pointDetailService.paging(paging, qrLst);
@@ -376,7 +378,7 @@ public class HomeController extends BaseController {
 		model.put("yearmonthdateend", yearmonthdateend);
 		
 		
-		pointService.paging(paging, qrLst);
+//		pointService.paging(paging, qrLst);
 		model.put("page", paging);
 		
 		return getView("/home/pointDetail");
@@ -403,6 +405,9 @@ public class HomeController extends BaseController {
 	@RequestMapping("/home/goodsOther")
 	public String goodsOther(Long goodsId,Integer buyNum,String remark, ModelMap model) {
 		UserProfile profile = getSubject().getProfile();
+		if(buyNum<1){
+			return "redirect:/home/goodsDetail?id="+goodsId;
+		}
 		
 		GoodsOther goodsOther = new GoodsOther();
 		goodsOther.setBuyNum(buyNum);

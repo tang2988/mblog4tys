@@ -99,13 +99,16 @@ public class PointServiceImpl implements PointService {
 	@Override
 	@Transactional
 	public synchronized Point updatePoint(PointDetail pd) {
-		PointPO po = pointDao.get(pd.getPid());
+		List<QueryRules> qrLst = new ArrayList<>();
+		qrLst.add(new QueryRules("userId",pd.getUserId(),QueryRules.OP_EQ));
+		PointPO po =pointDao.findOneByCondition(qrLst );
+		
 		if (po != null) {
 			Long old = po.getCurPoint();
 			long num = pd.getAddPoint();// 变动
 
 			if (num < 0) {// 消费
-				if (old < (num)) {
+				if (old < (-1*num)) {
 					throw new MtonsException("您的积分不足以抵扣该笔交易");
 				}
 				po.setUsedPoint(po.getUsedPoint() + num);
@@ -116,7 +119,7 @@ public class PointServiceImpl implements PointService {
 				po.setCurPoint(old + num);
 			}
 			po.setUpdateTime(new Date());
-			
+			pd.setPid(po.getId());
 			pd.setUserId(po.getUserId());
 			pd.setAddPoint(num);
 			pd.setBeforePoint(old);

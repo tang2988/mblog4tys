@@ -13,14 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import mblog.core.data.Goods;
-import mblog.core.persist.service.GoodsService;
+import mblog.core.data.GoodsOther;
+import mblog.core.persist.service.GoodsOtherService;
 import mblog.core.persist.utils.QueryRules;
 import mblog.web.controller.BaseController;
 import mtons.modules.pojos.Paging;
@@ -33,33 +30,34 @@ import mtons.modules.pojos.Paging;
 public class GoodsOtherController extends BaseController {
 	private static final Logger log = LoggerFactory.getLogger(GoodsOtherController.class);
 	@Autowired
-	private GoodsService goodsService;
+	private GoodsOtherService goodsOtherService;
 
 	@RequestMapping("/list")
 	public String list(Integer pn,  
-			String name,String startTime,String endTime, ModelMap model) throws ParseException {
+			Integer status,String createTime_le,String createTime_ge, ModelMap model) throws ParseException {
 		Paging paging = wrapPage(pn,30);
 		
 		List<QueryRules> qrLst = new ArrayList<>();
-		if(StringUtils.isNotBlank(name)){
-			QueryRules qr = new QueryRules("name",name,"like"	);qrLst.add(qr);
+		if(status!=null){
+			QueryRules qr = new QueryRules("name",status,QueryRules.OP_EQ	);qrLst.add(qr);
 		}
 		
-		if(StringUtils.isNotBlank(startTime)){
-			QueryRules qr = new QueryRules("startTime",DateUtils.parseDate(startTime+" 00:00:00", new String[]{"yyyy-MM-dd hh:mm:ss"}),"ge"	);qrLst.add(qr);
+		if(StringUtils.isNotBlank(createTime_le)){
+			QueryRules qr = new QueryRules("createTime",DateUtils.parseDate(createTime_le, new String[]{"yyyy-MM-dd HH:mm:ss"}),QueryRules.OP_LE	);qrLst.add(qr);
 		}
 		
-		if(StringUtils.isNotBlank(endTime)){
-			QueryRules qr = new QueryRules("endTime",DateUtils.parseDate(endTime+" 23:59:59", new String[]{"yyyy-MM-dd hh:mm:ss"}),"le");qrLst.add(qr);
+		if(StringUtils.isNotBlank(createTime_ge)){
+			QueryRules qr = new QueryRules("createTime",DateUtils.parseDate(createTime_ge, new String[]{"yyyy-MM-dd HH:mm:ss"}),QueryRules.OP_GE);qrLst.add(qr);
 		}
+		
 	
-		goodsService.paging(paging, qrLst);
+		goodsOtherService.paging(paging, qrLst);
 		model.put("page", paging);
-		model.put("name", name);
-		model.put("startTime", startTime);
-		model.put("endTime", endTime);
+		model.put("status", status);
+		model.put("createTime_le", createTime_le);
+		model.put("createTime_ge", createTime_ge);
 		
-		return "/admin/goods/list";
+		return "/admin/goodsother/list";
 	}
 
 	/*@RequestMapping("/delete")
@@ -71,40 +69,60 @@ public class GoodsOtherController extends BaseController {
 	@RequestMapping("/edit")
 	public String edit(@RequestParam(value = "id", required = false, defaultValue = "0") long id, Model model) {
 		if (id != 0) {
-			Goods goods = goodsService.findById(id);
-			model.addAttribute("goods", goods);
+			List<QueryRules> qrLst = new ArrayList<>();
+			qrLst.add( new QueryRules("id", id, QueryRules.OP_EQ));
+			qrLst.add( new QueryRules("status", GoodsOther.STATUS_FINISHED, QueryRules.OP_NE));
+			qrLst.add( new QueryRules("status", GoodsOther.STATUS_RETURNOK, QueryRules.OP_NE));
+			
+			GoodsOther goodsOther = goodsOtherService.findOneByCondition(qrLst );
+			model.addAttribute("goodsOther", goodsOther);
+			return "/admin/goodsother/edit";
 		}
-		return "/admin/goods/edit";
+		return "/admin/goodsother/save";
 	}
 
 	@RequestMapping("/save")
 	// @ResponseBody
-	public String save(long id,String name,Long price,Integer storeNum,String mainPic,Integer status,Boolean isVip,String startTime,String endTime,Long reserve1,
-			String content ,ModelMap model) {
+	public String save(long id,Long goodsId,Long userId,Integer status,Integer buyNum,Long cost,String remark,
+			ModelMap model) {
 		try {
 			long opId = getSubject().getProfile().getId();
-			Goods goods = new Goods();
-			goods.setId(id);
-			goods.setName(name);
-			goods.setPrice(price);
-			goods.setStoreNum(storeNum);
-			goods.setMainPic(mainPic);
-			goods.setStatus(status);
-			goods.setIsVip(isVip);
-			goods.setStartTime(DateUtils.parseDate(startTime+" 00:00:00", new String[]{"yyyy-MM-dd hh:mm:ss"}));
-			goods.setEndTime(DateUtils.parseDate(endTime+" 23:59:59", new String[]{"yyyy-MM-dd hh:mm:ss"}));
-			goods.setReserve1(reserve1);
-			goods.setDescHtm(content);
-			
-			goods.setOpId(opId);
-			goods.setUpdateTime(new Date());
-			goodsService.save(goods); 
+			GoodsOther goodsOther = new GoodsOther();
+			goodsOther.setId(id);
+			goodsOther.setUserId(userId);
+			goodsOther.setGoodsId(goodsId);
+			goodsOther.setStatus(status);
+			goodsOther.setUpdateTime(new Date());
+			goodsOther.setBuyNum(buyNum);
+			goodsOther.setCost(cost);
+			goodsOther.setRemark(remark);
+			goodsOther.setOpId(opId);
+			goodsOtherService.save(goodsOther); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/admin/goods/list";
+		return "redirect:/admin/goodsother/list";
 	}
 
+	
+	@RequestMapping("/edit")
+	// @ResponseBody
+	public String edit(long id, Integer status, String reserve3,
+			ModelMap model) {
+		try {
+			long opId = getSubject().getProfile().getId();
+			GoodsOther goodsOther = new GoodsOther();
+			goodsOther.setId(id);
+			goodsOther.setStatus(status);
+			goodsOther.setUpdateTime(new Date());
+			goodsOther.setReserve3(reserve3);
+			goodsOther.setOpId(opId);
+			goodsOtherService.save(goodsOther); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/admin/goodsother/list";
+	}
 	
 	/*@RequestMapping("/sync")
 	// @ResponseBody

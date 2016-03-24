@@ -24,6 +24,8 @@ public class GoodsOtherPO {
 	private Long goodsId;// 商品ID
 	private Integer status;// 订单状态：0下单成功1支付成功2发货成功3完成4退货申请5退款完成
 	private Date updateTime;// 更新时间
+	private Date createTime;// 
+	private Long opId;// 操作用户
 	private Integer buyNum;//
 	private Long cost;//
 
@@ -105,6 +107,18 @@ public class GoodsOtherPO {
 	}
 	public void setCost(Long cost) {
 		this.cost = cost;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	public Long getOpId() {
+		return opId;
+	}
+	public void setOpId(Long opId) {
+		this.opId = opId;
 	}
 	
 	
