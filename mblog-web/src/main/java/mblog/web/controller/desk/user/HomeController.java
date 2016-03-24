@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import mblog.base.lang.EnumPrivacy;
 import mblog.core.data.AccountProfile;
+import mblog.core.data.Goods;
+import mblog.core.data.GoodsOther;
 import mblog.core.data.Point;
 import mblog.core.data.User;
 import mblog.core.persist.service.CardTransactionRecordService;
@@ -30,6 +32,7 @@ import mblog.core.persist.service.CommentService;
 import mblog.core.persist.service.FavorService;
 import mblog.core.persist.service.FeedsService;
 import mblog.core.persist.service.FollowService;
+import mblog.core.persist.service.GoodsOtherService;
 import mblog.core.persist.service.GoodsService;
 import mblog.core.persist.service.MyPOSService;
 import mblog.core.persist.service.NotifyService;
@@ -77,6 +80,8 @@ public class HomeController extends BaseController {
 	private PointDetailService pointDetailService;
 	@Autowired
 	private GoodsService goodsService;
+	@Autowired
+	private GoodsOtherService goodsOtherService;
 	@Autowired
 	private CardTransactionRecordService cardTransactionRecordService;
 	
@@ -377,7 +382,39 @@ public class HomeController extends BaseController {
 		return getView("/home/pointDetail");
 	}
 	
+	
+	@RequestMapping("/home/goodsDetail")
+	public String goodsDetail(Long id, ModelMap model) {
+		Goods goods = goodsService.findById(id);
+		model.put("goods", goods );
+		
+		List<QueryRules> qrLst = new ArrayList<>();
+		QueryRules qr = new QueryRules("goodsId",id);	
+		qrLst.add(qr);
+		Paging page = wrapPage(1,100);
+		goodsOtherService.paging(page, qrLst);
+		model.put("page", page );
+		
+		return getView("/home/goodsDetail");
+	}
 
+	
+	
+	@RequestMapping("/home/goodsOther")
+	public String goodsOther(Long goodsId,Integer buyNum,String remark, ModelMap model) {
+		UserProfile profile = getSubject().getProfile();
+		
+		GoodsOther goodsOther = new GoodsOther();
+		goodsOther.setBuyNum(buyNum);
+		goodsOther.setGoodsId(goodsId);
+		goodsOther.setRemark(remark);
+		goodsOther.setUserId(profile.getId());
+		goodsOtherService.buyGoods(goodsOther );
+		
+		return "redirect:/home/point";
+	}
+
+	
 	private void initUser(ModelMap model) {
 		UserProfile up = getSubject().getProfile();
 		User user = userService.get(up.getId());

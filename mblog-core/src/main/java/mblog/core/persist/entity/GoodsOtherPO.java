@@ -24,8 +24,8 @@ public class GoodsOtherPO {
 	private Long goodsId;// 商品ID
 	private Integer status;// 订单状态：0下单成功1支付成功2发货成功3完成4退货申请5退款完成
 	private Date updateTime;// 更新时间
-
-	private Long remark;//
+	private Integer buyNum;//
+	private Long cost;//
 
 	@Version
 	private Long version;//
@@ -33,7 +33,7 @@ public class GoodsOtherPO {
 	private Long reserve1;//
 	private Long reserve2;//
 	private String reserve3;//
-	private String reserve4;//
+	private String remark;//
 	public long getId() {
 		return id;
 	}
@@ -64,10 +64,10 @@ public class GoodsOtherPO {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	public Long getRemark() {
+	public String getRemark() {
 		return remark;
 	}
-	public void setRemark(Long remark) {
+	public void setRemark(String remark) {
 		this.remark = remark;
 	}
 	public Long getVersion() {
@@ -94,11 +94,17 @@ public class GoodsOtherPO {
 	public void setReserve3(String reserve3) {
 		this.reserve3 = reserve3;
 	}
-	public String getReserve4() {
-		return reserve4;
+	public Integer getBuyNum() {
+		return buyNum;
 	}
-	public void setReserve4(String reserve4) {
-		this.reserve4 = reserve4;
+	public void setBuyNum(Integer buyNum) {
+		this.buyNum = buyNum;
+	}
+	public Long getCost() {
+		return cost;
+	}
+	public void setCost(Long cost) {
+		this.cost = cost;
 	}
 	
 	

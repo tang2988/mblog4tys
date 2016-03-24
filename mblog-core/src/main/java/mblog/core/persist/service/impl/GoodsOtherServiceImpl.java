@@ -1,6 +1,7 @@
 package mblog.core.persist.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -99,11 +100,13 @@ public class GoodsOtherServiceImpl implements GoodsOtherService {
 	@Override
 	@Transactional
 	public synchronized GoodsOther buyGoods(GoodsOther goodsOther) {
-		Goods goods = goodsService.updateStoreNum(goodsOther.getGoodsId(), -1	);
+		Goods goods = goodsService.updateStoreNum(goodsOther.getGoodsId(), goodsOther.getBuyNum());
 		
+		goodsOther.setCost(goodsOther.getBuyNum()*goods.getPrice());
+		goodsOther.setUpdateTime(new Date());
 		
 		PointDetail pd = new PointDetail();
-		pd.setAddPoint(-1*goods.getPrice());
+		pd.setAddPoint(-1* goodsOther.getCost());
 		pd.setOpId(goodsOther.getUserId());
 		pd.setUserId(goodsOther.getUserId());
 		
