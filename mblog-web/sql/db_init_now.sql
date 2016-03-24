@@ -200,8 +200,17 @@ INSERT INTO `mto_auth_menu` VALUES ('28', '菜单查看', null, 'authMenus:view'
 INSERT INTO `mto_auth_menu` VALUES ('29', '友情链接', NULL, 'friendLink:view', '8', 'admin/friendLink/list', '2', 'fa fa-link');
 INSERT INTO `mto_auth_menu` VALUES ('30', '友情链接修改', NULL, 'friendLink:edit', '0', '', '29', NULL);
 INSERT INTO `mto_auth_menu` VALUES ('31', '友情链接查看', NULL, 'friendLink:view', '0', '', '29', NULL);
-INSERT INTO `mto_auth_menu` VALUES ('32', 'POS', NULL, 'friendLink:view', '8', '/admin/cardTransactionRecord/list', '2', 'fa fa-link');
-INSERT INTO `mto_auth_menu` VALUES ('33', 'POS', NULL, 'friendLink:edit', '0', '/admin/cardTransactionRecord/sync', '2', 'fa fa-link');
+INSERT INTO `mto_auth_menu` VALUES ('32', 'POS交易', NULL, 'friendLink:view', '8', 'admin/cardTransactionRecord/list', '2', 'fa fa-link');
+INSERT INTO `mto_auth_menu` VALUES ('33', 'POS同步', NULL, 'friendLink:edit', '0', 'admin/cardTransactionRecord/sync', '32', 'fa fa-link');
+
+INSERT INTO `mto_auth_menu` VALUES ('34', '商品管理', NULL, 'friendLink:view', '8', 'admin/goods/list', '2', 'fa fa-link');
+INSERT INTO `mto_auth_menu` VALUES ('35', '商品添加', NULL, 'friendLink:edit', '0', 'admin/goods/edit', '34', 'fa fa-link');
+INSERT INTO `mto_auth_menu` VALUES ('36', '交易管理', NULL, 'friendLink:view', '8', 'admin/goodsother/list', '2', 'fa fa-link');
+INSERT INTO `mto_auth_menu` VALUES ('37', '交易修改', NULL, 'friendLink:edit', '0', 'admin/goodsother/edit', '36', 'fa fa-link');
+INSERT INTO `mto_auth_menu` VALUES ('38', '积分管理', NULL, 'friendLink:view', '8', 'admin/point/list', '2', 'fa fa-link');
+INSERT INTO `mto_auth_menu` VALUES ('39', '积分调整', NULL, 'friendLink:edit', '0', 'admin/point/edit', '38', 'fa fa-link');
+
+
 
 
 -- ----------------------------
