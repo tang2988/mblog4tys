@@ -209,6 +209,8 @@ INSERT INTO `mto_auth_menu` VALUES ('36', '交易管理', NULL, 'friendLink:view
 INSERT INTO `mto_auth_menu` VALUES ('37', '交易修改', NULL, 'friendLink:edit', '0', 'admin/goodsother/edit', '36', 'fa fa-link');
 INSERT INTO `mto_auth_menu` VALUES ('38', '积分管理', NULL, 'friendLink:view', '8', 'admin/point/list', '2', 'fa fa-link');
 INSERT INTO `mto_auth_menu` VALUES ('39', '积分调整', NULL, 'friendLink:edit', '0', 'admin/point/edit', '38', 'fa fa-link');
+INSERT INTO `mto_auth_menu` VALUES ('40', '积分规则', NULL, 'friendLink:view', '8', 'admin/pointrule/list', '2', 'fa fa-link');
+INSERT INTO `mto_auth_menu` VALUES ('41', '规则调整', NULL, 'friendLink:edit', '0', 'admin/pointrule/edit', '40', 'fa fa-link');
 
 
 
