@@ -131,4 +131,6 @@ public class PointServiceImpl implements PointService {
 		BeanUtils.copyProperties(po, m);
 		return m;
 	}
+	
+	
 }

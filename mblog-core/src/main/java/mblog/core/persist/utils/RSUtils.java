@@ -68,6 +68,8 @@ public class RSUtils extends CardTransactionRecordUtils{
 			ctrLst.addAll(getCardTransactionRecordLstReal(paraMap));
 		}
 		replaceSysSource(ctrLst);
+		
+		parseDealTimeFace(ctrLst);
 		return ctrLst;
 	}
 	

@@ -18,6 +18,6 @@ public interface MyPOSService {
 
 	List<MyPOS> findAll();
 
-	public Boolean checkVip(String sysSource, String yearmonthdatestart, String yearmonthdateend, String moblieNo,
+	public MyPOS checkMyPos(String sysSource, String yearmonthdatestart, String yearmonthdateend, String moblieNo,
 			String terminalcode, String transAcount);
 }

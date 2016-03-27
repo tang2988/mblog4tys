@@ -11,7 +11,6 @@ package mblog.core.persist.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +66,7 @@ public class RYXUtils  extends CardTransactionRecordUtils{
 			paraMap.put("yearmonthdateend",  d);
 			ctrLst.addAll(getCardTransactionRecordLstReal(paraMap));
 		}
+		parseDealTimeFace(ctrLst);
 		return ctrLst;
 	}
 	
@@ -181,7 +181,7 @@ public class RYXUtils  extends CardTransactionRecordUtils{
 		String yearmonthdatestart = paraMap.get("yearmonthdatestart");
 		String yearmonthdateend = paraMap.get("yearmonthdateend");
 
-		Integer initStartDate = 20150901;
+		Integer initStartDate = Integer.valueOf(initStartDateStr);
 		Integer initEndDate = Integer.valueOf(DateFormatUtils.format(new Date(), "yyyyMMdd"));
 		
 		List<String> daysLst = new ArrayList<>(); 

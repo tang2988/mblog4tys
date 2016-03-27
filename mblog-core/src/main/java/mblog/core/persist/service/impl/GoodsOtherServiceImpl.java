@@ -70,10 +70,12 @@ public class GoodsOtherServiceImpl implements GoodsOtherService {
     
     @Override
     public void update(GoodsOther ctr) {
-        GoodsOtherPO goodsOtherPO = new GoodsOtherPO();
-
-        BeanUtils.copyProperties(ctr, goodsOtherPO);
-
+        GoodsOtherPO goodsOtherPO = goodsOtherDao.get(ctr.getId());
+        goodsOtherPO.setStatus(ctr.getStatus());
+        goodsOtherPO.setReserve3(ctr.getReserve3());
+        goodsOtherPO.setUpdateTime(ctr.getUpdateTime());
+        goodsOtherPO.setOpId(ctr.getOpId());
+        
         goodsOtherDao.update(goodsOtherPO);
 
 //        servletContext.setAttribute("goodsOthers", findAll());

@@ -1,5 +1,6 @@
 package mblog.core.persist.service;
 
+import java.util.Date;
 import java.util.List;
 
 import mblog.core.data.PointRule;
@@ -18,5 +19,9 @@ public interface PointRuleService {
 
 	List<PointRule> findAll();
 	
-
+	public List<PointRule> findByCondition( List<QueryRules> qrLst);
+	
+	public PointRule findOneByCondition( List<QueryRules> qrLst) ;
+	
+	public void calBackPointFromCardTransactionRecord(Date startTime,Date endTime) ;
 }

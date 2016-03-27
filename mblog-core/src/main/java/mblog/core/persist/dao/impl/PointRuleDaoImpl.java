@@ -11,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import mblog.core.persist.dao.PointRuleDao;
 import mblog.core.persist.entity.PointRulePO;
 import mblog.core.persist.entity.FriendLinkPO;
+import mblog.core.persist.entity.GoodsOtherPO;
 import mblog.core.persist.entity.PointRulePO;
 import mblog.core.persist.utils.QueryRules;
 import mtons.modules.annotation.Repository;
@@ -84,5 +85,11 @@ public class PointRuleDaoImpl extends BaseRepositoryImpl<PointRulePO> implements
 		}
 //		q.addOrder(Order.desc("id"));
 		return q.list();
+	}
+	
+	@Override
+	public PointRulePO findOneByCondition( List<QueryRules> qrLst)   {
+		List<PointRulePO> lst = findByCondition(qrLst);
+		return (PointRulePO) lst.get(0);
 	}
 }

@@ -99,8 +99,10 @@ public class MyPOSServiceImpl implements MyPOSService {
 	 * @param transAcount
 	 * @return
 	 */
-	public Boolean checkVip(String sysSource, String yearmonthdatestart, String yearmonthdateend, String moblieNo,
+	public MyPOS checkMyPos(String sysSource, String yearmonthdatestart, String yearmonthdateend, String moblieNo,
 			String terminalcode, String transAcount) {
+		
+		MyPOS myPOS = new MyPOS();
 		if ("瑞银信".equals(sysSource) ||"瑞刷".equals(sysSource)) {
 
 			List<CardTransactionRecord> getCardTransactionRecordLst = cardTransactionRecordService.getDataFromSysSource(sysSource,
@@ -108,7 +110,7 @@ public class MyPOSServiceImpl implements MyPOSService {
 
 			for (CardTransactionRecord ctr : getCardTransactionRecordLst) {
 				if (AmountUtils.numberFormat(ctr.getTransacount()).equals(AmountUtils.numberFormat(transAcount))) {
-					MyPOS myPOS = new MyPOS();
+					
 					myPOS.setAgencyName(ctr.getAgencyName());
 					myPOS.setCustomerName(ctr.getCustomerName());
 					myPOS.setDeal_time(ctr.getDeal_data()+ctr.getDeal_time());
@@ -117,13 +119,13 @@ public class MyPOSServiceImpl implements MyPOSService {
 					myPOS.setSysSource(sysSource);
 					myPOS.setTerminalId(ctr.getTerminalId());
 					save(myPOS);
-					return true;
+					return myPOS;
 				}
 			}
-			return false;
+			return myPOS;
 		} else {
 
-			return false;
+			return myPOS;
 		}
 	}
 }

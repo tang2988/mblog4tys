@@ -23,7 +23,6 @@ public class AuthMenuServiceImpl implements AuthMenuService {
 
 	@Override
 	public List<AuthMenu> findByParentId(long parentId) {
-		// TODO Auto-generated method stub
 		List<AuthMenu> authMenus = new ArrayList<AuthMenu>();
 		List<AuthMenuPO> authMenuPOs = authMenuDao.findByParentId(parentId);
 		if(authMenuPOs!=null){

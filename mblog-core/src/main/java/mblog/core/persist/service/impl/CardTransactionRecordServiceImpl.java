@@ -13,10 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import mblog.core.data.CardTransactionRecord;
+import mblog.core.data.MyPOS;
 import mblog.core.data.User;
 import mblog.core.persist.dao.CardTransactionRecordDao;
 import mblog.core.persist.entity.CardTransactionRecordPO;
 import mblog.core.persist.service.CardTransactionRecordService;
+import mblog.core.persist.service.MyPOSService;
 import mblog.core.persist.service.UserService;
 import mblog.core.persist.utils.BeanMapUtils;
 import mblog.core.persist.utils.CardTransactionRecordUtils;
@@ -26,7 +28,6 @@ import mtons.modules.pojos.Paging;
 /**
  * @author Beldon 2015/10/25
  */
-@SuppressWarnings({ "unchecked", "unchecked" })
 @Service
 @Transactional
 public class CardTransactionRecordServiceImpl implements CardTransactionRecordService {
@@ -39,7 +40,8 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
 
     @Autowired
     UserService userService;
-    
+    @Autowired
+    MyPOSService myPOSService;
     
 	@Override
 	@Transactional(readOnly = true)
@@ -69,17 +71,18 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
     
     public void saveUnique(CardTransactionRecord ctr) {
         List<QueryRules> qrLst  =new ArrayList<>();
-        QueryRules moblieNoVQR = new QueryRules("moblieNoV", ctr.getMoblieNoV(), "eq"	);
+        QueryRules moblieNoVQR = new QueryRules("moblieNoV", ctr.getMoblieNoV(), QueryRules.OP_EQ	);
         qrLst.add(moblieNoVQR);
-        QueryRules onlyCodeQR = new QueryRules("onlyCode", ctr.getOnlyCode(), "eq"	);
+        QueryRules onlyCodeQR = new QueryRules("onlyCode", ctr.getOnlyCode(),  QueryRules.OP_EQ	);
         qrLst.add(onlyCodeQR);
-        QueryRules sysSourceQR = new QueryRules("sysSource", ctr.getSysSource(), "eq"	);
+        QueryRules sysSourceQR = new QueryRules("sysSource", ctr.getSysSource(),  QueryRules.OP_EQ	);
         qrLst.add(sysSourceQR);		
-        
+        QueryRules terminalIdQR = new QueryRules("terminalId", ctr.getTerminalId(),  QueryRules.OP_EQ	);
+        qrLst.add(terminalIdQR);
 		if(cardTransactionRecordDao.findByCondition(qrLst  ).size()<1){
 			  CardTransactionRecordPO cardTransactionRecordPO = new CardTransactionRecordPO();
 		        BeanUtils.copyProperties(ctr, cardTransactionRecordPO);
-			cardTransactionRecordDao.save(cardTransactionRecordPO);	
+			cardTransactionRecordDao.save(cardTransactionRecordPO);
 		}
     }
 
@@ -112,7 +115,9 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
     }
     
     
-    
+    /**
+     * 获取LIST
+     */
     public List<CardTransactionRecord> getDataFromSysSource (String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode ) {
     	
 		HashMap<String,String> param = new HashMap<String,String>();
@@ -128,9 +133,13 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
 		
 	}
     
+    
+    /****
+     * 根据手机号码同步
+     */
     @Transactional
-    public synchronized void syncDataFromSysSourceByMobile(String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo) {
-    	List<CardTransactionRecord> getCardTransactionRecordLst =  getDataFromSysSource(sysSource,yearmonthdatestart, yearmonthdateend, moblieNo, "");
+    public synchronized void syncDataFromSysSourceByMobile(String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode) {
+    	List<CardTransactionRecord> getCardTransactionRecordLst =  getDataFromSysSource(sysSource,yearmonthdatestart, yearmonthdateend, moblieNo, terminalcode);
     	for(CardTransactionRecord ctr: getCardTransactionRecordLst){
     		saveUnique(ctr);
 		}
@@ -141,17 +150,19 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
     	int pageNo = 1;
     	while (true) {
     		Paging paging = new Paging(pageNo++, 500);
-    		userService.paging(paging, "");
-    		List<User> userLst = (List<User>) paging.getResults();
-    		if(userLst==null || userLst.size()<1){
+    		
+    		List<QueryRules> qrLst  =new ArrayList<>();
+    		myPOSService.paging(paging, qrLst);
+    		List<MyPOS> myPosLst = (List<MyPOS>) paging.getResults();
+    		if(myPosLst==null || myPosLst.size()<1){
     			break;
     		}
-    		for(User user: userLst){
-    			String moblieNo =user.getMobile();
-    			if(StringUtils.isNotBlank(moblieNo)){
-    				syncDataFromSysSourceByMobile( sysSource,yearmonthdatestart, yearmonthdateend, moblieNo);
-    			}
+    		for(MyPOS m: myPosLst){
+				syncDataFromSysSourceByMobile( m.getSysSource(),yearmonthdatestart, yearmonthdateend, m.getMoblieNoV(),m.getTerminalId());
     		}
 		}
 	}
+    
+    
+    
 }

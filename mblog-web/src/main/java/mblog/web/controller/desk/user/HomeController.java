@@ -27,6 +27,7 @@ import mblog.base.lang.EnumPrivacy;
 import mblog.core.data.AccountProfile;
 import mblog.core.data.Goods;
 import mblog.core.data.GoodsOther;
+import mblog.core.data.MyPOS;
 import mblog.core.data.Point;
 import mblog.core.data.User;
 import mblog.core.persist.service.CardTransactionRecordService;
@@ -205,8 +206,8 @@ public class HomeController extends BaseController {
 		
 		
 		
-		Boolean isVip = myPOSService.checkVip(sysSource, yearmonthdatestart, yearmonthdatestart, mobile, terminalcode,transAcount);
-		if(isVip){
+		MyPOS mPos = myPOSService.checkMyPos(sysSource, yearmonthdatestart, yearmonthdatestart, mobile, terminalcode,transAcount);
+		if(mPos.getId()>0){
 			curUser.setMobile(mobile);
 			//
 			userService.updateMobile(curUser.getId(), mobile);
@@ -215,7 +216,7 @@ public class HomeController extends BaseController {
     		new Thread(new Runnable() {
 				@Override
 				public void run() {
-					cardTransactionRecordService.syncDataFromSysSourceByMobile(sysSource, CardTransactionRecordUtils.initStartDateStr, DateFormatUtils.format(new Date(), "yyyyMMdd"), mobile);					
+					cardTransactionRecordService.syncDataFromSysSourceByMobile(mPos.getSysSource(), CardTransactionRecordUtils.initStartDateStr, DateFormatUtils.format(new Date(), "yyyyMMdd"), mPos.getMoblieNoV(),mPos.getTerminalId());					
 				}
 			}).start();
     		
@@ -345,7 +346,7 @@ public class HomeController extends BaseController {
 		
 		
 		model.put("point", point );
-		
+		initUser(model);
 		return getView("/home/point");
 	}
 	
@@ -380,7 +381,7 @@ public class HomeController extends BaseController {
 		
 //		pointService.paging(paging, qrLst);
 		model.put("page", paging);
-		
+		initUser(model);
 		return getView("/home/pointDetail");
 	}
 	
@@ -396,7 +397,7 @@ public class HomeController extends BaseController {
 		Paging page = wrapPage(1,100);
 		goodsOtherService.paging(page, qrLst);
 		model.put("page", page );
-		
+		initUser(model);
 		return getView("/home/goodsDetail");
 	}
 
@@ -419,6 +420,43 @@ public class HomeController extends BaseController {
 		return "redirect:/home/point";
 	}
 
+	
+	
+
+	@RequestMapping("/home/missionList")
+	public String missionList(Integer pn,   ModelMap model) throws ParseException {
+		Paging paging = wrapPage(pn,20);
+		
+		UserProfile profile = getSubject().getProfile();
+		List<QueryRules> qrLst = new ArrayList<>();
+		
+		
+		if(profile!=null){
+			QueryRules qr = new QueryRules("userId",profile.getId()	);	
+			qrLst.add(qr);
+		}
+		model.put("page", paging);
+		initUser(model);
+		return getView("/home/missionList");
+	}
+	
+	@RequestMapping("/home/optimizeCard")
+	public String optimizeCard(Integer pn, String yearmonthdatestart,String yearmonthdateend,  ModelMap model) throws ParseException {
+		Paging paging = wrapPage(pn,20);
+		
+		UserProfile profile = getSubject().getProfile();
+		List<QueryRules> qrLst = new ArrayList<>();
+		
+		
+		if(profile!=null){
+			QueryRules qr = new QueryRules("userId",profile.getId()	);	
+			qrLst.add(qr);
+		}
+		model.put("page", paging);
+		initUser(model);
+		return getView("/home/optimizeCard");
+	}
+	
 	
 	private void initUser(ModelMap model) {
 		UserProfile up = getSubject().getProfile();

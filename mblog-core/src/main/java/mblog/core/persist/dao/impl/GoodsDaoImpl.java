@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -40,7 +41,7 @@ public class GoodsDaoImpl extends BaseRepositoryImpl<GoodsPO> implements GoodsDa
 			if("eq".equals(qr.getOp())){
 				q.add(Restrictions.eq(qr.getName(),qr.getVal()));
 			}else if("like".equals(qr.getOp())){
-				q.add(Restrictions.like(qr.getName(),qr.getVal()));
+				q.add(Restrictions.like(qr.getName(),qr.getVal()+"",MatchMode.ANYWHERE));
 			}else if("lt".equals(qr.getOp())){
 				q.add(Restrictions.lt(qr.getName(),qr.getVal()));
 			}else if("gt".equals(qr.getOp())){
@@ -55,7 +56,7 @@ public class GoodsDaoImpl extends BaseRepositoryImpl<GoodsPO> implements GoodsDa
 			}
 		}
 		
-		q.desc("id");
+		q.desc("reserve1");
 		return q.list();
 	}
 	

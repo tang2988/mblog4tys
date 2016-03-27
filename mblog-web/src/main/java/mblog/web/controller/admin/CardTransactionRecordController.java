@@ -99,12 +99,7 @@ public class CardTransactionRecordController extends BaseController {
 	// @ResponseBody
 	public @ResponseBody Data sync(String sysSource, String mobile,String yearmonthdatestart,String yearmonthdateend,Model model) {
 		try {
-			if(StringUtils.isNotBlank(mobile)){
-				cardTransactionRecordService.syncDataFromSysSourceByMobile(sysSource,  yearmonthdatestart, yearmonthdateend,mobile);
-			}else{
-				cardTransactionRecordService.syncDataFromSysSource(sysSource, yearmonthdatestart, yearmonthdateend);	
-			}
-			
+			cardTransactionRecordService.syncDataFromSysSource(sysSource, yearmonthdatestart, yearmonthdateend);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

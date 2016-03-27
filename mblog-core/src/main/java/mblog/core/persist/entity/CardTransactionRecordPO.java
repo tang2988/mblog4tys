@@ -1,6 +1,7 @@
 package mblog.core.persist.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -27,7 +28,10 @@ public class CardTransactionRecordPO {
     private String serialNumber;//交易流水号
     private String onlyCode;//交易流水号
     private String sysSource;//刷卡平台
-    
+    private Date dealTime;//
+    private Long userId;//
+    @Column(name = "point", columnDefinition = "int default 0")
+    private Long point;//返现
     
 	public long getId() {
 		return id;
@@ -119,9 +123,24 @@ public class CardTransactionRecordPO {
 	public void setSysSource(String sysSource) {
 		this.sysSource = sysSource;
 	}
-    
-    
-    
+	public Date getDealTime() {
+		return dealTime;
+	}
+	public void setDealTime(Date dealTime) {
+		this.dealTime = dealTime;
+	}
+	public Long getPoint() {
+		return point;
+	}
+	public void setPoint(Long point) {
+		this.point = point;
+	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
     
     
 }

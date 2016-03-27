@@ -9,8 +9,12 @@
 */
 package mblog.core.persist.utils;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import mblog.core.data.CardTransactionRecord;
 
@@ -19,7 +23,7 @@ import mblog.core.data.CardTransactionRecord;
  *
  */
 public abstract class CardTransactionRecordUtils {
-	public static String initStartDateStr = "20150901";
+	public static String initStartDateStr = "20151029";
 
 	public static CardTransactionRecordUtils getInstance(String sysSource) {
 		if("瑞刷".equals(sysSource)){
@@ -33,4 +37,24 @@ public abstract class CardTransactionRecordUtils {
 	
 	
 	public abstract List<CardTransactionRecord> getCardTransactionRecordLst( Map<String,String> paraMap)  ;
+	
+	
+	static void parseDealTime(CardTransactionRecord ctr){
+	    String deal_data=ctr.getDeal_data();//交易日期
+	    String deal_time=ctr.getDeal_time();//交易时间
+	    
+	    Date dealtime;
+		try {
+			dealtime = DateUtils.parseDate(deal_data+" "+deal_time, new String[]{"yyyyMMdd HH:mm:ss"});
+		} catch (ParseException e) {
+			throw new RuntimeException("解析时间错误："+(deal_data+" "+deal_time));
+		}
+	    ctr.setDealTime(dealtime);
+	}
+	
+	static void parseDealTimeFace(List<CardTransactionRecord> lst){
+		for(CardTransactionRecord ctr: lst){
+			parseDealTime(ctr);
+		}
+	}
 }

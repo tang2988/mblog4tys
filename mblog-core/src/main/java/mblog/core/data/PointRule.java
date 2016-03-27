@@ -3,11 +3,6 @@ package mblog.core.data;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Version;
 
 /**
@@ -23,7 +18,7 @@ public class PointRule  implements Serializable {
 	private long id;
 	private Long opId;// 操作用户
 	private String serialNo;// 规则编号
-	private Integer type;// 变动类型：10注册12认证 20POS 30网赚 40消费
+	private Integer type;// 变动类型：10注册12认证 21POS-RYX22POS-RS 30网赚 40消费
 	private Integer direction;// 变动方向：0增加1减少
 	private Integer ratio;// 系数
 	private Integer status;// 状态
@@ -34,10 +29,13 @@ public class PointRule  implements Serializable {
 	@Version
 	private Long version;//
 	
-	private Long reserve1;//
-	private Long reserve2;//
-	private String reserve3;//备注
-	private String reserve4;//
+	private Long reserve1;//用户ID
+	private Long reserve2;//个人用户1,全体用户0
+	private String reserve3;//描述
+	private String reserve4;//程序关键词 如瑞银信-超级支付;瑞刷-闪付
+	
+	final public static Integer STATUS_ON = 1;
+	final public static Integer STATUS_OFF = 1;
 	public long getId() {
 		return id;
 	}

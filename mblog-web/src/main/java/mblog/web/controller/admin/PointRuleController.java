@@ -50,11 +50,11 @@ public class PointRuleController extends BaseController {
 		}
 		
 		if(StringUtils.isNotBlank(startTime)){
-			QueryRules qr = new QueryRules("startTime",DateUtils.parseDate(startTime+" 00:00:00", new String[]{"yyyy-MM-dd hh:mm:ss"}),"ge"	);qrLst.add(qr);
+			QueryRules qr = new QueryRules("startTime",DateUtils.parseDate(startTime+" 00:00:00", new String[]{"yyyy-MM-dd HH:mm:ss"}),"ge"	);qrLst.add(qr);
 		}
 		
 		if(StringUtils.isNotBlank(endTime)){
-			QueryRules qr = new QueryRules("endTime",DateUtils.parseDate(endTime+" 23:59:59", new String[]{"yyyy-MM-dd hh:mm:ss"}),"le");qrLst.add(qr);
+			QueryRules qr = new QueryRules("endTime",DateUtils.parseDate(endTime+" 23:59:59", new String[]{"yyyy-MM-dd HH:mm:ss"}),"le");qrLst.add(qr);
 		}
 	
 		pointRuleService.paging(paging, qrLst);
@@ -78,6 +78,9 @@ public class PointRuleController extends BaseController {
 	public String edit(@RequestParam(value = "id", required = false, defaultValue = "0") long id, Model model) {
 		if (id != 0) {
 			PointRule pointRule = pointRuleService.findById(id);
+			if(pointRule.getReserve2()==0){
+				pointRule=null;//全体用户积分规则是系统默认选项，不支持修改
+			}
 			model.addAttribute("pointRule", pointRule);
 		}
 		return "/admin/pointrule/edit";
@@ -86,22 +89,26 @@ public class PointRuleController extends BaseController {
 	@RequestMapping("/save")
 	// @ResponseBody
 	public String save(Long id, String serialNo,Integer type,Integer direction,Integer ratio, 
-			Integer status,String startTime,String endTime,String reserve3,ModelMap model) {
+			Integer status,String startTime,String endTime,String reserve3,Long reserve1,Long reserve2,ModelMap model) {
 		try {
 			long opId = getSubject().getProfile().getId();
 			PointRule pointRule = new PointRule();
 			pointRule.setId(id);
-			pointRule.setSerialNo(serialNo);
+			pointRule.setSerialNo(type+""+StringUtils.leftPad(serialNo, 4,"0"));
 			pointRule.setType(type);
 			pointRule.setDirection(direction);
 			pointRule.setRatio(ratio);
-			pointRule.setStatus(status);;
-			pointRule.setStartTime(DateUtils.parseDate(startTime+" 00:00:00", new String[]{"yyyy-MM-dd hh:mm:ss"}));
-			pointRule.setEndTime(DateUtils.parseDate(endTime+" 23:59:59", new String[]{"yyyy-MM-dd hh:mm:ss"}));
+			pointRule.setStatus(status);
+			pointRule.setStartTime(DateUtils.parseDate(startTime+" 00:00:00", new String[]{"yyyy-MM-dd HH:mm:ss"}));
+			pointRule.setEndTime(DateUtils.parseDate(endTime+" 23:59:59", new String[]{"yyyy-MM-dd HH:mm:ss"}));
 			pointRule.setReserve3(reserve3);
 			pointRule.setOpId(opId);
+			pointRule.setReserve1(reserve1);
+			//全体用户积分规则是系统默认选项，不支持修改
+			reserve2=1L;
+			pointRule.setReserve2(reserve2);
 			pointRule.setUpdateTime(new Date());
-			pointRuleService.save(pointRule);//TODO SAVEORUPDATE BUG
+			pointRuleService.save(pointRule);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

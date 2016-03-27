@@ -2,6 +2,7 @@ package mblog.core.persist.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +25,8 @@ public class GoodsPO {
 	private String name;// 品名
 	private Long price;// 价格
 	private Integer storeNum;// 库存
+	
+	@Column(name = "descHtm", columnDefinition = "text default ''")
 	private String descHtm;// 描述
 	private String mainPic;// 图片
 	private Integer status;// 状态

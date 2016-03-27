@@ -21,7 +21,7 @@ public interface CardTransactionRecordService {
 	public List<CardTransactionRecord> getDataFromSysSource (String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode ) ;
 
 	public void syncDataFromSysSourceByMobile(String sysSource, String yearmonthdatestart, String yearmonthdateend,
-			String moblieNo);
+			String moblieNo,String terminalcode);
 
 	public void syncDataFromSysSource(String sysSource, String yearmonthdatestart, String yearmonthdateend);
 

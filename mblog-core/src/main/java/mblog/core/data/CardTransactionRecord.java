@@ -2,6 +2,7 @@ package mblog.core.data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @author Beldon
@@ -24,6 +25,10 @@ public class CardTransactionRecord implements Serializable {
     private String serialNumber;//交易流水号
     private String onlyCode;//交易流水号
     private String sysSource;//刷卡平台
+    
+    private Date dealTime;//
+    private Long point;//返现
+    private Long userId;//
     
     @Override
     public String toString() {
@@ -120,6 +125,30 @@ public class CardTransactionRecord implements Serializable {
 	public void setSysSource(String sysSource) {
 		this.sysSource = sysSource;
 	}
+
+	public Date getDealTime() {
+		return dealTime;
+	}
+
+	public void setDealTime(Date dealTime) {
+		this.dealTime = dealTime;
+	}
+
+	public Long getPoint() {
+		return point;
+	}
+
+	public void setPoint(Long point) {
+		this.point = point;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
     
-    
+	
 }

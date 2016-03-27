@@ -91,4 +91,7 @@ public interface Consts {
 
 	String EMAIL_TEMPLATE_FORGOT = "forgot.vm";
 	String EMAIL_TEMPLATE_BIND = "bind.vm";
+	
+	
+	public static long SYSTEM_OP_USERID = 2L;//系统操作用户；用于定时任务==
 }

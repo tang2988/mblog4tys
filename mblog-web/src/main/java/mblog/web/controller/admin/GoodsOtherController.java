@@ -39,7 +39,7 @@ public class GoodsOtherController extends BaseController {
 		
 		List<QueryRules> qrLst = new ArrayList<>();
 		if(status!=null){
-			QueryRules qr = new QueryRules("name",status,QueryRules.OP_EQ	);qrLst.add(qr);
+			QueryRules qr = new QueryRules("status",status,QueryRules.OP_EQ	);qrLst.add(qr);
 		}
 		
 		if(StringUtils.isNotBlank(createTime_le)){
@@ -105,9 +105,9 @@ public class GoodsOtherController extends BaseController {
 	}
 
 	
-	@RequestMapping("/edit")
+	@RequestMapping("/editOrder")
 	// @ResponseBody
-	public String edit(long id, Integer status, String reserve3,
+	public String editOrder(long id, Integer status, String reserve3,
 			ModelMap model) {
 		try {
 			long opId = getSubject().getProfile().getId();
@@ -117,7 +117,7 @@ public class GoodsOtherController extends BaseController {
 			goodsOther.setUpdateTime(new Date());
 			goodsOther.setReserve3(reserve3);
 			goodsOther.setOpId(opId);
-			goodsOtherService.save(goodsOther); 
+			goodsOtherService.update(goodsOther); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

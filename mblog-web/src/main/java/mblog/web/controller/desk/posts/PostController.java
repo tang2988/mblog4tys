@@ -92,7 +92,7 @@ public class PostController extends BaseController {
 
 			String getSummary = blog.getSummary();
 			try {
-				blog.setCreated(DateUtils.parseDate(getSummary, new String[]{"yyyy-MM-dd hh:mm:ss"}));
+				blog.setCreated(DateUtils.parseDate(getSummary, new String[]{"yyyy-MM-dd HH:mm:ss"}));
 			} catch (Exception e) {
 				blog.setCreated(new Date());
 			}
