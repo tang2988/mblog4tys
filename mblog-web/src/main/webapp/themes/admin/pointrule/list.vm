@@ -70,6 +70,9 @@ form.CurForm li {list-style:none;padding:5px}
 					截止日：<input name="endTime" onclick="laydate({ format: 'YYYY-MM-DD'})"  > 
 				</li>
 				<li>
+					用户ID：<input name="reserve1" value="$!{reserve1}" >
+				</li>
+				<li>
 					<input type="button" value="添加" onclick="window.location='edit'"  >
 					<input type="button" value="查询" onclick="submitCurForm(1)"  >
 				</li>
@@ -82,6 +85,7 @@ form.CurForm li {list-style:none;padding:5px}
                     <th class="col-lg-1">#</th>
                     <th>规则编号</th>
                     <th>类型</th>
+					<th>用户</th>
                     <th>变动方向</th>
                     <th>系数</th>
                     <th>状态</th>
@@ -92,8 +96,8 @@ form.CurForm li {list-style:none;padding:5px}
                         <th class="col-lg-2">操作</th>
                     #end
                 </tr>
-                <tr>
                 #foreach($row in $page.results)
+                <tr>
                     <td>$!{velocityCount}</td>
                     <td>$!{row.serialNo}</td>
                     <td>
@@ -109,7 +113,8 @@ form.CurForm li {list-style:none;padding:5px}
     						$!{row.type}
     					#end
 					</td>
-                    <td>
+                    <td>$!{row.reserve1}</td>
+					<td>
 						#if($!{row.direction}==0)
 						增加
 					#else

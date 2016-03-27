@@ -7,13 +7,21 @@
             <form id="qForm" class="form-horizontal" method="post" action="save">
                 <input type="hidden" name="userId" value="#if($point)$!point.userId#else 0#end">
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">当前积分:$!{point.curPoint}</label>
+                    <label class="col-lg-2 control-label">当前积分:</label>
+					<div class="col-lg-8">
+                        <span id=""> $!{point.curPoint}</span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">本次增加积分</label>
-                    <div class="col-lg-5">
+                    <div class="col-lg-8">
                         <input type="text" name="addPoint" class="form-control" value="" placeholder="正值为增加，负值为减少" onblur="setAfterPointView(this.value)">
-                        调整后积分:<span id="afterPoint"></span>
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label class="col-lg-2 control-label">调整后积分</label>
+                    <div class="col-lg-8">
+							<span id="afterPoint"> $!{point.curPoint}</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -40,6 +48,6 @@
 	
 	function setAfterPointView(val){
 	var _curPoint = $!{point.curPoint};
-	$("#afterPoint").val(_curPoint+val);
+	$("#afterPoint").text(parseInt(_curPoint)+parseInt(val));
 	}
 </script>

@@ -31,7 +31,7 @@
 		
 		<ul class="list-group user-nav first">
             <li class="list-group-item">
-                <a href="$base/home?method=comments"><i class="fa fa-comment-o"></i>我的任务</a>
+                <a href="$base/home/missionList"><i class="fa fa-comment-o"></i>我的任务</a>
             </li>
             <li class="list-group-item">
                 <a href="$base/home?method=myPosMgr"><i class="fa fa-comment-o"></i>我的POS</a>
@@ -40,13 +40,16 @@
                 <a href="$base/home/point"><i class="fa fa-file-text-o"></i>我的返现</a>
             </li>
 			<li class="list-group-item">
+                <a href="$base/home/optimizeCard"><i class="fa fa-file-text-o"></i>养卡提额</a>
+            </li>
+			<li class="list-group-item">
                 <a href="$base/home/notifies">
                     <i class="fa fa-bell-o"></i> 通知 <span class="label label-danger">$!{profile.badgesCount.notifies}</span>
                 </a>
             </li>
         </ul>
 		
-        <ul class="list-group user-nav first">
+        <ul class="list-group user-nav">
             <li class="list-group-item">
                 <a href="$base/home"><i class="fa fa-feed"></i> 动态</a>
             </li>
@@ -56,9 +59,6 @@
             <li class="list-group-item">
                 <a href="$base/home?method=comments"><i class="fa fa-comment-o"></i> 我的评论</a>
             </li>
-        </ul>
-
-        <ul class="list-group user-nav">
             <li class="list-group-item">
                 <a href="$base/home/favors"><i class="fa fa-heart-o"></i> 我的喜欢</a>
             </li>

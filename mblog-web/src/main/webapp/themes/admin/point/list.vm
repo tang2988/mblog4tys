@@ -42,7 +42,7 @@ form.CurForm li {list-style:none;padding:5px}
 </style>
 
 <div class="panel m-t-large m-b">
-    <header class="panel-heading">积分规则</header>
+    <header class="panel-heading">积分管理</header>
     <div class="panel-body">
     	<div>
     		<form class="CurForm" action="$base/admin/point/list" method="post">

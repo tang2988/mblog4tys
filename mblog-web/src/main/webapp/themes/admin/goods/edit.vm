@@ -1,5 +1,8 @@
 #set($layout = "/admin/layout/default.vm")
+<link href="$base/assets/vendors/uploader/uploader.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="$base/assets/vendors/laydate/laydate.js"></script>
+<script type="text/javascript" src="$base/assets/js/sea.js"></script>
+<script type="text/javascript" src="$base/assets/js/sea.config.js"></script>
 
 <style>
 .laydate_box, .laydate_box * {
@@ -26,11 +29,11 @@ div.laydate-icon{
 	text-align: left;
 }
 </style>
-<div class="col-lg-6">
+<div class="col-lg-10">
     <div class="panel m-t-large m-b">
         <header class="panel-heading">商品#if($goods)修改#else添加#end</header>
         <div class="panel-body">
-            <form id="qForm" class="form-horizontal" method="post" action="save">
+            <form id="qForm" class="form-horizontal" method="post" action="save" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="#if($goods)$!goods.id#else 0#end">
                 <div class="form-group">
                     <label class="col-lg-2 control-label">品名</label>
@@ -76,20 +79,45 @@ div.laydate-icon{
             	<div class="form-group">
                     <label class="col-lg-2 control-label">开始时间</label>
                     <div class="col-lg-6">
-                        <input type="text" name="startTime" class="form-control"  onclick="laydate({ format: 'YYYY-MM-DD'})"   value="$!{goods.startTime}">
+                        <input type="text" name="startTime" class="form-control"  onclick="laydate({ format: 'YYYY-MM-DD'})"   value="$date.format('yyyy-MM-dd', $!{goods.startTime})">
                         <p class="help-block"></p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">结束时间</label>
                     <div class="col-lg-6">
-                        <input type="text" name="endTime" class="form-control"  onclick="laydate({ format: 'YYYY-MM-DD'})"   value="$!{goods.endTime}">
+                        <input type="text" name="endTime" class="form-control"  onclick="laydate({ format: 'YYYY-MM-DD'})"   value="$date.format('yyyy-MM-dd',$!{goods.endTime})">
                         <p class="help-block"></p>
                     </div>
                 </div>
+				
+				<div class="form-group">
+					
+					<label class="col-lg-2 control-label">主图</label>
+                    <div class="col-lg-9">
+                        
+                        <!-- D&D Zone-->
+                        <div id="drag-and-drop-zone" class="uploader">
+                            <div class="browser">
+                                <label>
+                                    <span>点击选择图片</span>
+                                    <input type="file" name="files[]" accept="image/*" multiple="multiple" title='点击添加图片'/>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /D&D Zone -->
+    					<div class="panel panel-default">
+                            <div class="panel-body demo-panel-files" id='upload-albums'>
+                                <span class="demo-note">上传一张主图</span>
+                            </div>
+                        </div>
+                    </div>
+					
+                </div>
+				
                 <div class="form-group">
                     <label for="desc" class="col-sm-2 control-label no-padding-right">内容:</label>
-    				<div class="col-sm-9">
+    				<div class="col-sm-10">
 						#parse("/admin/editor/$!{site_editor}.vm")
 					</div>
                 </div>
@@ -111,7 +139,17 @@ div.laydate-icon{
 
 
 <script type="text/javascript">
-    $(function() {
-        $("#qForm").validate();
-    })
+var _base_path = '$!{base}';
+
+    window.app = {
+        base: '$base',
+        LOGIN_TOKEN: '$!{profile.id}'
+    };
+	
+	window.UEDITOR_HOME_URL = '$base/assets/vendors/ueditor/';
+	
+seajs.use('post', function (post) {
+	post.init();
+});
+seajs.use('upload');
 </script>

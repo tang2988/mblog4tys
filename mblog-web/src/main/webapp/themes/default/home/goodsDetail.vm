@@ -135,20 +135,20 @@ div.laydate-icon{
                     <div class="tab-content hidden" id="exchangeListTemplate_div">     
 						<table class="list-table">
                             <tr>
-								<th class="bidder"></th>
-                                <th class="bidder">用户</th>
-                                <th class="price-td">单价</th>
-                                <th class="points">数量</th>
-                                <th class=" bidTime">换购时间</th>
+								<td class="bidder"></td>
+                                <td class="bidder">用户</td>
+                                <td class="price-td">单价</td>
+                                <td class="points">数量</td>
+                                <td class=" bidTime">换购时间</td>
                             </tr>
 							
 							 #foreach($row in $page.results)
 							<tr>
                                 <td>$!{velocityCount}</td>
-                                <td>$!{row.userId}</td>
+                                <td>******</td>
                                 <td>$!{goods.price}</td>
-                                <td>1</td>
-                                <td>$!{row.updateTime} </td>
+                                <td>$!{row.buyNum}</td>
+                                <td>$date.format('yyyy-MM-dd',$!{row.updateTime}) </td>
                             </tr>
                             #end
 						</table>

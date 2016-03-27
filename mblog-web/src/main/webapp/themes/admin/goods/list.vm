@@ -108,7 +108,7 @@ div.laydate-icon{
                             <a href="edit?id=${row.id}" class="btn btn-mini btn-primary">
                                 <i class="fa fa-check-square-o"></i> 修改
                             </a>
-                            <a href="delete?id=${row.id}" class="btn btn-mini"><i class="fa fa-check-square-o"></i> 删除</a>
+                            #**<a href="delete?id=${row.id}" class="btn btn-mini"><i class="fa fa-check-square-o"></i> 删除</a>*#
                         </td>
                     #end
                 </tr>

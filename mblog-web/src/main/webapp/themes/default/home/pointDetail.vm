@@ -67,9 +67,9 @@ div.laydate-icon{
                     <th>变动积分</th>
                     <th>变动后积分</th>
                     <th>更新时间</th>
-                    <th>关联id</th>
+                    #**<th>关联id</th>**#
                     <th>来源</th>
-                    <th>操作人</th>
+                    #**<th>操作人</th>**#
                 </tr>
                 #foreach($row in $page.results)
 				<tr>
@@ -78,9 +78,9 @@ div.laydate-icon{
                     <td>$!{row.addPoint}</td>
                     <td>$!{row.afterPoint}</td>
                     <td>$!{row.updateTime} </td>
-                    <td>$!{row.relateId}</td>
+                    #**<td>$!{row.relateId}</td>**#
                     <td>$!{row.sourceDesc}</td>
-                    <td>$!{row.opId}</td>
+                    #**<td>$!{row.opId}</td>**#
                 </tr>
                 #end
             </table>

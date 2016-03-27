@@ -27,8 +27,6 @@ div.laydate-icon{
 }
 
 #ul_myPosMgr li {padding: 5px;}
-
-#goods li{float: left;margin:15px; width: 210px;}
 </style>
 <script type="text/javascript">
     
@@ -41,39 +39,34 @@ div.laydate-icon{
 <div class="shadow-box">
 	<div class="filter">
 		<ul class="">
-			<li><a class="active" href="$base/home/point">我的积分</a></li>
-			<li><a class="" href="$base/home/pointDetail">积分明细</a></li>
+			<li><a class="active" href="$base/home/pointDetail">任务列表</a></li>
 		</ul>
 	</div>
 	<!-- tab panes -->
 	<div class="stream-list">
-		<div style="padding : 20px; ">
-			当前可用积分：$!{point.curPoint}
+	
+	
+			<div class="stream-list">
+	
+		<div style="    padding-top: 100px;    text-align: center;    height: 500px;">
+            <h2>功能内测中，即将来临！</h2>
 		</div>
+
 	</div>
-	
-	
-		<!-- tab panes -->
-	<div class="stream-list" style="padding-left: 20px">
-      <ul id="goods">
-				 #foreach($row in $page.results)
-				<li>
-					<a href="$base/home/goodsDetail?id=$!{row.id}">
-						<img width="180px" src="$base$!{row.mainPic}" />
-						<div>
-							<span>$!{row.name}</span><br/>
-							<span style="text-decoration: line-through;color: #999;">市场参考价：$!{row.reserve2} RMB</span><br/>
-							<span>积分兑换价：$!{row.price}</span><br/>
-							<span>库存：$!{row.storeNum}</span>
-						</div>
-					</a>
-				</li>                    
-                #end
-			</ul>
+        
 	</div>
+</div>
+<div class="text-center clr">
+	#pageHtm("home?method=myPos" $page 5)
 </div>
 
 <script type="text/javascript">
 $(function() {
+	
+	// edit
+	$('a[data-evt=edit]').click(function () {
+		var id = $(this).attr('data-id');
+		window.location.href='$base/post/to_update/' + id;
+	});
 })
 </script>
