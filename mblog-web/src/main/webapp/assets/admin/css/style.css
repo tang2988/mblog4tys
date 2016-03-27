@@ -479,9 +479,9 @@ input[type="text"], select, textarea{min-width: 40px;height: auto;}
 
   #nav{position: relative;width: 150px;position: absolute;z-index:1000;left:0;top:50px;bottom: 0;border-right:1px solid #162636}
   #nav.bg-light{border-color:#bfc7d0}
-  #nav.nav-vertical {width: 90px}
+  #nav.nav-vertical {width: 100px}
   #nav + #content{padding-left: 150px;}
-  #nav.nav-vertical + #content {padding-left: 90px;}
+  #nav.nav-vertical + #content {padding-left: 100px;}
   .nav-primary.nav-doc > ul > li > a{border-bottom: none;padding: 3px 15px;text-shadow:none;}
   .nav-primary .affix{top: 0;min-width: 149px}
   .nav-primary.nav-vertical .affix{top: 0;min-width: 89px}
