@@ -1,9 +1,11 @@
 package mblog.web.controller.admin;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +40,21 @@ public class CardTransactionRecordController extends BaseController {
 			QueryRules qr = new QueryRules("sysSource",sysSource	);	
 			qrLst.add(qr);
 		}
-		
-		if(StringUtils.isNotBlank(yearmonthdatestart)){
-			QueryRules qr = new QueryRules("deal_data",yearmonthdatestart+" 00:00:00","ge"	);qrLst.add(qr);
+			
+		try {
+			if(StringUtils.isNotBlank(yearmonthdatestart)){
+				QueryRules qr = new QueryRules("dealTime",DateUtils.parseDate(yearmonthdatestart+" 00:00:00", new String[]{"yyyy-MM-dd HH:mm:ss"}),"ge"	);
+				qrLst.add(qr);
+			}
+			
+			if(StringUtils.isNotBlank(yearmonthdateend)){
+				QueryRules qr = new QueryRules("dealTime",DateUtils.parseDate(yearmonthdateend+" 23:59:59", new String[]{"yyyy-MM-dd HH:mm:ss"})	,"le");
+				qrLst.add(qr);
+			}
+		} catch (ParseException e) {
+			log.error("日期解析报错",e);
 		}
-		
-		if(StringUtils.isNotBlank(yearmonthdateend)){
-			QueryRules qr = new QueryRules("deal_data",yearmonthdateend+" 23:59:59"	,"le");qrLst.add(qr);
-		}
+	
 	
 		
 		if(StringUtils.isNotBlank(mobile)){
@@ -95,7 +104,7 @@ public class CardTransactionRecordController extends BaseController {
 	@RequestMapping("/sync")
 	public @ResponseBody Data sync(String sysSource, String mobile,String yearmonthdatestart,String yearmonthdateend,Model model) {
 		try {
-			cardTransactionRecordService.syncDataFromSysSource(sysSource, yearmonthdatestart, yearmonthdateend);
+			cardTransactionRecordService.syncDataFromSysSource(sysSource, yearmonthdatestart.replaceAll("-", ""), yearmonthdateend.replaceAll("-", ""));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -54,7 +54,7 @@ public class CardTransactionRecordDaoImpl extends BaseRepositoryImpl<CardTransac
 			}
 		}
 		
-		q.desc("id");
+		q.desc("dealTime");
 		return q.list();
 	}
 	

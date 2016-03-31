@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import mblog.core.data.CardTransactionRecord;
 import mblog.core.data.MyPOS;
-import mblog.core.data.User;
 import mblog.core.persist.dao.CardTransactionRecordDao;
 import mblog.core.persist.entity.CardTransactionRecordPO;
 import mblog.core.persist.service.CardTransactionRecordService;
@@ -80,7 +78,15 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
     
     
     public synchronized void saveUnique(CardTransactionRecord ctr) {
-        List<QueryRules> qrLst  =new ArrayList<>();
+		if(countRecord(ctr)<1){
+			  CardTransactionRecordPO cardTransactionRecordPO = new CardTransactionRecordPO();
+		        BeanUtils.copyProperties(ctr, cardTransactionRecordPO);
+			cardTransactionRecordDao.save(cardTransactionRecordPO);
+		}
+    }
+
+    public Integer countRecord(CardTransactionRecord ctr){
+    	List<QueryRules> qrLst  =new ArrayList<>();
         QueryRules moblieNoVQR = new QueryRules("moblieNoV", ctr.getMoblieNoV(), QueryRules.OP_EQ	);
         qrLst.add(moblieNoVQR);
         QueryRules onlyCodeQR = new QueryRules("onlyCode", ctr.getOnlyCode(),  QueryRules.OP_EQ	);
@@ -89,13 +95,11 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
         qrLst.add(sysSourceQR);		
         QueryRules terminalIdQR = new QueryRules("terminalId", ctr.getTerminalId(),  QueryRules.OP_EQ	);
         qrLst.add(terminalIdQR);
-		if(cardTransactionRecordDao.findByCondition(qrLst  ).size()<1){
-			  CardTransactionRecordPO cardTransactionRecordPO = new CardTransactionRecordPO();
-		        BeanUtils.copyProperties(ctr, cardTransactionRecordPO);
-			cardTransactionRecordDao.save(cardTransactionRecordPO);
-		}
+        
+        List<CardTransactionRecordPO> lst = cardTransactionRecordDao.findByCondition(qrLst  );
+		return lst==null ?0:lst.size();
     }
-
+    
     @Override
     public void delete(long id) {
         CardTransactionRecordPO cardTransactionRecordPO = cardTransactionRecordDao.get(id);

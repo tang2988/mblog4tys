@@ -66,12 +66,12 @@ div.laydate-icon{
             <div style="padding: 30px;  ">
 		    		<form class="CurForm" action="$base/home?method=myPosMgr" method="post">
 		    		<ul id="ul_myPosMgr">
-		    			<li>请选择您最近一笔刷卡交易来验证您的身份
+		    			<li>请选择您今天之前的一笔刷卡交易来验证您的身份
 		    			</li>
 						<li>产商：
 						<select name="sysSource">
-							<option value="瑞银信" select="select">瑞银信</option>
-							<option value="瑞刷" select="select">瑞刷</option>
+							<option value="瑞银信" #if($!{sysSource}=="瑞银信")selected="selected"#end >瑞银信</option>
+								<option value="瑞刷"  #if($!{sysSource}=="瑞刷")selected="selected"#end>瑞刷</option>
 						</select>
 						</li>
 						<li>
@@ -81,9 +81,9 @@ div.laydate-icon{
 						终端编号：<input name="terminalcode" value="" >*pos机正面第一行IPOS后面8位数字 
 						</li>
 						<li>
-							刷卡日：<input name="yearmonthdatestart" onclick="laydate({max:laydate.now(), format: 'YYYYMMDD'})" >
-							<input name="yearmonthdateend" type="hidden" onclick="laydate({max:laydate.now(), format: 'YYYYMMDD'})"  > 
-						</li>
+							刷卡日：<input name="yearmonthdatestart" onclick="laydate({max:laydate.now(), format: 'YYYYMMDD'})" >*今天之前的刷卡日
+							<input name="yearmonthdateend" type="hidden" onclick="laydate({max:laydate.now(-1), format: 'YYYYMMDD'})"  > 
+							</li>
 						<li>
 							刷卡金额：<input name="transAcount">
 							<input type="button" value="开始认证" onclick="submitCurForm(1)"  >

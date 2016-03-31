@@ -70,6 +70,7 @@ div.laydate-icon{
                     <th>金额</th>
                     <th>下单时间</th>
                     <th>下单备注</th>
+					<th>处理进度</th>
                 </tr>
                 #foreach($row in $page.results)
 				<tr>
@@ -93,6 +94,7 @@ div.laydate-icon{
                     <td>$!{row.cost}</td>
                     <td>$!{row.createTime}</td>
                     <td>$!{row.remark}</td>
+					<td>$!{row.reserve3}</td>
                 </tr>
                 #end
             </table>

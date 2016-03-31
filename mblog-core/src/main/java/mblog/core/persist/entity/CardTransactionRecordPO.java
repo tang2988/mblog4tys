@@ -38,7 +38,7 @@ public class CardTransactionRecordPO {
     private Long point1;//个人返现
     @Column(name = "point2", columnDefinition = "int default 0")
     private Long point2;//全体返现
-    
+    private Date createTime;//
 	public long getId() {
 		return id;
 	}
@@ -164,6 +164,12 @@ public class CardTransactionRecordPO {
 	}
 	public void setPoint2(Long point2) {
 		this.point2 = point2;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
     
     

@@ -17,6 +17,8 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -50,6 +52,7 @@ import mblog.core.persist.utils.QueryRules;
 import mblog.core.persist.utils.StringUtil;
 import mblog.shiro.authc.AccountSubject;
 import mblog.web.controller.BaseController;
+import mblog.web.controller.admin.CardTransactionRecordController;
 import mblog.web.controller.desk.Views;
 import mtons.modules.lang.Const;
 import mtons.modules.pojos.Data;
@@ -63,6 +66,8 @@ import mtons.modules.pojos.UserProfile;
  */
 @Controller
 public class HomeController extends BaseController {
+	private static final Logger log = LoggerFactory.getLogger(CardTransactionRecordController.class);
+	
 	@Autowired
 	private PostService postService;
 	@Autowired
@@ -147,14 +152,20 @@ public class HomeController extends BaseController {
 			QueryRules qr = new QueryRules("sysSource",sysSource	);	
 			qrLst.add(qr);
 		}
-		
-		if(StringUtils.isNotBlank(yearmonthdatestart)){
-			QueryRules qr = new QueryRules("deal_data",yearmonthdatestart+" 00:00:00","ge"	);qrLst.add(qr);
+		try {
+			if(StringUtils.isNotBlank(yearmonthdatestart)){
+				QueryRules qr = new QueryRules("dealTime",DateUtils.parseDate(yearmonthdatestart+" 00:00:00", new String[]{"yyyy-MM-dd HH:mm:ss"}),"ge"	);
+				qrLst.add(qr);
+			}
+			
+			if(StringUtils.isNotBlank(yearmonthdateend)){
+				QueryRules qr = new QueryRules("dealTime",DateUtils.parseDate(yearmonthdateend+" 23:59:59", new String[]{"yyyy-MM-dd HH:mm:ss"})	,"le");
+				qrLst.add(qr);
+			}
+		} catch (ParseException e) {
+			log.error("日期解析报错",e);
 		}
-		
-		if(StringUtils.isNotBlank(yearmonthdateend)){
-			QueryRules qr = new QueryRules("deal_data",yearmonthdateend+" 23:59:59"	,"le");qrLst.add(qr);
-		}
+
 	
 		if(1==1){
 			QueryRules qr = new QueryRules("userId",up.getId()	);qrLst.add(qr);
@@ -163,7 +174,7 @@ public class HomeController extends BaseController {
 
 		model.put("page", page);
 		initUser(model);
-
+		model.put("sysSource", sysSource);
 		model.put("yearmonthdatestart", yearmonthdatestart);
 		model.put("yearmonthdateend", yearmonthdateend);
 		return getView(Views.HOME_myPos);
@@ -236,6 +247,19 @@ public class HomeController extends BaseController {
 		return Data.failure("抱歉，您未通过了POS验证，请填写正确的刷卡记录再次提交验证，或联系本站");
 		
 	}
+	
+	/**
+	 * 我myPosMgr
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/mpos" )
+	public @ResponseBody Data mpos( ModelMap model) {
+		myPOSService.aa();
+		return Data.failure("抱歉，您未通过了POS验证，请填写正确的刷卡记录再次提交验证，或联系本站");
+		
+	}
+	
 	
 	
 	/**

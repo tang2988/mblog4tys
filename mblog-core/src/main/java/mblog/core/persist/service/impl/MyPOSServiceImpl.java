@@ -3,11 +3,13 @@ package mblog.core.persist.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import mblog.core.data.CardTransactionRecord;
@@ -146,4 +148,78 @@ public class MyPOSServiceImpl implements MyPOSService {
 			return myPOS;
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Transactional(propagation=Propagation.NOT_SUPPORTED)
+	public void aa(){
+		try {
+			a1();			
+		} catch (Exception e) {
+		}
+
+		try {
+			a2();	
+		} catch (Exception e) {
+		}
+		
+		
+	}
+	
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public void a1(){
+		
+		for(int k=5;k>0;k--){
+			MyPOS myPOS = new MyPOS();
+			myPOS.setAgencyName(RandomStringUtils.randomAlphanumeric(5));
+			if(k==3){
+				throw new RuntimeException("tys make err");
+			}
+			save(myPOS);
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NOT_SUPPORTED)
+	public void a2(){
+		
+		for(int k=5;k>0;k--){
+			MyPOS myPOS = new MyPOS();
+			myPOS.setCustomerName(RandomStringUtils.randomAlphanumeric(5));
+			save(myPOS);
+			
+			if(k==3){
+				throw new RuntimeException("tys make err");
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

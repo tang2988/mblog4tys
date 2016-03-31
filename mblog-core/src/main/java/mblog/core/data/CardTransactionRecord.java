@@ -32,6 +32,8 @@ public class CardTransactionRecord implements Serializable {
     private Long point2;//全体返现
     private Long userId;//
     private String realterminalId;
+    
+    private Date createTime;//
     @Override
     public String toString() {
     	return "serialNumber:"+serialNumber+",transacount:"+transacount+",moblieNoV:"+moblieNoV+",terminalId:"+terminalId;
@@ -174,6 +176,14 @@ public class CardTransactionRecord implements Serializable {
 
 	public void setPoint2(Long point2) {
 		this.point2 = point2;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
     
 	
