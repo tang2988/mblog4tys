@@ -53,15 +53,16 @@ div.laydate-icon{
     		<ul id="ul_myPosMgr">
 				<li>产商：
 				<select name="sysSource">
-					<option value="瑞银信" select="select">瑞银信</option>
+					<option value="瑞银信" #if($!{sysSource}=="瑞银信")selected="selected"#end >瑞银信</option>
+					<option value="瑞刷"  #if($!{sysSource}=="瑞刷")selected="selected"#end>瑞刷</option>
 				</select>
 				</li>
 				<li>
 					
 				</li>
 				<li>
-					开始日<input name="yearmonthdatestart" onclick="laydate({max:laydate.now(), format: 'YYYYMMDD'})" value="$!{yearmonthdatestart}">
-					截止日<input name="yearmonthdateend" onclick="laydate({max:laydate.now(), format: 'YYYYMMDD'})" value="$!{yearmonthdateend}" > 
+					开始日<input name="yearmonthdatestart" onclick="laydate({max:laydate.now(), format: 'YYYY-MM-DD'})" value="$!{yearmonthdatestart}">
+					截止日<input name="yearmonthdateend" onclick="laydate({max:laydate.now(), format: 'YYYY-MM-DD'})" value="$!{yearmonthdateend}" > 
 					<input type="button" value="查询" onclick="submitCurForm(1)"  >
 				</li>
 				<li>

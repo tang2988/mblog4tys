@@ -57,13 +57,13 @@ div.laydate-icon{
     		<ul>
 				<li>产商：
 				<select name="sysSource">
-					<option value="瑞银信" select="select">瑞银信</option>
-					<option value="瑞刷" select="select">瑞刷</option>
+					<option value="瑞银信" #if($!{sysSource}=="瑞银信")selected="selected"#end >瑞银信</option>
+					<option value="瑞刷"  #if($!{sysSource}=="瑞刷")selected="selected"#end>瑞刷</option>
 				</select>
 				</li>
 				<li>
-					开始日：<input name="yearmonthdatestart" onclick="laydate({ format: 'YYYYMMDD'})" >
-					截止日：<input name="yearmonthdateend" onclick="laydate({ format: 'YYYYMMDD'})"  > 
+					开始日：<input name="yearmonthdatestart" onclick="laydate({ format: 'YYYY-MM-DD'})" value="$!{yearmonthdatestart}">
+					截止日：<input name="yearmonthdateend" onclick="laydate({ format: 'YYYY-MM-DD'})"  value="$!{yearmonthdateend}"> 
 				</li>
 				<li>
 					手机号码：<input name="mobile" >
@@ -83,7 +83,6 @@ div.laydate-icon{
                     <th>终端编号</th>
                     <th>交易金额</th>
                     <th>手续费</th>
-                    <th>交易日期</th>
                     <th>交易时间</th>
                     <th>交易类型</th>
                     <th>银行卡号</th>
@@ -101,8 +100,7 @@ div.laydate-icon{
                     <td>$!{row.terminalId}</td>
                     <td>$!{row.transacount}</td>
                     <td>$!{row.feeAmt}</td>
-                    <td>$!{row.deal_data}</td>
-                    <td>$!{row.deal_time}</td>
+                    <td>$!{row.dealTime}</td>
                     <td>$!{row.dealTypeName}</td>
                     <td>$!{row.bankcardNumber}</td>
                     <td>$!{row.sysSource}</td>
