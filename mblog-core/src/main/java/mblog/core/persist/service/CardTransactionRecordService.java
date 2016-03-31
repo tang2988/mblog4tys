@@ -27,4 +27,6 @@ public interface CardTransactionRecordService {
 
 	public void syncDataFromSysSource(String sysSource, String yearmonthdatestart, String yearmonthdateend);
 
+	
+    public Integer countRecord(CardTransactionRecord ctr);
 }

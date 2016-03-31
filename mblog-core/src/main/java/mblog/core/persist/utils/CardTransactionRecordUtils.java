@@ -66,5 +66,6 @@ public abstract class CardTransactionRecordUtils {
 		ctr.setPoint(0L);
 		ctr.setPoint1(0L);
 		ctr.setPoint2(0L);
+		ctr.setCreateTime(new Date());
 	}
 }

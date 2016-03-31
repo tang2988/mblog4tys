@@ -166,6 +166,12 @@ public class PointRuleServiceImpl implements PointRuleService {
 				break;
 			}
 			for(CardTransactionRecord ctr: lst ){
+				if(cardTransactionRecordService.countRecord(ctr)>1){
+					log.error("该记录有问题，不能计算积分"+ctr);//TODO
+				}else{
+					
+				}
+				
 				calAllRulePointFromOneCardTransactionRecord(ctr);
 				calPersonRulePointFromOneCardTransactionRecord(ctr);
 			}

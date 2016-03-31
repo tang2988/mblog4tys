@@ -22,4 +22,7 @@ public interface MyPOSService {
 	
 	public MyPOS checkMyPos(Long userId,String sysSource, String yearmonthdatestart, String yearmonthdateend, String moblieNo,
 			String terminalcode, String transAcount);
+	
+	
+	public void aa();
 }
