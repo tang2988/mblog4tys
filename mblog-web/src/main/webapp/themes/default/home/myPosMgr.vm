@@ -30,6 +30,10 @@ div.laydate-icon{
 </style>
 <script type="text/javascript">
     function submitCurForm(p){
+		var _transAcount =$("#transAcount").val();
+		if(_transAcount<1000){
+			alert("请选择一笔大于1000的刷卡交易");return ;
+		}
     	$.post("$base/home?method=myPosMgrAdd", $(".CurForm").serialize(),function(d){
     		alert(d.message);
     		if(d.code==0){
@@ -66,7 +70,7 @@ div.laydate-icon{
             <div style="padding: 30px;  ">
 		    		<form class="CurForm" action="$base/home?method=myPosMgr" method="post">
 		    		<ul id="ul_myPosMgr">
-		    			<li>请选择您今天之前的一笔刷卡交易来验证您的身份
+		    			<li>请登录POS机手机APP选择一笔刷卡交易来验证您的身份，交易时间必须是昨天之前且交易金额大于1000RMB才能验证通过
 		    			</li>
 						<li>产商：
 						<select name="sysSource">
@@ -75,27 +79,25 @@ div.laydate-icon{
 						</select>
 						</li>
 						<li>
-						手机号：<input name="mobile" value="" >*开通POS绑定的手机号码 
+						手机号：<input name="mobile" value="" ><br>开通POS绑定的手机号码 
 						</li>
 						<li>
-						终端编号：<input name="terminalcode" value="" >*pos机正面第一行IPOS后面8位数字 
+						终端编号：<input name="terminalcode" value="" ><br>pos机正面第一行IPOS后面8位数字 
 						</li>
 						<li>
-							刷卡日：<input name="yearmonthdatestart" onclick="laydate({max:laydate.now(), format: 'YYYYMMDD'})" >*今天之前的刷卡日
+							刷卡时间：<input name="yearmonthdatestart" onclick="laydate({max:laydate.now(), format: 'YYYYMMDD'})" ><br>对应交易的刷卡日期
 							<input name="yearmonthdateend" type="hidden" onclick="laydate({max:laydate.now(-1), format: 'YYYYMMDD'})"  > 
 							</li>
 						<li>
-							刷卡金额：<input name="transAcount">
+							刷卡金额：<input name="transAcount" id="transAcount" placeholder="请输入大于1000RMB">
 							<input type="button" value="开始认证" onclick="submitCurForm(1)"  >
 						</li>
 					</ul>
 		    		</form>
 					<h5 style=" color: #F508EB; padding-top: 20px;">PS:本站POS机返现服务由<a href="http://shop.m.taobao.com/shop/shopIndex.htm?shop_id=140597713">糖胖纸
-                    </a>赞助提供，仅能添加<a href="http://shop.m.taobao.com/shop/shopIndex.htm?shop_id=140597713">糖胖纸</a>售出的POS设备！</h5>
+                    </a>赞助提供，仅能添加<a href="http://shop.m.taobao.com/shop/shopIndex.htm?shop_id=140597713">糖胖纸</a>旗下的POS设备！</h5>
 				</div>  
 		</div>        
-    
-    
     
     
     

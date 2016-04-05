@@ -2,7 +2,7 @@
 #set($title ="消息提示")
 
 <div class="panel panel-default" style="min-height: 300px; max-width: 460px; margin: 30px auto;">
-	<div class="panel-heading">提示</div>
+	<div class="panel-heading">提示<span style="padding-left: 20%;"><i id="timeOutShow" style="    color: blue;font-weight: bold;">5</i> 秒后自动跳转到<a id="mainPage" href="${base}">首页 </a></span></div>
 	<div class="panel-body">
 		<fieldset>
 			#if($error)
@@ -11,3 +11,20 @@
 		</fieldset>
 	</div><!-- /panel-content -->
 </div><!-- /panel -->
+<script language=javascript>
+
+var _timeOutShow = 5;
+function goMainPage(){
+	if(_timeOutShow<=0){
+		window.clearInterval(_setIntervalId)
+		document.getElementById("mainPage").click();
+		return ;
+	}
+	$("#timeOutShow").val(_timeOutShow--);
+	document.getElementById("timeOutShow").innerHTML=_timeOutShow;
+	console.info(_timeOutShow);
+
+}
+
+var _setIntervalId=self.setInterval("goMainPage()",1000)
+</script>
