@@ -42,6 +42,9 @@ public class User implements Serializable {
 
 	private List<Role> roles = new ArrayList<Role>();
 
+	
+	private int vipLevel;
+	private Date vipTimeOut;
 	public long getId() {
 		return id;
 	}
@@ -193,4 +196,22 @@ public class User implements Serializable {
 	public void setSignature(String signature) {
 		this.signature = signature;
 	}
+
+	public int getVipLevel() {
+		return vipLevel;
+	}
+
+	public void setVipLevel(int vipLevel) {
+		this.vipLevel = vipLevel;
+	}
+
+	public Date getVipTimeOut() {
+		return vipTimeOut;
+	}
+
+	public void setVipTimeOut(Date vipTimeOut) {
+		this.vipTimeOut = vipTimeOut;
+	}
+	
+	
 }

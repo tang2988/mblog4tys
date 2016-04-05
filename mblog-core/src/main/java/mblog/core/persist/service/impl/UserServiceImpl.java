@@ -145,7 +145,7 @@ public class UserServiceImpl implements UserService {
 		po.setStatus(EntityStatus.ENABLED);
 		po.setActiveEmail(EntityStatus.ENABLED);
 		po.setCreated(now);
-
+		po.setVipLevel(0);
 		userDao.save(po);
 
 		return BeanMapUtils.copy(po, 0);
@@ -157,7 +157,6 @@ public class UserServiceImpl implements UserService {
 	public AccountProfile update(User user) {
 		UserPO po = userDao.get(user.getId());
 		if (null != po) {
-			
 			String getUsername = user.getUsername();
 			for(String fn : FORBID_NAME){
 				if(getUsername.contains(fn)){
@@ -390,6 +389,43 @@ public class UserServiceImpl implements UserService {
 		UserPO po = userDao.get(id);
 		if (po != null) {
 			po.setMobile(mobile);
+		}
+	}
+	@Transactional(readOnly = true)
+	public Boolean isAdminUser(Long id ){
+		UserPO po = userDao.get(id);
+		if (po != null) {
+			try {
+				for(RolePO role :po.getRoles()){
+					if(role.getId()==1L){
+						return true;
+					}
+				}
+			} catch (Exception e) {
+			}
+		}
+		return false;
+	}
+	
+	@Transactional(readOnly = true)
+	public Boolean isVipUser(Long id ){
+		UserPO po = userDao.get(id);
+		if (po != null) {
+			if(po.getVipLevel()>0){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	@Override
+	@Transactional
+	public void updateVip(long id,Integer vipLevel,Date vipTime) {
+		UserPO po = userDao.get(id);
+		if (po != null) {
+			po.setVipLevel(vipLevel);
+			po.setVipTimeOut(vipTime);
 		}
 	}
 }

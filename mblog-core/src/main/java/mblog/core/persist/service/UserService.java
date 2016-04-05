@@ -9,6 +9,7 @@
 */
 package mblog.core.persist.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,7 +17,6 @@ import java.util.Set;
 import mblog.core.data.AccountProfile;
 import mblog.core.data.AuthMenu;
 import mblog.core.data.User;
-import mblog.core.persist.entity.UserPO;
 import mtons.modules.pojos.Paging;
 
 /**
@@ -118,4 +118,12 @@ public interface UserService {
     
     
     public void updateMobile(long id,String mobile) ;
+    
+    
+	public Boolean isAdminUser(Long id ); 
+	
+	
+	public Boolean isVipUser(Long id );
+	
+	public void updateVip(long id,Integer vipLevel,Date vipTime) ;
 }

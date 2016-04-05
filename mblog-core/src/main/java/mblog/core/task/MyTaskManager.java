@@ -65,5 +65,25 @@ public class MyTaskManager {
 			
 	        log.info("完成发放前一天的交易返现....");
 	    }
+	    
+	    
+	    @Scheduled(cron = "0 0 12 1 * *")
+	    void calFreeVip(){  
+	    	log.info("开始发放前上一个月的vip资格....");
+	    	//TODO vipssssssssssssssssssss
+	    	/*Calendar yesterday = Calendar.getInstance();
+	    	yesterday.add(Calendar.DATE, -1);
+	    	
+			try {
+				Date startTime = DateUtils.parseDate(DateFormatUtils.format(yesterday, "yyyy-MM-dd")+" 00:00:00", new String[]{"yyyy-MM-dd HH:mm:ss"});
+				Date endTime=DateUtils.parseDate(DateFormatUtils.format(yesterday, "yyyy-MM-dd")+" 23:59:59", new String[]{"yyyy-MM-dd HH:mm:ss"});
+				pointRuleService.calCardTransactionRecordPoint(startTime, endTime);
+		    	
+			} catch (ParseException e) {
+				 log.info("发放前上一个月的vip资格",e);
+			}*/
+			
+	        log.info("完成发放前上一个月的vip资格....");
+	    }
 	
 }

@@ -79,7 +79,7 @@ public class UserPO {
 
 	private String signature; // 个性签名
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "mto_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	private List<RolePO> roles = new ArrayList<RolePO>();
@@ -88,6 +88,9 @@ public class UserPO {
 	private int activeEmail; // 邮箱激活状态
 	private int status; // 用户状态
 
+	private int vipLevel;
+	private Date vipTimeOut;
+	
 	public UserPO() {
 
 	}
@@ -255,4 +258,22 @@ public class UserPO {
 	public void setSignature(String signature) {
 		this.signature = signature;
 	}
+
+	public int getVipLevel() {
+		return vipLevel;
+	}
+
+	public void setVipLevel(int vipLevel) {
+		this.vipLevel = vipLevel;
+	}
+
+	public Date getVipTimeOut() {
+		return vipTimeOut;
+	}
+
+	public void setVipTimeOut(Date vipTimeOut) {
+		this.vipTimeOut = vipTimeOut;
+	}
+	
+	
 }
