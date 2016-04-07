@@ -22,11 +22,11 @@ public class ViewCopyrightPugin implements GroupVidewControllerHook.GroupViewCon
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, HandlerMethod handler, ModelAndView modelAndView) throws Exception {
         Post ret = (Post) modelAndView.getModelMap().get("ret");
-        String content = ret.getContent();
+        /*String content = ret.getContent();
         if (!content.contains("本文归作者所有，未经作者允许，不得转载")){
             content += "<br/><br/><br/>注意：该文章来源于互联网，如原作者不愿意在本网站刊登内容,请及时通知本站,予以删除。";
             ret.setContent(content);
-        }
+        }*/
     }
 
     @Override
