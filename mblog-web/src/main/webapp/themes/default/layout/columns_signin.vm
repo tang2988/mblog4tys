@@ -7,7 +7,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>$!{site_name} - 登录</title>
-    <meta name="keywords" content="mtons,$!{site_keywords}">
+    <meta name="keywords" content="51xinbei.com - 信呗网 - $!{site_keywords}">
     <meta name="description" content="$!{site_description}">
 
 	$!{site_metas}
@@ -25,8 +25,8 @@
 	<script type="text/javascript" src="$base/assets/vendors/validate/jquery-validate.js"></script>
 	
 	<!-- Favicons -->
-    <link rel="apple-touch-icon-precomposed" href="http://mtons.com/assets/images/logo/m99.png"/>
-    <link rel="shortcut icon" href="http://mtons.com/assets/images/logo/m.png"/>
+    <link rel="apple-touch-icon-precomposed" href="http://51xinbei.com/assets/images/logo/m99.png"/>
+    <link rel="shortcut icon" href="http://51xinbei.com/assets/images/logo/m.png"/>
 
 </head>
 <body class="sign">

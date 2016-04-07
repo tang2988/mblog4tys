@@ -2,7 +2,7 @@
 #set($title ="消息提示")
 
 <div class="panel panel-default" style="min-height: 300px; max-width: 460px; margin: 30px auto;">
-	<div class="panel-heading">提示<span style="padding-left: 20%;"><i id="timeOutShow" style="    color: blue;font-weight: bold;">5</i> 秒后自动跳转到<a id="mainPage" href="${base}">首页 </a></span></div>
+	<div class="panel-heading">提示<span style="padding-left: 20%;"><i id="timeOutShow" style="    color: blue;font-weight: bold;">5</i> 秒后自动跳转到<a id="mainPage" href="http://51xinbei.com">首页 </a></span></div>
 	<div class="panel-body">
 		<fieldset>
 			#if($error)

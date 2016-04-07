@@ -37,8 +37,8 @@
 	<link href="$base/assets/vendors/pace/themes/pace-theme-loading-bar.css" rel="stylesheet" />
 	
 	<!-- Favicons -->
-	<link rel="apple-touch-icon-precomposed" href="http://mtons.com/assets/images/logo/m.png"/>
-	<link rel="shortcut icon" href="http://mtons.com/assets/images/logo/m.png"/>
+	<link rel="apple-touch-icon-precomposed" href="http://51xinbei.com/assets/images/logo/m.png"/>
+	<link rel="shortcut icon" href="http://51xinbei.com/assets/images/logo/m.png"/>
 	
 	<style type="text/css">
 	body {font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;}
