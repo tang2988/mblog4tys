@@ -27,6 +27,7 @@ div.laydate-icon{
 }
 
 #ul_myPosMgr li {padding: 10px;}
+.showTips{color: #B3A9A9}
 </style>
 <script type="text/javascript">
     function submitCurForm(p){
@@ -58,7 +59,7 @@ div.laydate-icon{
 		<div>
 			
 			 
-			<div style="padding: 30px;">
+			<div style="padding:20px 20px 0 20px">
 				<ul >
 					 #foreach($row in $myPosLst)
                           <li >
@@ -66,11 +67,12 @@ div.laydate-icon{
                           </li>
         			 #end
                 </ul>
+				<hr />
          	</div>
-            <div style="padding: 30px;  ">
+            <div style="padding: 10px;  ">
 		    		<form class="CurForm" action="$base/home?method=myPosMgr" method="post">
 		    		<ul id="ul_myPosMgr">
-		    			<li>请登录POS机手机APP选择一笔刷卡交易来验证您的身份，交易时间必须是昨天之前且交易金额大于1000RMB才能验证通过
+		    			<li>请登录手刷APP选择一笔刷卡交易来验证您是机主，交易时间必须是昨天之前且交易金额大于1000RMB才能验证通过
 		    			</li>
 						<li>产商：
 						<select name="sysSource">
@@ -79,23 +81,28 @@ div.laydate-icon{
 						</select>
 						</li>
 						<li>
-						手机号：<input name="mobile" value="" ><br>开通POS绑定的手机号码 
+						手机号：<input name="mobile" value="" ><br>
+								<span class="showTips">开通POS绑定的手机号码</span>
 						</li>
 						<li>
-						终端编号：<input name="terminalcode" value="" ><br>pos机正面第一行IPOS后面8位数字 
+						终端编号：<input name="terminalcode" value="" ><br>
+								<span class="showTips">pos机正面第一行IPOS后面8位数字</span>
 						</li>
 						<li>
-							刷卡时间：<input name="yearmonthdatestart" onclick="laydate({max:laydate.now(), format: 'YYYYMMDD'})" ><br>对应交易的刷卡日期
+							刷卡时间：<input name="yearmonthdatestart" onclick="laydate({max:laydate.now(), format: 'YYYYMMDD'})" ><br>
+									<span class="showTips">对应交易的刷卡日期</span>
 							<input name="yearmonthdateend" type="hidden" onclick="laydate({max:laydate.now(-1), format: 'YYYYMMDD'})"  > 
 							</li>
 						<li>
 							刷卡金额：<input name="transAcount" id="transAcount" placeholder="请输入大于1000RMB">
+								<br>
+									<br>
 							<input type="button" value="开始认证" onclick="submitCurForm(1)"  >
 						</li>
 					</ul>
 		    		</form>
-					<h5 style=" color: #F508EB; padding-top: 20px;">PS:本站POS机返现服务由<a href="http://shop.m.taobao.com/shop/shopIndex.htm?shop_id=140597713">糖胖纸
-                    </a>赞助提供，仅能添加<a href="http://shop.m.taobao.com/shop/shopIndex.htm?shop_id=140597713">糖胖纸</a>旗下的POS设备！</h5>
+					<h5 style=" color: #F508EB; padding-top: 20px;">PS:本站POS机返现服务由<a href="http://shop.m.taobao.com/shop/shopIndex.htm?shop_id=140597713"> 糖胖纸 
+                    </a>提供，目前仅能添加<a href="http://shop.m.taobao.com/shop/shopIndex.htm?shop_id=140597713"> 糖胖纸 </a>的POS设备！</h5>
 				</div>  
 		</div>        
     

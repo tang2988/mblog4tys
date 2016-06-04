@@ -27,14 +27,16 @@ div.laydate-icon{
 }
 
 #ul_myPosMgr li {padding: 5px;}
+
+.posTable td,th{  vertical-align: middle;    text-align: center;}
+
+
+.onDetail{background-color: #fcf8e3}
+.cdetail{}
+.cdetail tr{background-color: #fcf8e3}
+.cdetail td{background-color: #fcf8e3;    border: 1px solid #ddd; }
 </style>
 <script type="text/javascript">
-    
-    function submitCurForm(p){
-    	$("#pn").val(p);
-    	$(".CurForm").submit();
-    }
-    
 </script>
 <div class="shadow-box">
 	<div class="filter">
@@ -62,6 +64,7 @@ div.laydate-icon{
 				</li>
 				<li>
 					开始日<input name="yearmonthdatestart" onclick="laydate({max:laydate.now(), format: 'YYYY-MM-DD'})" value="$!{yearmonthdatestart}">
+					<br><br>
 					截止日<input name="yearmonthdateend" onclick="laydate({max:laydate.now(), format: 'YYYY-MM-DD'})" value="$!{yearmonthdateend}" > 
 					<input type="button" value="查询" onclick="submitCurForm(1)"  >
 				</li>
@@ -72,51 +75,53 @@ div.laydate-icon{
     		</form>
 		</div>
         <div class="pull-out m-t-small">
-            <table id="treeTable" class="table table-striped table-bordered b-t text-small">
+    		<table id="treeTable" class="posTable table table-striped table-bordered b-t text-small">
                 <tr>
                     <th>#</th>
-                    #*<th>手机号码</th>*#
-                    <th>终端编号</th>
                     <th>交易金额</th>
                     <th>手续费</th>
                     <th>交易时间</th>
                     <th>交易类型</th>
-                    <th>银行卡号</th>
-                    <th>刷卡平台</th>
-                    <th>交易流水号</th>
-					<th>返现积分</th>
-                    #if($shiro.hasPermission("friendLink:edit1"))
-                    	<th>所属代理</th>
-                        <th width="300" class="col-lg-2">操作</th>
-                    #end
                 </tr>
                 #foreach($row in $page.results)
-                    <td>$!{velocityCount}</td>
-                     #*<td>$!{row.moblieNoV}</td>*#
-                    <td>$!{row.terminalId}</td>
+				<tr id="t$!{row.id}" class="tdetail">
+					<td>$!{velocityCount}</td>
                     <td>$!{row.transacount}</td>
                     <td>$!{row.feeAmt}</td>
                     <td>$!{row.deal_data}<br>$!{row.deal_time}</td>
                     <td>$!{row.dealTypeName}</td>
-                    <td>$!{row.bankcardNumber}</td>
-                    <td>$!{row.sysSource}</td>
-                    <td>$!{row.serialNumber}</td>
-					<td>$!{row.point}</td>
-                    #if($shiro.hasPermission("friendLink:edit1"))
-                    	<td>$!{row.agencyName}</td>
-                        <td class="text-center">
-                            <a href="$base/admin/cardTransactionRecord/edit?id=${row.id}" class="btn btn-mini btn-primary">
-                                <i class="fa fa-check-square-o"></i> 修改
-                            </a>
-                            <a href="$base/admin/cardTransactionRecord/delete?id=${row.id}" class="btn btn-mini"><i class="fa fa-check-square-o"></i> 删除</a>
-                        </td>
-                    #end
+                </tr>
+				<tr id="c$!{row.id}" class="cdetail" style="    ;display:none">
+					<td>交易<br>明细</td>
+                    <td colspan="4">
+						<table id="innrTable" class="posTable table ">
+							<tr >
+								<td style=" width: 25%;">账户</td>
+                                <td style=" width: 25%;">$!{row.moblieNoV}</td>
+								<td style=" width: 29%;">终端号</td>
+                                <td style=" width: 21%;">尾号$!{row.terminalId.substring(8,12)}</td>
+                            </tr>
+							<tr >
+                                <td>产商</td>
+								<td>$!{row.sysSource}</td>
+								 <td>银行卡</td>
+								<td>尾号$!{row.bankcardNumber.substring(12,16)}</td>
+                            </tr>
+							<tr >
+								<td>订单</td>
+								<td>$!{row.serialNumber}</td>
+								
+                               
+            					<td>返积分</td>
+								<td>$!{row.point}</td>
+                            </tr>
+						</table>
+					</td>
                 </tr>
                 #end
             </table>
-            
+			
         </div>
-        
         
         
         
@@ -155,5 +160,34 @@ $(function() {
 		var id = $(this).attr('data-id');
 		window.location.href='$base/post/to_update/' + id;
 	});
+	
+	
+	$(".tdetail").click(function(){
+		var id = this.id.replace("t","");
+		
+		$(".cdetail").each(function(){
+            $(this).hide();
+         });
+		
+		$(".onDetail").each(function(){
+            $(this).removeClass("onDetail");
+         });
+		 
+		 
+		$("#c"+id).show("fast");
+		$("#t"+id).addClass("onDetail");
+		
+	});
+	
+	
+	$(".cdetail").click(function(){
+		$(this).hide("fast");
+	});
 })
+
+    function submitCurForm(p){
+    	$("#pn").val(p);
+    	$(".CurForm").submit();
+    }
+	
 </script>

@@ -154,6 +154,8 @@ public class CardTransactionRecordServiceImpl implements CardTransactionRecordSe
     @Transactional
     public synchronized void syncDataFromSysSourceByMobile(String sysSource, String yearmonthdatestart,String yearmonthdateend,String moblieNo,String terminalcode,Long userId) {
     	List<CardTransactionRecord> getCardTransactionRecordLst =  getDataFromSysSource(sysSource,yearmonthdatestart, yearmonthdateend, moblieNo, terminalcode);
+    	
+    	log.info("获取到的刷卡交易集合为：{}",getCardTransactionRecordLst);
     	for(CardTransactionRecord ctr: getCardTransactionRecordLst){
     		CardTransactionRecordUtils.postDate(ctr, userId, terminalcode);
     		saveUnique(ctr);

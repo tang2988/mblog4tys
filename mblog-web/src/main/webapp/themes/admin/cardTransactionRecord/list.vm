@@ -57,6 +57,7 @@ div.laydate-icon{
     		<ul>
 				<li>产商：
 				<select name="sysSource">
+					<option value="" #if($!{sysSource}=="")selected="selected"#end >所有</option>
 					<option value="瑞银信" #if($!{sysSource}=="瑞银信")selected="selected"#end >瑞银信</option>
 					<option value="瑞刷"  #if($!{sysSource}=="瑞刷")selected="selected"#end>瑞刷</option>
 				</select>

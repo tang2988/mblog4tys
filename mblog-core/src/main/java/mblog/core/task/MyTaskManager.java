@@ -33,7 +33,7 @@ public class MyTaskManager {
 	        System.out.println("I'm doing with rate now!");  
 	    }*/
 	      
-	    @Scheduled(cron = "0 0 6,8 * * *")
+	    @Scheduled(cron = "0 0 7 * * *")
 	    void syncCardTransactionRecord(){  
 	    	log.info("开始同步前一天的交易数据....");
 	    	
@@ -47,7 +47,7 @@ public class MyTaskManager {
 	    }
 	    
 	    
-	    @Scheduled(cron = "0 0 9,11 * * *")
+	    @Scheduled(cron = "0 0 16 * * *")
 	    void calBackPointFromCardTransactionRecord(){  
 	    	log.info("开始发放前一天的交易返现....");
 	    	
