@@ -57,7 +57,7 @@ div.laydate-icon{
 		
 		<div style="padding : 20px; ">
 			<h5 >
-				我的积分规则
+				我的POS积分规则(每周二12点结算)
             </h5>
 			<table id="treeTable" class="table table-striped table-bordered b-t text-small">
                 <tr>
