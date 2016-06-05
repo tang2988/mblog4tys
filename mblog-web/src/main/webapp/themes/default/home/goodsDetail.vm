@@ -137,7 +137,7 @@ div.laydate-icon{
                     <div class="tab-content hidden" id="exchangeListTemplate_div">     
 						<table class="list-table">
                             <tr>
-                                <td class=" bidTime">时间</td>
+                                <td class="bidTime" style="width: 35%";>时间</td>
 								<td class="bidder">用户</td>
                                 <td class="points">数量</td>
                             </tr>
