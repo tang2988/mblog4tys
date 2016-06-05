@@ -51,7 +51,7 @@ public class GoodsOtherDaoImpl extends BaseRepositoryImpl<GoodsOtherPO> implemen
 			}
 		}
 		
-		q.desc("id");
+		q.desc("createTime");
 		return q.list();
 	}
 	

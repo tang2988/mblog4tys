@@ -130,26 +130,24 @@ div.laydate-icon{
 					<li class="tab"><a href="javascript:showDetails(1);"  >换购明细</a></li>
                  </ul>
                 <div class="tab-content-wrap-account">
-                    <div class="tab-content" id="goodDetailTemplate_div">
+                    <div class="tab-content" id="goodDetailTemplate_div" style="    font-size: x-large;">
+						<p style="color: blue;padding-bottom: 18px; font-size: xx-large;">到账时间：<br>每周二处理订单</p>
 						$!{goods.descHtm}
 					</div>
                     <div class="tab-content hidden" id="exchangeListTemplate_div">     
 						<table class="list-table">
                             <tr>
-								<td class="bidder"></td>
-                                <td class="bidder">用户</td>
-                                <td class="price-td">订单金额</td>
+                                <td class=" bidTime">时间</td>
+								<td class="bidder">用户</td>
                                 <td class="points">数量</td>
-                                <td class=" bidTime">换购时间</td>
                             </tr>
 							
 							 #foreach($row in $page.results)
 							<tr>
-                                <td>$!{velocityCount}</td>
+								<td>$date.format('yyyy-MM-dd',$!{row.updateTime}) </td>
                                 <td>******</td>
-                                <td>$!{goods.price}</td>
                                 <td>$!{row.buyNum}</td>
-                                <td>$date.format('yyyy-MM-dd',$!{row.updateTime}) </td>
+                                
                             </tr>
                             #end
 						</table>

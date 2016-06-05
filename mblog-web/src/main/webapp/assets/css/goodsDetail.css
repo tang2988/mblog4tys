@@ -478,6 +478,10 @@
     border: 1px solid #d0d0d0;
     margin: 0 auto;
 }
+
+.tab-content .list-table td{
+    border: 1px solid #d0d0d0;
+}
 .tab-content .list-table thead th{
     height: 38px;
     border-style: solid;
@@ -500,7 +504,7 @@
     padding-top: 10px;
 }
 .tab-content-wrap-account .tab-content {
-    padding:50px 85px;
+    padding:20px;
     min-height: 100px;
 }
 .tab-wrap-account {

@@ -64,8 +64,8 @@ div.laydate-icon{
                     <th>#</th>
                     <th>刷卡方式</th>
                     <th>积分系数</th>
-                    <th>开始时间</th>
-                    <th>截至时间</th>
+                    #**<th>开始时间</th>
+                    <th>截至时间</th>*#
                     <th>范围</th>
                 </tr>
                 #foreach($row in $prLst)
@@ -73,8 +73,8 @@ div.laydate-icon{
                     <td>$!{velocityCount}</td>
                     <td>$!{row.reserve4}</td>
                     <td>$!{row.ratio}%</td>
-                    <td>$!{row.startTime}</td>
-                    <td>$!{row.endTime} </td>
+                    #**<td>$!{row.startTime}</td>
+                    <td>$!{row.endTime} </td>*#
                     <td>
 					#if($!{row.reserve2}==0)
 						全员专享
