@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 
+import mblog.base.context.AppContext;
 import mblog.core.data.CardTransactionRecord;
 import mblog.core.persist.service.CardTransactionRecordService;
 
@@ -38,16 +39,21 @@ public class RYXUtils  extends CardTransactionRecordUtils{
 	
 	private static final Logger log = LoggerFactory.getLogger(CardTransactionRecordService.class);
 	
-	static String RYX_SYS_URL ="http://119.254.93.71:8002/qtfr/";
-	static String RYX_SYS_UNAME = "11112563";
-	static String RYX_SYS_UPSW = "200820e3227815ed1756a6b531e7e0d2";//MD5: qwe123
-	static String BROWER_USER_AGENT ="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.75 Safari/537.36";
+	static String RYX_SYS_URL =AppContext.getAppConfigByName("RYX_SYS_URL");
+	static String RYX_SYS_UNAME = AppContext.getAppConfigByName("RYX_SYS_UNAME");
+	static String RYX_SYS_UPSW = AppContext.getAppConfigByName("RYX_SYS_UPSW");
+	static String BROWER_USER_AGENT =AppContext.getAppConfigByName("BROWER_USER_AGENT");
 	
 	static String loginRYXSystemJsession = "";
 	
-	public final static RYXUtils instance = new RYXUtils();
+	public static RYXUtils instance ;
 	
-	
+	public static RYXUtils getInstance (){
+		instance = null;
+			log.info("瑞银信账户信息：RYX_SYS_URL={};RYX_SYS_UNAME={};RYX_SYS_UPSW={}",RYX_SYS_URL,RYX_SYS_UNAME,RYX_SYS_UPSW);
+			instance = new RYXUtils();
+		return instance;
+	}
 	/**
 	 * 获取DOCUMENT对象
 	 * 
@@ -137,7 +143,7 @@ public class RYXUtils  extends CardTransactionRecordUtils{
 			Map<String, String> cookieMap = resp.cookies();
 			
 			//LOGIN
-			url ="http://119.254.93.71:8002/qtfr/users/users.do?method=checkLogin&loginname="+RYX_SYS_UNAME+"&password="+RYX_SYS_UPSW;
+			url =RYX_SYS_URL+"users/users.do?method=checkLogin&loginname="+RYX_SYS_UNAME+"&password="+RYX_SYS_UPSW;
 			Document re = Jsoup.connect(url). userAgent(BROWER_USER_AGENT ).cookies(cookieMap).ignoreContentType(true) .post() ;
 			log.info(re.toString());
 			

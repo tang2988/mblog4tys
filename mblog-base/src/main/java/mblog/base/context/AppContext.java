@@ -11,13 +11,12 @@ package mblog.base.context;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ServletContextAware;
-
-import javax.servlet.ServletContext;
 
 /**
  * @author langhsu
@@ -60,6 +59,8 @@ public class AppContext implements ServletContextAware {
 	 */
 	public Map<String, String> config;
 
+	public static Map<String, String> appConfig;
+	
 	/**
 	 * 容器全局变量
 	 */
@@ -110,6 +111,7 @@ public class AppContext implements ServletContextAware {
 	}
 
 	public void setConfig(Map<String, String> config) {
+		this.appConfig=config;
 		this.config = config;
 		//同步更新容器全局变量
 		Iterator<Map.Entry<String, String>> iter = config.entrySet().iterator();
@@ -135,4 +137,9 @@ public class AppContext implements ServletContextAware {
 	public ServletContext getServletContext() {
 		return servletContext;
 	}
+
+	public static String getAppConfigByName(String name) {
+		return appConfig.get(name);
+	}
+	
 }

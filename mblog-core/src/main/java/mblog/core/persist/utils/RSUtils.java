@@ -11,7 +11,6 @@ package mblog.core.persist.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
 
+import mblog.base.context.AppContext;
 import mblog.core.data.CardTransactionRecord;
 import mblog.core.persist.service.CardTransactionRecordService;
 
@@ -39,15 +39,21 @@ public class RSUtils extends CardTransactionRecordUtils{
 	
 	private static final Logger log = LoggerFactory.getLogger(CardTransactionRecordService.class);
 	
-	static String RYX_SYS_URL ="http://119.254.93.71:8002/qtfr/";
-	static String RYX_SYS_UNAME = "200026347";
-	static String RYX_SYS_UPSW = "200820e3227815ed1756a6b531e7e0d2";//MD5: qwe123
-	static String BROWER_USER_AGENT ="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.75 Safari/537.36";
+	static String RYX_SYS_URL =AppContext.getAppConfigByName("RS_SYS_URL");
+	static String RYX_SYS_UNAME = AppContext.getAppConfigByName("RS_SYS_UNAME");
+	static String RYX_SYS_UPSW = AppContext.getAppConfigByName("RS_SYS_UPSW");
+	static String BROWER_USER_AGENT =AppContext.getAppConfigByName("BROWER_USER_AGENT");
 	
 	static String loginRYXSystemJsession = "";
 	
-	public final static RSUtils instance = new RSUtils();
+	public static RSUtils instance ;
 	
+	public static RSUtils getInstance (){
+		instance = null;
+			log.info("瑞刷账户信息：RYX_SYS_URL={};RYX_SYS_UNAME={};RYX_SYS_UPSW={}",RYX_SYS_URL,RYX_SYS_UNAME,RYX_SYS_UPSW);
+			instance = new RSUtils();
+		return instance;
+	}
 	
 	/**
 	 * 获取DOCUMENT对象
@@ -102,21 +108,21 @@ public class RSUtils extends CardTransactionRecordUtils{
 			if(StringUtils.isNotBlank(paraUrl)){
 				url +=paraUrl;
 			}
-			log.info("瑞银信查询：{}",url);
+			log.info("瑞刷查询：{}",url);
 			Document resp = Jsoup.connect(url). userAgent(BROWER_USER_AGENT ).cookie("JSESSIONID",loginRYXSystemJsession).ignoreContentType(true) .post() ;
 
 			String jsonStr = resp.toString().replaceAll("<html>", "").replaceAll("</html>", "")
 					.replaceAll("<head>", "").replaceAll("</head>", "")
 					.replaceAll("<body>", "").replaceAll("</body>", "");
 			
-			log.info("瑞银信查询返回：{}" , jsonStr);
+			log.info("瑞刷查询返回：{}" , jsonStr);
 			JSONObject  holdJson = JSONObject.parseObject(jsonStr);
 			
 			List<CardTransactionRecord> ctrLst = JSONObject.parseArray(holdJson.getString("rows"), CardTransactionRecord.class);
 			
 			return ctrLst;
 		} catch (Exception e) {
-			log.error("登陆瑞银信系统查询交易记录失败", e);
+			log.error("登陆瑞刷系统查询交易记录失败", e);
 		}
 		return new ArrayList<>();
 	}
@@ -140,7 +146,7 @@ public class RSUtils extends CardTransactionRecordUtils{
 			Map<String, String> cookieMap = resp.cookies();
 			
 			//LOGIN
-			url ="http://119.254.93.71:8002/qtfr/users/users.do?method=checkLogin&loginname="+RYX_SYS_UNAME+"&password="+RYX_SYS_UPSW;
+			url =RYX_SYS_URL+"users/users.do?method=checkLogin&loginname="+RYX_SYS_UNAME+"&password="+RYX_SYS_UPSW;
 			Document re = Jsoup.connect(url). userAgent(BROWER_USER_AGENT ).cookies(cookieMap).ignoreContentType(true) .post() ;
 			log.info(re.toString());
 			
@@ -150,7 +156,7 @@ public class RSUtils extends CardTransactionRecordUtils{
 				return loginRYXSystemJsession= cookieMap.get("JSESSIONID");
 			}
 		} catch (IOException e) {
-			log.error("登陆瑞银信系统失败", e);
+			log.error("登陆瑞刷系统失败", e);
 		}
 		return "";
 	}
@@ -165,7 +171,7 @@ public class RSUtils extends CardTransactionRecordUtils{
 				return true;
 			}
 		} catch (IOException e) {
-			log.error("登陆瑞银信系统失败", e);
+			log.error("登陆瑞刷系统失败", e);
 			return true;
 		}
 		

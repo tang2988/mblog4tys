@@ -28,9 +28,9 @@ public abstract class CardTransactionRecordUtils {
 
 	public static CardTransactionRecordUtils getInstance(String sysSource) {
 		if("瑞刷".equals(sysSource)){
-			return RSUtils.instance;
+			return RSUtils.getInstance();
 		}else if("瑞银信".equals(sysSource)){
-			return RYXUtils.instance;
+			return RYXUtils.getInstance();
 		}else{
 			throw new RuntimeException("未找到POS厂商："+sysSource);
 		}
